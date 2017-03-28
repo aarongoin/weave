@@ -149,7 +149,7 @@
 	}
 
 	var noteView = Vue.component('note-view', {
-		props: ['note']
+		props: ['note', 'height'],
 		// TODO:
 		// - 2-way data bind to element current size
 	});
