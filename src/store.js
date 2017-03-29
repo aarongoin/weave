@@ -3,14 +3,6 @@ const
 	notes = localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [],
 	threads = localStorage.getItem('threads') ? JSON.parse(localStorage.getItem('threads')) : [];
 
-window.onbeforeunload = function() {
-	// save notes and threads
-	localStorage.setItem('notes', store.notes);
-	localStorage.setItem('threads', store.threads);
-
-	window.removeEventListener('keyup', keyHandler);
-};
-
 module.exports = {
 
 	createNote: function(init) {
@@ -84,6 +76,12 @@ module.exports = {
 		// TODO - remove corresponding notes too?
 
 		// add to history
+	},
+
+	saveLocal: function() {
+		// save notes and threads
+		localStorage.setItem('notes', notes);
+		localStorage.setItem('threads', threads);
 	}
 
 }
