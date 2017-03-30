@@ -9,7 +9,7 @@
 <template>
 
 	<div id="app">
-		<app-menu title="weave.works"></app-menu>
+		<app-menu title="W"></app-menu>
 		<weave-view 
 			v-if="view === 0" 
 			v-bind:store="store"

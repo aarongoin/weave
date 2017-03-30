@@ -37,7 +37,7 @@
 
 	<div class="box">
 		<input type="text" name="title" inputmode="latin-prose" size="50" placeholder="Title or something here..." v-on:focus="unfocusBody"/>
-		<text-editor v-bind:input="onInput" v-bind:content="note.body" v-on:focus="focusBody"></text-editor>
+		<text-editor v-bind:input="onInput" v-bind:content="(note) ? note.body : 'Text here...'" v-on:focus="focusBody"></text-editor>
 		<span>Words: {{wc}}</span>
 	</div>
 
@@ -54,7 +54,6 @@
 			TextEditor: TextEditor
 		},
 		data: function() { return {
-			body: undefined,
 			focus: 'editor',
 			wc: 0
 		}},
@@ -66,7 +65,10 @@
 				testWords.lastIndex = 0;
 				while (testWords.test(text)) wc++;
 				this.wc = wc;
-			}
+			},
+			focusBody: function() { this.canStyle(true); },
+			unfocusBody: function() { this.canStyle(false); },
+			onStyle: function(style) { this.body[style](); }
 		},
 		mount: function() {
 			// update word count to reflect note.body
@@ -78,11 +80,6 @@
 					break;
 				}
 			}
-		},
-		methods: {
-			focusBody: function() { this.canStyle(true); },
-			unfocusBody: function() { this.canStyle(false); },
-			onStyle: function(style) { this.body[style](); }
 		}
 	}
 
