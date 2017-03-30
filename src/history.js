@@ -1,8 +1,6 @@
-const
+var
 	historyLength = sessionStorage.getItem('historyLength') || 0,
 	historyIndex = sessionStorage.getItem('historyIndex') || 0;
-
-var
 	canRedo = (historyIndex < historyLength),
 	canUndo = (historyIndex > 0);
 
