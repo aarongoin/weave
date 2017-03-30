@@ -69,6 +69,7 @@
 				this.note = note;
 				this.prev = this.view;
 				this.view = 3;
+				Store.userWillRead(note);
 				// add editor
 			},
 			restoreView: function() {
