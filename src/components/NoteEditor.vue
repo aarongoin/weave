@@ -51,7 +51,7 @@
 		<textarea
 			class="editable"
 			v-on:mousedown="check = true"
-			v-on:mouseup="check = false"
+			v-on:mouseup="checkSelection(); check = false;"
 			v-on:input="onInput"
 			v-bind:style="height"
 		></textarea>
@@ -59,7 +59,7 @@
 		<span class="stats">
 			&nbsp; <!-- this space prevents jank when we hide/show selection count  since wordcount-->
 			<span v-if="(showSelection&&(selectedCount > 0))">Selected: {{selectedCount}} words</span>
-			<span class="wordcount">Words: {{wc}} Pages: {{pages}}</span></span>
+			<span class="wordcount">Words: {{wc}} &nbsp; Pages: {{pages}}</span></span>
 	</div>
 
 </template>
@@ -87,7 +87,7 @@
 			check: false,
 			height: '1em'
 		}},
-		props: ['note'],
+		props: ['onSave', 'note'],
 		components: {
 			DateTime: DateTime
 		},
@@ -98,7 +98,7 @@
 					event = this.$el.children[2];
 					if (event.selectionStart !== event.selectionEnd) {
 						this.selection = this.text.slice(event.selectionStart, event.selectionEnd);
-					}
+					} else this.showSelection = false;
 				}
 			},
 			resetCount: function() {
