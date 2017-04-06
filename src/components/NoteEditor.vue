@@ -107,7 +107,7 @@
 			},
 			onInput: function(event) {
 				this.text = event.target.value
-				this.selection = this.text;
+				this.showSelection = false;
 				this.height = 'height: auto';
 				Vue.nextTick(this.resize);
 			},
