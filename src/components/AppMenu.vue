@@ -14,13 +14,32 @@
 		height: 3rem;
 		display: inline;
 		background-color: #222;
-		padding-left: 1rem;
-		padding-right: 1rem;
 		box-shadow: 0 0 1rem #111;
+
+		display: flex;
+		justify-content: space-between;
 	}
 
-	#toolbar li, #toolbar h1 {
+	ul {
+		list-style: none;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	li {
 		display: inline;
+		flex-basis: 3rem;
+	}
+
+	li > button {
+		font-size: 1.7rem;
+		display: inline;
+		background-color: #222;
+		height: 3rem;
+		width: 3rem;
+		color: #fff;
+		border: none;
+		outline: none;
 	}
 
 </style>
@@ -28,14 +47,16 @@
 
 	<div id="toolbar">
 		<menu type="toolbar">
-			<li><h1>{{title}}</h1></li>
-			<li>search</li>
-			<li>undo</li>
-			<li>redo</li>
-			<li>new</li>
-			<li>weaveView</li>
-			<li>threadView</li>
-			<li>sliceView</li>
+			<ul v-for="group in buttons">
+				<li v-for="b in group">
+					<button v-if="b.icon" v-on:click="b.click" v-bind:name="b.name">
+						<img v-bind:src="b.icon">
+					</button>
+					<button v-else v-on:click="b.click" v-bind:name="b.name">
+						{{b.text}}
+					</button>
+				</li>
+			</ul>
 		</menu>
 	</div>
 
@@ -44,7 +65,7 @@
 
 	module.exports = {
 		name: 'app-menu',
-		props: ['title'],
+		props: ['buttons'],
 		mounted: function() {
 			//this.$el.height = this.$el.firstChild.offsetHeight;
 		}

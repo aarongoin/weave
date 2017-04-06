@@ -9,7 +9,7 @@
 <template>
 
 	<div id="app">
-		<app-menu title="W"></app-menu>
+		<app-menu title="W" v-bind:buttons="buttons"></app-menu>
 		<weave-view 
 			v-if="view === 0" 
 			v-bind:store="store"
@@ -28,7 +28,7 @@
 		<note-editor 
 			v-else-if="view === 3" 
 			v-bind:note="note"
-			v-bind:canStyle="canStyle"
+			v-bind:onSave="onSave"
 		></note-editor>
 	</div>
 
@@ -56,7 +56,37 @@
 			store: Store,
 			view: 3,
 			prev: 0,
-			note: undefined
+			note: undefined,
+			buttons: [
+				[{ 
+					name: 'title',
+					text: 'W',
+					click: function(event){
+						console.log('You clicked: ' + event.currentTarget.name);
+					}
+				}],
+				[{ 
+					name: 'weaveView',
+					icon: './img/weave.png',
+					click: function(event){
+						console.log('You clicked: ' + event.currentTarget.name);
+					}
+				},
+				{ 
+					name: 'threadView',
+					icon: './img/thread.png',
+					click: function(event){
+						console.log('You clicked: ' + event.currentTarget.name);
+					}
+				},
+				{ 
+					name: 'sliceView',
+					icon: './img/slice.png',
+					click: function(event){
+						console.log('You clicked: ' + event.currentTarget.name);
+					}
+				}]
+			]
 		}},
 		mount: function() {
 			window.onbeforeunload = function() {
@@ -70,7 +100,7 @@
 				this.prev = this.view;
 				this.view = 3;
 				Store.userWillRead(note);
-				// add editor
+				// add editor buttons
 			},
 			restoreView: function() {
 				this.note = undefined;
