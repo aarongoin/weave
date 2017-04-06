@@ -13,7 +13,7 @@
 		width: 100vw;
 		height: 3rem;
 		display: inline;
-		background-color: #06c;
+		background-color: #222;
 		padding-left: 1rem;
 		padding-right: 1rem;
 		box-shadow: 0 0 1rem #111;

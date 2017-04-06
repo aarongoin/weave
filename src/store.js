@@ -65,6 +65,18 @@ module.exports = {
 		// add to history
 	},
 
+	checkDateTime: function(datetime, thread) {
+		var i = this.notes.length;
+
+		while (i--) {
+			// check for if notes conflict
+			if (datetime < this.notes[i].datetime) break;
+			else if ((datetime === this.notes[i].datetime) && (thread === this.notes[i].thread)) return false;
+	
+		}
+		return true;
+	},
+
 	removeNote: function(note) {
 		var i = this.notes.indexOf(note);
 		if (i !== -1) this.notes.splice(i, 1);
@@ -106,5 +118,4 @@ module.exports = {
 		localStorage.setItem('notes', JSON.stringify(notes));
 		localStorage.setItem('threads', JSON.stringify(threads));
 	}
-
 }

@@ -77,13 +77,6 @@
 				this.view = this.prev;
 				this.prev = undefined;
 
-			},
-			canStyle: function(bool) {
-				if (bool) {
-					// activate editor buttons
-				} else {
-					// deactivate editor buttons
-				}
 			}
 		}
 	}
