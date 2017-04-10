@@ -6,7 +6,7 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		box-shadow: 0 0 1rem #111;
+		box-shadow: 0 0 0.5rem #111;
 		width: 100%;
 		height: 3rem;
 		background-color: #222;
