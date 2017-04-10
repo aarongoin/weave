@@ -181,6 +181,9 @@
 			this.head.value = (this.note && this.note.head) ? this.note.head : "Title or Summary here.";
 			this.body.value = (this.note && this.note.body) ? this.note.body : "This could be your great adventure.";
 
+			this.onInput({ target:this.body});
+			this.onInput({ target:this.head});
+
 			//window.addEventListener('mousemove', this.checkSelection);
 			//window.addEventListener('mousedown', this.resetCount);
 
