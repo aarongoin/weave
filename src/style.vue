@@ -4,7 +4,7 @@
 
 * {
 	padding: 0;
-	margin: 0 auto;
+	margin: 0;
 	font-family: "Raleway", "Arial", sans-serif;
 }
 
@@ -17,10 +17,11 @@ body {
 .box {
 	z-index: 0;
 	max-width: 50rem;
-	padding: 1.5rem;
 	background-color: #fff;
-	box-shadow: 0 0 1rem #333;
+	box-shadow: 0 0 0.5rem #333;
 	color: #222;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .noselect {

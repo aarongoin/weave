@@ -58,30 +58,32 @@
 			prev: 0,
 			note: undefined,
 			buttons: [
-				[{ 
+				/*[{ 
 					name: 'title',
 					text: 'W',
 					click: function(event){
 						console.log('You clicked: ' + event.currentTarget.name);
 					}
-				}],
+				}],*/
 				[{ 
-					name: 'weaveView',
-					icon: './img/weave.png',
+					name: 'undo',
+					icon: './dist/img/undo.svg',
 					click: function(event){
-						console.log('You clicked: ' + event.currentTarget.name);
+						document.execCommand('undo');
+						//console.log('You clicked: ' + event.currentTarget.name);
 					}
 				},
 				{ 
-					name: 'threadView',
-					icon: './img/thread.png',
+					name: 'redo',
+					icon: './dist/img/redo.svg',
 					click: function(event){
-						console.log('You clicked: ' + event.currentTarget.name);
+						document.execCommand('redo');
+						//console.log('You clicked: ' + event.currentTarget.name);
 					}
-				},
-				{ 
-					name: 'sliceView',
-					icon: './img/slice.png',
+				}],
+				[{
+					name: 'done',
+					text: 'done',
 					click: function(event){
 						console.log('You clicked: ' + event.currentTarget.name);
 					}

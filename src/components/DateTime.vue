@@ -2,7 +2,7 @@
 
 	span {
 		display: inline-block;
-		margin-bottom: 0.5rem;
+		margin: 0 1.5rem 0.5rem auto;
 		vertical-align: center;
 	}
 

@@ -4,7 +4,7 @@
   "description": "A Vue.js project",
   "author": "Aaron Goin <aaron.goin@wsu.edu>",
   "scripts": {
-    "serve": "http-server -o -c 1 -a localhost",
+    "serve": "http-server -c 1 -a localhost",
     "dev": "browserify -g envify -p [ vueify/plugins/extract-css -o dist/build.css ] -e src/main.js -o dist/build.js",
     "lint": "eslint --ext .js,.vue src test/unit",
     "test": "karma start karma.conf.js",

@@ -1,23 +1,27 @@
 <style scoped>
 
 	#toolbar {
+		z-index: 1;
+		position: fixed !important;
+		top: 0;
+		left: 0;
+		right: 0;
+		box-shadow: 0 0 1rem #111;
 		width: 100%;
 		height: 3rem;
-		background-color: #000;
+		background-color: #222;
 		color: #fff;
 	}
 
 	#toolbar > menu {
-		z-index: 1;
-		position: fixed !important;
-		width: 100vw;
+		
+		width: 100%;
+		max-width: 50rem;
 		height: 3rem;
-		display: inline;
-		background-color: #222;
-		box-shadow: 0 0 1rem #111;
-
+		margin-left: auto;
+		margin-right: auto;
 		display: flex;
-		justify-content: space-between;
+		justify-content: space-around;
 	}
 
 	ul {
@@ -32,14 +36,25 @@
 	}
 
 	li > button {
-		font-size: 1.7rem;
+		font-size: 1.5rem;
 		display: inline;
 		background-color: #222;
-		height: 3rem;
-		width: 3rem;
 		color: #fff;
 		border: none;
 		outline: none;
+		height: 3rem;
+		padding: 0.75rem;
+		cursor: pointer;
+	}
+
+	img {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+
+	li span {
+		position: relative;
+		bottom: 0.1rem;
 	}
 
 </style>
@@ -53,7 +68,7 @@
 						<img v-bind:src="b.icon">
 					</button>
 					<button v-else v-on:click="b.click" v-bind:name="b.name">
-						{{b.text}}
+						<span>{{b.text}}</span>
 					</button>
 				</li>
 			</ul>

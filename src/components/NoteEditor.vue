@@ -1,18 +1,23 @@
 <style scoped>
 
 	div {
-		margin-top: 1rem;
+		margin-top: 4rem;
+		padding-top: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: stretch;
 	}
 
-	div > input {
+	.noteHead {
 		outline: none;
 		border: none;
 		font-size: 1.7rem;
-		margin-right:1rem;
-		margin-bottom: 0.5rem;
-		max-width: 32rem;
 		color: #222;
-		display: inline-block;
+		overflow: hidden;
+		resize: none;
+		height: 2rem;
+		margin: 0 1.5rem 0.5rem 1.5rem;
 	}
 
 	.wordcount {
@@ -22,21 +27,26 @@
 	}
 
 	.stats {
-		width: 100%;
-		max-width: 49rem;
 		font-size: 1rem;
 		color: #666;
-		display: inline-block;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		margin: 0;
+		background-color: #fff;
+		padding: 0.75rem 1.5rem 0.75rem 1.5rem;
+	}
+
+	.stats > span {
+		margin: 0;
 	}
 
 	.editable {
-		margin: 0.5rem 0 0.5rem 0;
-
+		margin: 0.5rem 1.5rem 0.5rem 1.5rem;
 		border: none;
 		outline: none;
-		font-size: 1em;
-		height:100%;
-		width: 100%;
+		font-size: 1rem;
+		height: 1.3rem;
 		overflow: hidden;
 		resize: none;
 	}
@@ -46,20 +56,13 @@
 <template>
 
 	<div class="box">
-		<input type="text" name="title" inputmode="latin-prose" size="50" placeholder="Title or something here..."/>
 		<date-time initial="1999----" thread="0"></date-time>
-		<textarea
-			class="editable"
-			v-on:mousedown="check = true"
-			v-on:mouseup="checkSelection(); check = false;"
-			v-on:input="onInput"
-			v-bind:style="height"
-		></textarea>
-		<!--<text-editor v-bind:input="onInput" v-bind:initial="(note) ? note.body : [{index: 0, end: 32, text: 'Heya.\r\nPut some text here, okay!', style=0}]" v-on:focus="focusBody"></text-editor>-->
+		<textarea class="noteHead" maxlength="250" v-on:input="onInput"></textarea>
+		<textarea class="editable" v-on:input="onInput"></textarea>
 		<span class="stats">
-			&nbsp; <!-- this space prevents jank when we hide/show selection count  since wordcount-->
-			<span v-if="(showSelection&&(selectedCount > 0))">Selected: {{selectedCount}} words</span>
-			<span class="wordcount">Words: {{wc}} &nbsp; Pages: {{pages}}</span></span>
+			<span>{{pageOf}}/{{pages}}</span>
+			<span class="wordcount">{{wc}} words</span>
+		</span>
 	</div>
 
 </template>
@@ -81,58 +84,115 @@
 	module.exports = {
 		name: 'note-editor',
 		data: function() { return {
-			text: "",
-			selection: "",
-			showSelection: false,
-			check: false,
-			height: '1em'
+			//selection: "",
+			//showSelection: false,
+			//check: false,
+			wc: 0,
+			pages: 1,
+			pageOf: 1
 		}},
 		props: ['onSave', 'note'],
 		components: {
 			DateTime: DateTime
 		},
 		methods: {
+			/*selectAll: function(event) {
+				this.selection = this.body.value;
+				this.showSelection = true;
+			},
 			checkSelection: function(event) {
 				if (this.check) {
 					this.showSelection = true;
 					event = this.$el.children[2];
 					if (event.selectionStart !== event.selectionEnd) {
-						this.selection = this.text.slice(event.selectionStart, event.selectionEnd);
+						this.selection = this.body.value.slice(event.selectionStart, event.selectionEnd);
+						if (this.selection === "") this.showSelection = false;
 					} else this.showSelection = false;
 				}
 			},
 			resetCount: function() {
-				this.selection = this.text;
+				this.selection = this.body.value;
 				this.showSelection = false;
-			},
+			},*/
 			onInput: function(event) {
-				this.text = event.target.value
-				this.showSelection = false;
-				this.height = 'height: auto';
-				Vue.nextTick(this.resize);
+				if (event.target === this.body) {
+					//this.showSelection = false;
+
+					this.wc = count(this.body.value);
+					this.pages = Math.round(this.wc / 275) || 1;
+					this.onScroll();
+
+					this.body.style.height = '1.3rem';
+					Vue.nextTick(this.resizeBody);
+				} else {
+					this.head.style.height = '2rem';
+					Vue.nextTick(this.resizeHead);
+				}
+
+				this.stickyStats();
 			},
-			resize: function() {
-				this.height = 'height:' + event.target.scrollHeight + 'px';
+			resizeHead: function() {
+				this.head.style.height = this.head.scrollHeight + 'px';
 			},
-		},
-		computed: {
-			wc: function() {
-				return count(this.text);
+			resizeBody: function() {
+				this.body.style.height = this.body.scrollHeight + 'px';
 			},
-			selectedCount: function() {
-				return count(this.selection);
+			onResize: function(event) {
+
+				this.body.style.height = '1.3rem';
+				this.head.style.height = '2rem';
+
+				Vue.nextTick(this.resizeBody);
+				Vue.nextTick(this.resizeHead);
 			},
-			pages: function() {
-				return Math.ceil(this.wc / 300);
+			onScroll: function(event) {
+				
+				this.pageCount();
+				this.stickyStats();
+				
+			},
+			pageCount: function() {
+				var t;
+				if (this.body.clientHeight > window.innerHeight) {
+					t = Math.abs(this.body.getBoundingClientRect().top);
+					t = (t / this.body.clientHeight) * (this.pages + 1);
+					this.pageOf = Math.ceil(t);
+					if (this.pageOf > this.pages) this.pageOf = this.pages;
+				} else this.pageOf = 1;
+			},
+			stickyStats: function() {
+				if (this.$el.clientHeight > (window.innerHeight - this.toolbar.clientHeight)) {
+					this.stats.style.bottom = "0";
+					this.stats.style.position = "sticky";
+				} else {
+					this.stats.style.bottom = "auto";
+					this.stats.style.position = "inherit";
+				}
 			}
 		},
 		mounted: function() {
-			this.$el.children[1].value = (this.note && this.note.body) ? this.note.body : "This could be your great adventure.";
-			window.addEventListener('mousemove', this.checkSelection);
-			window.addEventListener('mousedown', this.resetCount);
+
+			this.datetime = this.$el.children[0];
+			this.head = this.$el.children[1];
+			this.body = this.$el.children[2];
+			this.stats = this.$el.children[3];
+			this.toolbar = document.getElementById('toolbar');
+
+			this.head.value = (this.note && this.note.head) ? this.note.head : "Title or Summary here.";
+			this.body.value = (this.note && this.note.body) ? this.note.body : "This could be your great adventure.";
+
+			//window.addEventListener('mousemove', this.checkSelection);
+			//window.addEventListener('mousedown', this.resetCount);
+
+			window.addEventListener('scroll', this.onScroll);
+			window.addEventListener('resize', this.onResize);
 		},
 		destroyed: function() {
-			window.removeEventListener('mousemove', this.checkSelection);
+			//window.removeEventListener('mousemove', this.checkSelection);
+			//window.removeEventListener('mousedown', this.resetCount);
+
+			window.removeEventListener('scroll', this.onScroll);
+			window.removeEventListener('resize', this.onResize);
 		}
 	}
 
