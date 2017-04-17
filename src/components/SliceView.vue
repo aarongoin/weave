@@ -1,12 +1,21 @@
 <style scoped>
 
+	.crossThread {
+		z-index: -11;
+		width: 2px;
+		position: absolute;
+		margin-left: 6.95rem;
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+
 	.slice {
 		display: block;
+		width: 14rem;
 	}
 
 	.sliceHeader {
 		z-index: 10;
-		height: 2rem;
+		height: 1.5rem;
 		position: absolute;
 		top: 3rem;
 		color: #fff;
@@ -14,10 +23,12 @@
 		justify-content: center;
 		align-items: center;
 		width: 14rem;
+		font-size: 0.9rem;
 	}
 
 	.space {
 		height: 14rem;
+		max-height: 14rem;
 		display: flex;
 		justify-content: center;
 		align-items: flex-end;
@@ -75,13 +86,19 @@
 				}
 			}, this.slice.datetime));
 
+			children.push(EL('div', {
+				attrs: {
+					class: 'crossThread',
+					style: 'height:' + ((this.threads.length + 1)*14) + 'rem'
+				}
+			}, '&nbsp;'));
+
 			while (++i < this.threads.length) {
 				if (j < this.slice.notes.length && this.slice.notes[j].thread === i) {
 					temp = EL('note-view', {
 						props: {
 							note: this.slice.notes[j++],
 							thread: this.threads[i],
-							odd: (i % 2),
 							editFunc: this.editFunc
 						}
 					});

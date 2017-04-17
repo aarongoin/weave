@@ -7,7 +7,7 @@
 
 	.sliceHeader {
 		z-index: 10;
-		height: 2rem;
+		height: 1.8rem;
 		position: fixed;
 		top: 3rem;
 		background-color: rgba(40,40,40,0.9);
@@ -17,7 +17,7 @@
 
 	.notes {
 		display: inline-flex;
-		margin-left: 9rem;
+		margin-left: 7rem;
 	}
 
 	.notes > div {

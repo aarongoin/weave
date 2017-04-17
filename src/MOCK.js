@@ -59,12 +59,10 @@ module.exports = {
 	threads: [
 		{
 			color: '#00cc66',
-			shade: '#00aa44',
 			name: 'Ishmael'
 		},
 		{
 			color: '#cc6600',
-			shade: '#aa4400',
 			name: 'Captain Ahab'
 		}
 	],

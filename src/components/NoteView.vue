@@ -9,6 +9,7 @@
 		width: 14rem;
 		position: relative;
 		top: 0.2rem;
+		max-height: 13rem;
 	}
 
 	.noteHead {
@@ -55,7 +56,6 @@
 		:style="{
 			border: (focused) ? '0.2rem solid ' + thread.color : ' 0 solid rgba(0,0,0,0)',
 			margin: (focused) ? '0rem' : '0.2rem',
-			zIndex: (focused) ? '3' : (odd) ? '1' : '2'
 		}"
 		v-on:click="onClick"
 	>
@@ -92,7 +92,7 @@
 
 	module.exports = {
 		name: 'note-view',
-		props: ['note', 'editFunc', 'thread', 'odd', 'newNote'],
+		props: ['note', 'editFunc', 'thread', 'newNote'],
 		data: function() { return {
 			focused: false
 		}},

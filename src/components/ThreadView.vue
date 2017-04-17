@@ -6,6 +6,7 @@
 		position: absolute;
 		left: 0;
 		top: 0;
+		opacity: 0.3;
 	}
 
 	.outer > div {
@@ -21,7 +22,7 @@
 		:style="{ width: width }"
 	>
 		<div v-for="thread in threads"
-			:style="{ backgroundColor:thread.shade }"
+			:style="{ backgroundColor:thread.color }"
 		>&nbsp;</div>
 	</div>
 
