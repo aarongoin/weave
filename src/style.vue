@@ -10,7 +10,7 @@
 
 body {
 	font-size: 1.1em;
-	background-color: #0c6;
+	background-color: #333;
 	padding-bottom: 1rem;
 }
 
@@ -18,7 +18,6 @@ body {
 	z-index: 0;
 	max-width: 50rem;
 	background-color: #fff;
-	box-shadow: 0 0 0.5rem #333;
 	color: #222;
 	margin-left: auto;
 	margin-right: auto;
@@ -29,6 +28,27 @@ body {
   	-moz-user-select: none;     /* Firefox all */
   	-ms-user-select: none;      /* IE 10+ */
   	user-select: none;          /* Likely future */ 
+}
+
+
+.editBox {
+	outline: none;
+	border: none;
+	overflow: hidden;
+	resize: none;
+}
+
+.noteHead {
+	color: #222;
+}
+
+.noteBody {
+	color: #222;
+}
+
+.noteStats {
+	color: #555;
+	background-color: #fff;
 }
 
 </style>

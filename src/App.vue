@@ -9,26 +9,21 @@
 <template>
 
 	<div id="app">
-		<app-menu title="W" v-bind:buttons="buttons"></app-menu>
+		<app-menu
+			:buttons="buttons"></app-menu>
 		<weave-view 
 			v-if="view === 0" 
-			v-bind:store="store"
-			v-bind:edit="editNote"
+			:store="store"
+			:menu="layoutMenu"
+			:editFunc="editNote"
 		></weave-view>
-		<thread-view 
-			v-else-if="view === 1" 
-			v-bind:store="store"
-			v-bind:edit="editNote"
-		></thread-view>
-		<slice-view 
-			v-else-if="view === 2" 
-			v-bind:store="store"
-			v-bind:edit="editNote"
-		></slice-view>
 		<note-editor 
-			v-else-if="view === 3" 
-			v-bind:note="note"
-			v-bind:onSave="onSave"
+			v-else-if="view === 1" 
+			:note="note"
+			:noteBody="noteBody"
+			:updateBody="updateBody"
+			:menu="layoutMenu"
+			:thread="store.threads[note.thread]"
 		></note-editor>
 	</div>
 
@@ -38,57 +33,24 @@
 	const 
 		AppMenu = require('./components/AppMenu.vue'),
 		WeaveView = require('./components/WeaveView.vue'),
-		SliceView = require('./components/SliceView.vue'),
-		ThreadView = require('./components/ThreadView.vue'),
 		NoteEditor = require('./components/NoteEditor.vue'),
-		Store = require('./store.js');
+		Store = require('./store.js'),
+		MOCK = require('./MOCK.js');
 
 	module.exports = {
 		name: 'app',
 		components: {
 			AppMenu: AppMenu,
 			WeaveView: WeaveView,
-			SliceView: SliceView,
-			ThreadView: ThreadView,
 			NoteEditor: NoteEditor
 		},
 		data: function() { return {
-			store: Store,
-			view: 3,
+			store: MOCK,
+			view: 0,
 			prev: 0,
 			note: undefined,
-			buttons: [
-				/*[{ 
-					name: 'title',
-					text: 'W',
-					click: function(event){
-						console.log('You clicked: ' + event.currentTarget.name);
-					}
-				}],*/
-				[{ 
-					name: 'undo',
-					icon: './dist/img/undo.svg',
-					click: function(event){
-						document.execCommand('undo');
-						//console.log('You clicked: ' + event.currentTarget.name);
-					}
-				},
-				{ 
-					name: 'redo',
-					icon: './dist/img/redo.svg',
-					click: function(event){
-						document.execCommand('redo');
-						//console.log('You clicked: ' + event.currentTarget.name);
-					}
-				}],
-				[{
-					name: 'done',
-					text: 'done',
-					click: function(event){
-						console.log('You clicked: ' + event.currentTarget.name);
-					}
-				}]
-			]
+			noteBody: undefined,
+			buttons: []
 		}},
 		mount: function() {
 			window.onbeforeunload = function() {
@@ -100,15 +62,49 @@
 			editNote: function(note) {
 				this.note = note;
 				this.prev = this.view;
-				this.view = 3;
-				Store.userWillRead(note);
-				// add editor buttons
+				this.view = 1;
+				//Store.userWillRead(note);
+				this.noteBody = this.store.localStorage[note.id] || '';
+
 			},
 			restoreView: function() {
 				this.note = undefined;
 				this.view = this.prev;
 				this.prev = undefined;
 
+			},
+			layoutMenu: function(childButtons) {
+				this.buttons = [];
+				// add any buttons before?
+				if (this.view !== 1) this.buttons.push([
+					{ 
+						name: 'title',
+						text: 'W',
+						click: function(event){
+							console.log('You clicked: ' + event.currentTarget.name);
+						}
+					}
+				]);
+				// add child buttons
+				if (childButtons !== undefined) this.buttons.push(childButtons);
+				// add any buttons after?
+				if (this.view === 1) this.buttons.push([
+					{
+						name: 'done',
+						text: 'done',
+						click: this.onDone
+					}
+				]);
+			},
+			updateBody: function(body) {
+				this.noteBody = body;
+			},
+			onDone: function() {
+				this.store.localStorage[this.note.id] = this.noteBody;
+				this.note = undefined;
+				this.noteBody = undefined;
+				this.view = this.prev;
+				this.prev = undefined;
 			}
 		}
 	}

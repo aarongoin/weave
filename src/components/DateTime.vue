@@ -2,7 +2,6 @@
 
 	span {
 		display: inline-block;
-		margin: 0 1.5rem 0.5rem auto;
 		vertical-align: center;
 	}
 
@@ -10,7 +9,6 @@
 		border: none;
 		outline: none;
 		width: 1.8rem;
-		font-size: 1.1rem;
 		text-align: center;
 	}
 
@@ -44,7 +42,7 @@ module.exports = {
 	data: function() { return {
 		valid: ""
 	}},
-	props: ['initial', 'thread'],
+	props: ['initial', 'thread', 'style'],
 	methods: {
 		validate: function() {
 			var v = "",

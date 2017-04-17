@@ -4,6 +4,7 @@
     "html"
   ],
   "env": {
+  	"browser": true,
     "jasmine": true
   }
 }

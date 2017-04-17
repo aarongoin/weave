@@ -1,10 +1,28 @@
 <style scoped>
 
+	.outer {
+		margin-top: 3rem;
+		z-index: -5;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+
+	.outer > div {
+		margin-top: 12rem;
+		height: 2rem;
+	}
+
 </style>
 <template>
 
-	<div>
-		There's nothing here...
+	<div
+		class="outer"
+		:style="{ width: width }"
+	>
+		<div v-for="thread in threads"
+			:style="{ backgroundColor:thread.shade }"
+		>&nbsp;</div>
 	</div>
 
 </template>
@@ -12,7 +30,7 @@
 
 	module.exports = {
 		name: 'thread-view',
-		props: ['store']
+		props: ['threads', 'width']
 	}
 
 </script>

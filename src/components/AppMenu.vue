@@ -1,12 +1,11 @@
 <style scoped>
 
 	#toolbar {
-		z-index: 1;
+		z-index: 20;
 		position: fixed !important;
 		top: 0;
 		left: 0;
 		right: 0;
-		box-shadow: 0 0 0.5rem #111;
 		width: 100%;
 		height: 3rem;
 		background-color: #222;
@@ -80,10 +79,7 @@
 
 	module.exports = {
 		name: 'app-menu',
-		props: ['buttons'],
-		mounted: function() {
-			//this.$el.height = this.$el.firstChild.offsetHeight;
-		}
+		props: ['buttons']
 	}
 
 </script>

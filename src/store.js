@@ -10,8 +10,9 @@ module.exports = {
 
 	createNote: function(init) {
 		init = init || {};
-		init.title = init.title || ''; // Must be unique
-		init.datetime = init.datetime || new Date();
+		init.id = (new Date()).toJSON(); // looks something like: 2017-10-26T07:46:36.611Z
+		init.head = init.head || '';
+		init.datetime = init.datetime;
 		init.body = init.body || '';
 		init.wc = init.wc || 0;
 		init.thread = init.thread || 0;
