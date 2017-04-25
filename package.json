@@ -19,6 +19,7 @@
     "vue": "vue/dist/vue.common.js"
   },
   "dependencies": {
+    "preact": "^8.1.0",
     "vue": "^2.0.1"
   },
   "devDependencies": {
