@@ -1,22 +1,108 @@
 const
 	History = require('./history.js'),
-	LZW = require('./lz-string.js');
+	LZW = require('./lz-string.js'),
+	Source = require('./Sourcery.js');
+/*
 
-var 
-	notes = localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [],
-	threads = localStorage.getItem('threads') ? JSON.parse(localStorage.getItem('threads')) : [];
+Past: []
+Future: []
+
+userId/projectId/noteId/version
+userId/projectId/slices/version
+userId/projectId/threadId/version
+
+Data changes:
+	add_note -> rem_note
+	rem_note -> add_note
+	add_slice -> rem_slice
+	rem_slice -> add_slice
+	add_thread -> rem_thread
+	rem_thread -> add_thread
+Note changes:
+	body
+	head
+	thread
+
+	move_slice
+	move_thread
+
+*/
+
+const actions = {
+		createSlice: function(action, undo) {
+			if (undo) {
+
+			} else {
+				state.slices.splice(action.atIndex, 0, action.diff || {
+					datetime: '',
+					notes: []
+				});
+			}
+		},
+		removeSlice: function(action) {
+			return state.slices.splice(action.atIndex, 1);
+		},
+		createNote: function(action) {
+			var notes = state.slices[sliceId].notes,
+				i = notes.length - 1,
+				note = {
+					id: action.withId,
+					thread: action.threadId,
+					head: '',
+					body: '',
+					wc: 0
+				};
+
+			// insert new note in by thread in ascending order
+			if (threadId > notes[i++].thread) notes.push(note);
+			else while (i--) if (threadId < notes[i].thread) {
+				notes.splice(i, 0, note);
+				break;
+			}
+
+		},
+		removeNote: function(action) {
+			var notes = state.slices[sliceId].notes,
+				i = notes.length;
+
+			while (i--) if (action.threadId === notes[i].thread) return notes.splice(i, 1);
+		}
+	};
+
+module.exports = {
+	do: function(action) {
+		doo[action.type](action);
+		pastActions.push(action);
+	},
+	undo: function() {
+		var a;
+		if (pastActions.length) {
+			a = pastActions.pop();
+			undo[a.type](a);
+			futureActions.push(a);
+		}
+	},
+	redo: function() {
+		var a;
+		if (futureActions.length) {
+			a = futureActions.pop();
+			doo[action.type](action);
+			pastActions.push(action);
+		}
+	}
+};
+	
 
 module.exports = {
 
-	createNote: function(init) {
-		init = init || {};
-		init.id = (new Date()).toJSON(); // looks something like: 2017-10-26T07:46:36.611Z
-		init.head = init.head || '';
-		init.datetime = init.datetime;
-		init.body = init.body || '';
-		init.wc = init.wc || 0;
-		init.thread = init.thread || 0;
-		init.compressed = init.compressed || false;
+	createNote: function(slice, thread) {
+		var note = {};
+		note.id = (new Date()).toJSON(); // looks something like: 2017-10-26T07:46:36.611Z
+		note.revision = 0;
+		note.head = '';
+		note.wc = 0;
+		note.thread = thread;
+		note.compressed = false;
 
 		return init;
 	},

@@ -1,67 +1,58 @@
 module.exports = {
+	discard: [],
+	notes: {
+		'2017-10-26T07:46:36.611Z': {
+			id: '2017-10-26T07:46:36.611Z',
+			thread: 0,
+			head: 'CHAPTER 1. Loomings.',
+			wc: 2237
+		},
+		'2017-10-27T07:46:36.611Z': {
+			id: '2017-10-27T07:46:36.611Z',
+			thread: 1,
+			head: 'In which I go insane...',
+			wc: 0
+		},
+		'2017-9-27T07:46:36.611Z': {
+			id: '2017-9-27T07:46:36.611Z',
+			thread: 1,
+			head: 'In which I go insane...',
+			wc: 0
+		},
+		'2017-10-25T07:46:36.611Z': {
+			id: '2017-10-25T07:46:36.611Z',
+			thread: 0,
+			head: 'CHAPTER 1. Loomings.',
+			wc: 0
+		},
+		'2017-10-23T07:46:36.611Z': {
+			id: '2017-10-23T07:46:36.611Z',
+			thread: 1,
+			head: 'In which I go insane...',
+			wc: 0
+		}
+	},
 	slices: [
-		{
-			datetime: '1999-10-26',
-			notes: [
-				{
-					id: '2017-10-26T07:46:36.611Z',
-					revision: 0,
-					thread: 0,
-					location: 0,
-					head: 'CHAPTER 1. Loomings.',
-					wc: 2237
-				},
-				{
-					id: '2017-10-27T07:46:36.611Z',
-					revision: 0,
-					thread: 1,
-					location: 0,
-					head: 'In which I go insane...',
-					wc: 0
-				}
-			]
-		},
-		{
-			datetime: '1999-10-27',
-			notes: [
-				{
-					id: '2017-9-27T07:46:36.611Z',
-					revision: 0,
-					thread: 1,
-					location: 0,
-					head: 'In which I go insane...',
-					wc: 0
-				}
-			]
-		},
-		{
-			datetime: '1999-11-29',
-			notes: [
-				{
-					id: '2017-10-25T07:46:36.611Z',
-					revision: 0,
-					thread: 0,
-					location: 0,
-					head: 'CHAPTER 1. Loomings.',
-					wc: 0
-				},
-				{
-					id: '2017-10-23T07:46:36.611Z',
-					revision: 0,
-					thread: 1,
-					location: 0,
-					head: 'In which I go insane...',
-					wc: 0
-				}
-			]
-		},
+		['1999-10-26',
+			'2017-10-26T07:46:36.611Z',
+			'2017-10-27T07:46:36.611Z'
+		],
+		['1999-10-27',
+			'2017-9-27T07:46:36.611Z'
+		],
+		['1999-11-29',
+			'2017-10-25T07:46:36.611Z',
+			'2017-10-23T07:46:36.611Z'
+		]
 	],
 	threads: [
 		{
+			id: '1',
 			color: '#00cc66',
 			name: 'Ishmael'
 		},
 		{
+			id: '2',
 			color: '#cc6600',
 			name: 'Captain Ahab'
 		}
