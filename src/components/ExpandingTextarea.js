@@ -19,21 +19,20 @@ class ExpandingTextarea extends React.Component {
 
 		this.onInput = this.onInput.bind(this);
 		this.doResize = this.doResize.bind(this);
+		this.resize = this.resize.bind(this);
 	}
 
 	render(props, state) {
+		var style = Object.assign(props.style, state.style);
 		return (
 			<textarea
-				style={Object.assign(props.style, state.style)}
+				style={style}
 				maxlength={props.maxlength}
 				placeholder={props.placeholder}
 				oninput={this.onInput}
 				onchange={props.change}
 				onfocus={props.focus}
 				onblur={props.blur}
-				ref={(el) => {
-					if (this.state.style.height !== el.scrollHeight) this.setState({style: Object.assign(Style.editBox, { height: el.scrollHeight })})
-				}}
 			/>
 		)
 	}
@@ -55,12 +54,13 @@ class ExpandingTextarea extends React.Component {
 
 	doResize() {
 		this.state.style.height = this.props.baseHeight;
-		this.forceUpdate();
+		this.forceUpdate(this.resize);
 	}
 
 	resize() {
-		//this.state.style.height = this.el.scrollHeight + 'px';
-		//this.forceUpdate();
+		this.state.style.height = this.base.scrollHeight + 'px';
+		this.forceUpdate();
+
 	}
 }
 

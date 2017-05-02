@@ -9,9 +9,6 @@ const
 			maxWidth: '50rem',
 			backgroundColor: '#fff',
 			color: '#222',
-			marginLeft: 'auto',
-			marginRight: 'auto',
-			marginTop: '0.5rem',
 			display: 'flex',
 			flexDirection: 'column',
 			justifyContent: 'space-around',
@@ -34,12 +31,10 @@ const
 			justifyContent: 'space-around',
 			alignItems: 'center',
 			padding: '0.5rem 0.75rem 0.5rem 0.75rem',
-			margin: '0.25rem 0',
 			fontSize: '0.9rem'
 		},
 
 		wordcount: {
-			margin: '0.25rem 0',
 			fontSize: '0.9rem'
 		},
 
@@ -76,22 +71,24 @@ class NoteView extends React.Component {
 	}
 
 	componentDidMount() {
-
+		this.base.style.border = (this.state.focused) ? ('0.2rem solid ' + props.thread.color) : '0 solid rgba(0,0,0,0)';
+		this.base.style.margin = (this.state.focused) ? '0' : '0.2rem';
 	}
 
 	render(props, state) {
+		var argyle = Object.assign(Style.box, {
+			border: ((state.focused) ? ('0.2rem solid ' + props.thread.color) : '0 solid rgba(0,0,0,0)'),
+			margin: (state.focused) ? '0' : '0.2rem'
+		});
+
 		return (
-			<div style={Style.box}
-				style={Object.assign(Style.box, {
-						border: (state.focused) ? '0.2rem solid ' + props.thread.color : ' 0 solid rgba(0,0,0,0)',
-						margin: (state.focused) ? '0rem' : '0.2rem'
-					})
-				}
+			<div
+				style={argyle}
 				onclick={this.onClick}
 			>
 				<ExpandingTextarea
 					style={Style.textarea}
-					maxLength="250" 
+					maxLength={250} 
 					oninput={this.onInput} 
 					baseHeight="1.3rem"
 					placeholder="Title/Summary"
@@ -102,12 +99,11 @@ class NoteView extends React.Component {
 					ref={el => this.el = el}
 				/>
 				<span 
-					class={Style.stats} 
-					style={'background-color:' + props.thread.color}
+					style={Object.assign(Style.stats, {backgroundColor: props.thread.color})}
 				>
 					<button 
 						onclick={this.onEdit} 
-						style={'background-color:' + props.thread.color}
+						style={Object.assign(Style.button, {backgroundColor: props.thread.color})}
 					>edit</button>
 					<span style={Style.wordcount}>{props.note.wc} words</span>
 				</span>
@@ -128,19 +124,19 @@ class NoteView extends React.Component {
 	}
 
 	onFocus() {
-		this.setState({focused: true });
+		if (!this.state.focused) this.setState({ focused: true });
 	}
 
 	onChange() {
-		this.setState({focused: false });
+		if (this.state.focused) this.setState({ focused: false });
 	}
 
 	onBlur() {
-		this.setState({focused: false });
+		if (this.state.focused) this.setState({ focused: false });
 	}
 
 	onClick(event) {
-		this.el.el.focus();
+		this.el.base.focus();
 	}
 }
 
