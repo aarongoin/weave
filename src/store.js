@@ -1,208 +1,247 @@
 const
-	History = require('./history.js'),
 	LZW = require('./lz-string.js'),
 	Source = require('./Sourcery.js');
-/*
 
-Past: []
-Future: []
+var _store = Source.getLocal('weave-store'),
+	_history = Source.getLocal('weave-history');
 
-userId/projectId/noteId/version
-userId/projectId/slices/version
-userId/projectId/threadId/version
+if (_store === null) {
+	_store = {
+		notes: {'welcomeToWeave': { id: 'welcomeToWeave', rev: 0, thread: '1', head: 'Welcome to Weave!', body: 'This is the place!', wc: 4 }},
+		slices: [{datetime:'1999-10-26', notes: ['welcomeToWeave' ]}],
+		threads: [{	id: '1', color: '#00cc66', name: 'The User'}]
+	};
+} else {
+	_store = JSON.parse(LZW.decompressFromUTF16(_store));
 
-Data changes:
-	add_note -> rem_note
-	rem_note -> add_note
-	add_slice -> rem_slice
-	rem_slice -> add_slice
-	add_thread -> rem_thread
-	rem_thread -> add_thread
-Note changes:
-	body
-	head
-	thread
+	_store.slices.forEach(notes => {
+		var i = notes.length;
+		while (--i) {
+			_store.notes[notes[i]] = LZW.decompressFromUTF16(Source.getLocal(notes[i]));
+		}
+	});
+}
 
-	move_slice
-	move_thread
-
-*/
+if (_history === null) {
+	_history = {
+		past: [],
+		future: [],
+		discard: [] // array of deleted notes id
+	};
+} else _history = JSON.parse(LZW.decompressFromUTF16(_history));
 
 const actions = {
-		createSlice: function(action, undo) {
-			if (undo) {
-
-			} else {
-				state.slices.splice(action.atIndex, 0, action.diff || {
+		NEW_SLICE: {/* action={ ... atIndex } */
+			do: function(action) {
+				_store.slices.splice(action.atIndex, 0, {
 					datetime: '',
 					notes: []
 				});
+			},
+			undo: function(action) {
+				_store.slices.splice(action.atIndex, 1);
 			}
 		},
-		removeSlice: function(action) {
-			return state.slices.splice(action.atIndex, 1);
+		REM_SLICE: {/* action={ ... atIndex } */
+			do: function(action) {
+				action.slice = _store.slices.splice(action.atIndex, 1);
+				// TODO: remove any notes
+			},
+			undo: function(action) {
+				_store.slices.splice(action.atIndex, 0, action.slice);
+				// TODO: restore any notes
+			}
 		},
-		createNote: function(action) {
-			var notes = state.slices[sliceId].notes,
-				i = notes.length - 1,
-				note = {
+		NEW_NOTE: {/* action={ ... sliceIndex, threadID } */
+			do: function(action) {
+				state.slices[action.sliceIndex].notes.push({
 					id: action.withId,
 					thread: action.threadId,
 					head: '',
 					body: '',
 					wc: 0
-				};
-
-			// insert new note in by thread in ascending order
-			if (threadId > notes[i++].thread) notes.push(note);
-			else while (i--) if (threadId < notes[i].thread) {
-				notes.splice(i, 0, note);
-				break;
+				});
+			},
+			undo: function(action) {
+				Source.setLocal(action.withID); // remove note from localStorage
+				_store.slices[action.sliceIndex].notes.pop();
 			}
-
 		},
-		removeNote: function(action) {
-			var notes = state.slices[sliceId].notes,
-				i = notes.length;
+		REM_NOTE: {/* action={ ... withID, sliceIndex } */
+			do: function(action) {
+				var notes = _store.slices[action.sliceIndex].notes,
+					i = notes.indexOf(action.noteID);
 
-			while (i--) if (action.threadId === notes[i].thread) return notes.splice(i, 1);
+				if (i === -1) return false;
+				else {
+					action.noteIndex = i;
+					action.note = notes.splice(i, 1);
+					_history.discard.push(action.noteID);
+				}
+			},
+			undo: function(action) {
+				_store.slices[action.sliceIndex].notes.splice(action.noteIndex, 0, action.note);
+				_history.discard.pop();
+			}
+		},
+		NEW_THREAD: {/* action={ ... } */
+			do: function(action) {
+				_store.threads.push({
+					id: String(_store.threads.length),
+					name: 'Name',
+					color: '#666'
+				});
+			},
+			undo: function(action) {
+				_store.threads.pop();
+			}
+		},
+		REM_THREAD: {/* action={ ... withID } */
+			do: function(action) {
+				var i = _store.threads.length;
+				while (i--) if (_store.threads[i].id === action.withID) {
+					action.index = i;
+					action.thread = _store.threads.splice(i, 1);
+					// TODO: remove any notes
+					return true;
+				}
+				return false;
+			},
+			undo: function(action) {
+				_store.threads.splice(action.index, 0, action.thread);
+				// TODO: restore any notes
+
+			}
+		},
+		MOD_SLICE_DATE: {/* action={ ... atIndex, newDate } */
+			do: function(action) {
+				action.oldDate = _store.slices[action.atIndex].datetime;
+				_store.slices[action.atIndex].datetime = action.newDate;
+			},
+			undo: function(action) {
+				_store.slices[action.atIndex].datetime = action.oldDate;
+			}
+		},
+		MOV_SLICE: {/* action={ ... fromIndex, toIndex } */
+			do: function(action) {
+				_store.slices.splice(toIndex, 0, _store.slices.splice(fromIndex, 1));
+			},
+			undo: function(action) {
+				_store.slices.splice(fromIndex, 0, _store.slices.splice(toIndex, 1));
+			}
+		},
+		MOD_THREAD_NAME: {/* action={ ... atIndex, newName} */
+			do: function(action) {
+				action.oldName = _store.threads[action.atIndex].name;
+				_store.threads[action.atIndex].name = action.newName;
+			},
+			undo: function(action) {
+				_store.threads[action.atIndex].name = action.oldName;
+			}
+		},
+		MOD_THREAD_COLOR: {/* action={ ... atIndex, newColor} */
+			do: function(action) {
+				action.oldColor = _store.threads[action.atIndex].color;
+				_store.threads[action.atIndex].color = action.newColor;
+			},
+			undo: function(action) {
+				_store.threads[action.atIndex].color = action.oldColor;
+			}
+		},
+		MOV_THREAD: {/* action={ ... fromIndex, toIndex } */
+			do: function(action) {
+				_store.threads.splice(toIndex, 0, _store.threads.splice(fromIndex, 1));
+			},
+			undo: function(action) {
+				_store.threads.splice(fromIndex, 0, _store.threads.splice(toIndex, 1));
+			}
+		},
+		MOD_NOTE_HEAD: {/* action={ ... noteID, newHead} */
+			do: function(action) {
+				action.oldHead = _store.notes[noteID].head;
+				_store.notes[noteID].head = action.newHead;
+			},
+			undo: function(action) {
+				_store.notes[noteID].head = action.oldHead;
+			}
+		},
+		MOD_NOTE_BODY: {/* action={ ... noteID, noteBody} */
+			do: function(action) {
+				// TODO: diff noteBody
+			},
+			undo: function(action) {
+				// TODO: patch noteBody
+			}
+		},
+		MOV_NOTE_SLICE: {/* action={ ... noteID, fromSliceIndex, toSliceIndex } */
+			do: function(action) {
+				var notes = _store.slices[action.fromSliceIndex].notes,
+					i = notes.indexOf(noteID);
+
+				if (i === -1) return false;
+				else {
+					_store.slices[action.toSliceIndex].notes.push(notes.splice(i, 1));
+					return true;
+				}
+			},
+			undo: function(action) {
+				_store.slices[action.fromSliceIndex].notes.push(_store.slices[action.toSliceIndex].pop())
+			}
+		},
+		MOV_NOTE_THREAD: {/* action={ ... noteID, toThreadID } */
+			do: function(action) {
+				action.fromThreadID = _store.notes[action.noteID].thread;
+				_store.notes[action.noteID].thread = action.toThreadID;
+			},
+			undo: function(action) {
+				_store.notes[action.noteID].thread = action.fromThreadID;
+			}
 		}
 	};
 
 module.exports = {
 	do: function(action) {
-		doo[action.type](action);
-		pastActions.push(action);
+		actions[action.type].do(action);
+		_history.past.push(action);
 	},
 	undo: function() {
-		var a;
-		if (pastActions.length) {
-			a = pastActions.pop();
-			undo[a.type](a);
-			futureActions.push(a);
+		var action;
+		if (_history.past.length) {
+			action = _history.past.pop();
+			actions[action.type].undo(action);
+			_history.future.push(action);
 		}
 	},
 	redo: function() {
 		var a;
-		if (futureActions.length) {
-			a = futureActions.pop();
-			doo[action.type](action);
-			pastActions.push(action);
-		}
-	}
-};
-	
-
-module.exports = {
-
-	createNote: function(slice, thread) {
-		var note = {};
-		note.id = (new Date()).toJSON(); // looks something like: 2017-10-26T07:46:36.611Z
-		note.revision = 0;
-		note.head = '';
-		note.wc = 0;
-		note.thread = thread;
-		note.compressed = false;
-
-		return init;
-	},
-
-	// lazy decompression of notes
-	userWillRead: function(note) {
-		if (note.compressed) {
-			note.body = LZW.decompressFromUTF16(note.body);
-			note.compressed = false;
+		if (_history.future.length) {
+			a = _history.future.pop();
+			actions[action.type].do(action);
+			_history.past.push(action);
 		}
 	},
-
-	getNotesForThread: function(thread) {
-		var l = this.notes.length,
+	getThread: function(withID) {
+		var i = _store.threads.length;
+		while (i--) if (_store.threads[i].id === withID) return _store.threads[i];
+	},
+	threadNotesInSlice: function(atIndex) {
+		var out = [],
+			slice = _store.slices[atIndex].notes,
 			i = -1,
-			n = [];
-
-		while (++i < l) if (this.notes[i].thread === thread) n.pop(this.notes[i]);
-
-		return n;
-	},
-
-	getNotesForDate: function(date) {
-		// TODO - find and return list of notes for date
-	},
-
-	getNotesForKeywords: function(keywords) {
-		// TODO - find and return list of notes based on keyword search
-	},
-
-	addNote: function(note) {
-		// sort note into list
-		var i = this.notes.length,
 			n;
 
-		while (i--) {
-			n = this.notes[i];
-			// check for if notes conflict
-			if (note.datetime <= n.datetime) {
-				if (note.thread === n.thread) return false;
-				else if (note.thread < n.thread) {
-					this.notes.splice(i, 0, note);
-					break;
-				}
+		while (++i < _store.threads.length) {
+			n = -1;
+			while (++n < slice.length) if (_store.notes[slice[n]].thread === _store.threads[i].id) {
+				out.push(_store.notes[slice[n]]);
+				break;
 			}
-		}
-		// add to history
-	},
-
-	checkDateTime: function(datetime, thread) {
-		var i = this.notes.length;
-
-		while (i--) {
-			// check for if notes conflict
-			if (datetime < this.notes[i].datetime) break;
-			else if ((datetime === this.notes[i].datetime) && (thread === this.notes[i].thread)) return false;
-	
-		}
-		return true;
-	},
-
-	removeNote: function(note) {
-		var i = this.notes.indexOf(note);
-		if (i !== -1) this.notes.splice(i, 1);
-
-		// add to history
-	},
-
-	addThread: function(thread) {
-		var i = this.threads.length;
-		while (i--) if (this.threads[i].name === thread.name) return false;
-		
-		this.threads.push(thread);
-
-		// add to history
-	},
-
-	removeThread: function(thread) {
-		var i = this.threads.indexOf(thread);
-		if (i !== -1) this.threads.splice(i, 1);
-
-		// TODO - remove corresponding notes too?
-
-		// add to history
-	},
-
-	saveLocal: function() {
-
-		// recompress note bodies
-		var n, i = notes.length;
-		while (i--) {
-			n = notes[i];
-			if (!n.compressed) {
-				n.body = LZW.compressToUTF16(n.body);
-				n.compressed = true;
-			}
+			if (n === slice.length) out.push(null);
 		}
 
-		// save notes and threads
-		localStorage.setItem('notes', JSON.stringify(notes));
-		localStorage.setItem('threads', JSON.stringify(threads));
-	}
-}
+		return out;
+	},
+	slices: _store.slices,
+	threads: _store.threads,
+	notes: _store.notes
+};
