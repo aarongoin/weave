@@ -5,7 +5,7 @@
   "author": "Aaron Goin <aaron.goin@wsu.edu>",
   "scripts": {
     "serve": "http-server -c 1 -a localhost",
-    "dev": "browserify -g envify -p [ vueify/plugins/extract-css -o dist/build.css ] -e src/main.js -o dist/build.js",
+    "dev": "watchify -g envify -p [ vueify/plugins/extract-css -o dist/build.css ] -e src/main.js -o dist/build.js -v",
     "lint": "eslint --ext .js,.vue src test/unit",
     "test": "karma start karma.conf.js",
     "build": "cross-env NODE_ENV=production browserify -g envify -p [ vueify/plugins/extract-css -o dist/build.css ] -e src/main.js | uglifyjs -c warnings=false -m > dist/build.js"
