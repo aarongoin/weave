@@ -49,9 +49,11 @@
 			class="space" 
 		>
 			<button 
-				v-on:click="newNote" 
+				v-on:click="newNote"
+				v-on:mouseover="buttonOver"
+				v-on:mouseout="buttonOut"
 				v-bind:data-thread="i"
-			>+</button>
+			></button>
 		</div>
 	</div>
 
@@ -67,6 +69,12 @@
 		methods: {
 			newNote: function(event) {
 				this.createNote(this.id, Number(event.target.dataset.thread));
+			},
+			buttonOver: function(event) {
+				event.target.textContent = '+';
+			},
+			buttonOut: function(event) {
+				event.target.textContent = '';
 			}
 		}
 	}

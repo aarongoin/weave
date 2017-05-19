@@ -54,8 +54,8 @@
 
 	<div class="box"
 		:style="{
-			border: (focused) ? '0.2rem solid ' + thread.color : ' 0 solid rgba(0,0,0,0)',
-			margin: (focused) ? '0rem' : '0.2rem',
+			border: (selected) ? '0.2rem solid ' + thread.color : ' 0 solid rgba(0,0,0,0)',
+			margin: (selected) ? '0rem' : '0.2rem',
 		}"
 		v-on:click="onClick"
 	>
@@ -92,9 +92,9 @@
 
 	module.exports = {
 		name: 'note-view',
-		props: ['note', 'editFunc', 'thread', 'newNote'],
+		props: ['note', 'editFunc', 'thread', 'newNote', 'resetSelection'],
 		data: function() { return {
-			focused: false
+			selected: false
 		}},
 		components: {
 			DateTime: DateTime,
@@ -111,13 +111,16 @@
 				this.newNote(event);
 			},
 			onFocus: function() {
-				this.focused = true;
+				this.selected = true;
+				this.resetSelection(note.id);
 			},
 			onChange: function() {
-				this.focused = false;
+				this.selected = false;
+				this.resetSelection(note.id);
 			},
 			onBlur: function() {
-				this.focused = false;
+				this.selected = false;
+				this.resetSelection(note.id);
 			},
 			onClick: function(event) {
 				this.$el.firstElementChild.focus();

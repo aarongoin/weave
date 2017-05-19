@@ -48,7 +48,7 @@
 		border-radius: 1rem;
 	}
 	button:hover {
-		background-color: rgba(255,255,255,0.2);
+		background-color: rgba(255,255,255,0.6);
 	}
 
 	.noNote {
@@ -71,6 +71,12 @@
 		methods: {
 			newNote: function(event) {
 				this.createNote(this.id, Number(event.target.dataset.thread));
+			},
+			buttonOver: function(event) {
+				event.target.textContent = '+';
+			},
+			buttonOut: function(event) {
+				event.target.textContent = '';
 			}
 		},
 		render: function(EL) {
@@ -91,7 +97,7 @@
 					class: 'crossThread',
 					style: 'height:' + ((this.threads.length + 1)*14) + 'rem'
 				}
-			}, '&nbsp;'));
+			}, ''));
 
 			while (++i < this.threads.length) {
 				if (j < this.slice.notes.length && this.slice.notes[j].thread === i) {
@@ -109,14 +115,16 @@
 							'data-thread': i
 						},
 						on: {
-							click: this.newNote
+							click: this.newNote,
+							mouseover: this.buttonOver,
+							mouseout: this.buttonOut
 						},
 						props: {
 							note: this.slice.notes[j],
 							thread: this.threads[i],
 							editFunc: this.editFunc
 						}
-					}, '+');
+					}, '');
 				}
 				children.push(EL('div', { attrs: { class: 'space' }, }, [temp]));	
 			}
