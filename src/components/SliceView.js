@@ -3,38 +3,19 @@ const
 
 	NoteView = require('./NoteView.js'),
 
-	Store = require('../store.js'),
-
 	Style = {
-		crossThread: {
-			zIndex: '-11',
-			width: '2px',
-			position: 'absolute',
-			marginLeft: '6.95rem',
-			backgroundColor: 'rgba(255, 255, 255, 0.1)'
-		},
-
 		slice: {
-			display: 'block',
-			width: '14rem'
-		},
-
-		sliceHeader: {
-			zIndex: '10',
-			height: '1.5rem',
-			position: 'fixed',
-			top: '3rem',
-			color: '#fff',
+			zIndex: 9,
 			display: 'flex',
-			justifyContent: 'center',
+			flexDirection: 'column',
+			justifyContent: 'flex-start',
 			alignItems: 'center',
-			width: '14rem',
-			fontSize: '0.9rem'
+			margin: '0 2rem',
+			width: '14rem'
 		},
 
 		space: {
 			height: '14rem',
-			maxHeight: '14rem',
 			display: 'flex',
 			justifyContent: 'center',
 			alignItems: 'flex-end'
@@ -52,57 +33,45 @@ const
 			textAlign: 'center',
 			margin: '0 1rem 0.4rem 1rem',
 			borderRadius: '1rem'
-		},
-
-		noNote: {
-			height: '100%',
-			width: '100%'
 		}
 	};
 
 
-class SliceView extends React.Component {
+	/*
+		this.props: {
+			id=#
+			slice={}
+			threads=[{}]
+			scrollY=""
+		};
+		*/
 
-	render(props, state) {
-		var spaces = [],
-			i = -1;
-		while (++i < props.notes.length) {
-			spaces.push(
+module.exports = function(props, state) {
+	var context = this.context;
+	
+	return (
+		<div style={Style.slice}>
+			{props.slice.notes.map((note, i) => 
 				<div style={Style.space}>
-					{(props.notes[i]) ?
+					{(note) ?
 						<NoteView
-							note={props.notes[i]}
-							thread={props.threads[i]}
+							sliceIndex={props.id}
+							noteIndex={i}
+							note={note}
+							thread={props.threads[note.thread]}
 							editFunc={props.editFunc}
 						/>
 					:
 						<button
 							style={Style.button}
-							thread={props.threads[i]}
-							data-thread={i}
-							onclick={this.newNote}
+							onclick={() => context.do('NEW_NOTE', {
+								sliceIndex: props.id,
+								noteIndex: i
+							})}
 						>+</button>
 					}
 				</div>
-			);	
-		}
-
-		return (
-			<div style={Style.slice}>
-				<div style={Object.assign(Style.sliceHeader, { top: props.scrollY })}>
-					{props.header}
-				</div>
-				<div style={Object.assign(Style.crossThread, { height: ((props.threads.length + 1)*14) + 'rem' })}>
-					&nbsp;
-				</div>
-				{spaces}
-			</div>
-		)
-	}
-
-	newNote(event) {
-		this.createNote(this.props.id, Number(event.target.dataset.thread));
-	}
+			)}
+		</div>
+	)
 }
-
-module.exports = SliceView;

@@ -12,9 +12,9 @@ const
 
 class ExpandingTextarea extends React.Component {
 	constructor(props, context) {
-		super(props);
+		super(props, context);
 		this.state = {
-			style: Object.assign(Style.editBox, { height: props.baseHeight })
+			style: Object.assign({}, Style.editBox, { height: props.baseHeight })
 		};
 
 		this.onInput = this.onInput.bind(this);
@@ -23,7 +23,7 @@ class ExpandingTextarea extends React.Component {
 	}
 
 	render(props, state) {
-		var style = Object.assign(props.style, state.style);
+		var style = Object.assign({}, props.style, state.style);
 		return (
 			<textarea
 				style={style}

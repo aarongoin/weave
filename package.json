@@ -5,10 +5,10 @@
   "author": "Aaron Goin <aaron.goin@wsu.edu>",
   "scripts": {
     "serve": "http-server -c 1 -a localhost",
-    "dev": "watchify -d -v -t [ babelify --presets [ env react ] ] -e src/index.js -o dist/build.js",
+    "dev": "watchify -d -v -t [ babelify --presets [ env react ] ] -e src/App.js -o dist/build.js",
     "lint": "eslint --ext .js src test/unit",
     "test": "echo TODO",
-    "build": "browserify -g -t [ babelify --no-sourceMaps --presets [ env react ] ] -e src/index.js | uglifyjs -c warnings=false -m > dist/build.js"
+    "build": "browserify -g -t [ babelify --no-sourceMaps --presets [ env react ] ] -e src/App.js | uglifyjs -c warnings=false -m > dist/build.js"
   },
   "browserify": {
     "transform": [ "babelify" ]

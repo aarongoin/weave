@@ -1,6 +1,7 @@
 const
 	React = require('preact'),
 
+	Bind = require('../bind.js'),
 	ExpandingTextarea = require('./ExpandingTextarea.js'),
 
 	Style = {
@@ -55,19 +56,13 @@ const
 
 class NoteView extends React.Component {
 	constructor(props, context) {
-		super(props);
+		super(props, context);
 
 		this.state = {
 			focused: false
 		}
 
-		this.onInput = this.onInput.bind(this);
-		this.onEdit = this.onEdit.bind(this);
-		this.onCreateNote = this.onCreateNote.bind(this);
-		this.onFocus = this.onFocus.bind(this);
-		this.onChange = this.onChange.bind(this);
-		this.onBlur = this.onBlur.bind(this);
-		this.onClick = this.onClick.bind(this);
+		Bind(this);
 	}
 
 	componentDidMount() {
@@ -76,7 +71,7 @@ class NoteView extends React.Component {
 	}
 
 	render(props, state) {
-		var argyle = Object.assign(Style.box, {
+		var argyle = Object.assign({}, Style.box, {
 			border: ((state.focused) ? ('0.2rem solid ' + props.thread.color) : '0 solid rgba(0,0,0,0)'),
 			margin: (state.focused) ? '0' : '0.2rem'
 		});
@@ -99,11 +94,11 @@ class NoteView extends React.Component {
 					ref={el => this.el = el}
 				/>
 				<span 
-					style={Object.assign(Style.stats, {backgroundColor: props.thread.color})}
+					style={Object.assign({}, Style.stats, {backgroundColor: props.thread.color})}
 				>
 					<button 
 						onclick={this.onEdit} 
-						style={Object.assign(Style.button, {backgroundColor: props.thread.color})}
+						style={Object.assign({}, Style.button, {backgroundColor: props.thread.color})}
 					>edit</button>
 					<span style={Style.wordcount}>{props.note.wc} words</span>
 				</span>
@@ -116,7 +111,7 @@ class NoteView extends React.Component {
 	}
 
 	onEdit() {
-		this.editFunc(this.note);
+		this.props.editFunc(this.props.sliceIndex, this.props.noteIndex);
 	}
 
 	onCreateNote(event) {
@@ -127,8 +122,13 @@ class NoteView extends React.Component {
 		if (!this.state.focused) this.setState({ focused: true });
 	}
 
-	onChange() {
+	onChange(event) {
 		if (this.state.focused) this.setState({ focused: false });
+		this.context.do('MODIFY_NOTE_HEAD', {
+			sliceIndex: this.props.sliceIndex,
+			noteIndex: this.props.noteIndex,
+			newHead: event.target.value
+		});
 	}
 
 	onBlur() {

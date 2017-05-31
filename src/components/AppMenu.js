@@ -12,7 +12,7 @@ const
 			width: '100%',
 			height: '3rem',
 
-			backgroundColor: '#222',
+			backgroundColor: '#000000',
 
 			color: '#fff'
 		},
@@ -98,7 +98,7 @@ module.exports = function(props) {
 				type="toolbar"
 				style={Style.menu}
 			>
-				{renderGroups(props.buttons)}
+				{props.buttons ? renderGroups(props.buttons) : ""}
 			</menu>
 		</div>
 	)

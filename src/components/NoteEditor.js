@@ -4,7 +4,7 @@ const
 	DateTime = require('./DateTime.js'),
 	ExpandingTextarea = require('./ExpandingTextarea.js'),
 
-	Store = require('../store.js'),
+	Bind = require('../bind.js'),
 
 	Style = {
 		box: {
@@ -50,7 +50,9 @@ const
 			margin: '0.5rem 1.5rem'
 		},
 		noteBody: {
-			color: '#222'
+			color: '#222',
+			fontSize: '1.1rem',
+			margin: '0.5rem 1.5rem'
 		},
 		stats: {
 			backgroundColor: '#fff',
@@ -92,51 +94,63 @@ function count(text) {
 
 class NoteEditor extends React.Component {
 	constructor(props, context) {
-		super(props);
-
-		this.thread = Store.getThread(props.note.thread);
+		super(props, context);
 
 		this.state = {
-			threadStyle: Object.assign(Style.thread, { backgroundColor: this.thread.color }),
-			wc: props.note.wc || 0,
+			threadStyle: Object.assign({}, Style.thread, { backgroundColor: props.thread.color }),
+			head: props.note.head,
+			body: props.note.body,
+			wc: props.note.wc,
 			pages: 1,
 			pageOf: 1,
 			statStyle: {}
 		}
 
+		Bind(this);
 	}
 
 	render(props, state) {
 		return (
 			<div
-				re={this.mounted}
-				class="box"
+				ref={this.mounted}
+				style={Style.box}
 			>
-				<span class="top">
-					<span style={Object.assign(Style.thread, { backgroundColor: this.thread.color })}>
-						props.thread.name
+				<span style={Style.top}>
+					<span style={state.threadStyle}>
+						{props.thread.name}
 					</span>
-					<span style={Object.assign(Style.thread, { backgroundColor: this.thread.color })}>
-						'+'
+					<span style={state.threadStyle}>
+						{'+'}
 					</span>
 				</span>
 				<ExpandingTextarea
 					style={Style.noteHead}
 					maxLength="250"
-					change={this.onHead}
-					value={props.note.head}
-					baseHeight="1.3em"
+					oninput={(e) => this.setState({head: e.target.value})}
+					change={() => this.context.do('MODIFY_NOTE_HEAD', {
+						sliceIndex: this.props.indices[0],
+						noteIndex: this.props.indices[1],
+						newHead: this.state.head
+					})}
+					value={state.head}
+					baseHeight="1.7em"
 					placeholder="Title/Summary"
 				/>
 				<ExpandingTextarea
 					ref={this.bodyMounted}
 					style={Style.noteBody}
-					input={this.onBody}
-					value={props.note.body}
-					baseHeight="1.3em"
+					oninput={this.onBody}
+					change={() => this.context.do('MODIFY_NOTE_BODY', {
+						sliceIndex: this.props.indices[0],
+						noteIndex: this.props.indices[1],
+						newBody: this.state.body,
+						wc: this.state.wc
+					})}
+					value={state.body}
+					baseHeight="1.1em"
 					placeholder="Body"
 				/>
-				<span style={Object.assign(Style.stats, state.statStyle)}>
+				<span style={Object.assign({}, Style.stats, state.statStyle)}>
 					<span>
 						{state.pageOf + '/' + state.pages}
 					</span>
@@ -157,7 +171,7 @@ class NoteEditor extends React.Component {
 		window.addEventListener('scroll', this.onScroll);
 		window.addEventListener('resize', this.onResize);
 
-		this.menu([
+		this.context.menu([
 			{ 
 				name: 'undo',
 				icon: './dist/img/undo.svg',
@@ -178,21 +192,10 @@ class NoteEditor extends React.Component {
 		window.removeEventListener('resize', this.onResize);
 	}
 
-	onHead(event) {
-		Store.do({
-			type: 'MOD_NOTE_HEAD',
-			noteID: this.props.note.id,
-			newHead: event.target.value
-		});
-	}
-
 	onBody(event) {
-		Store.do({
-			type: 'MOD_NOTE_BODY',
-			noteID: this.props.note.id,
-			newHead: event.target.value
-		});
+		
 		this.setState({
+			body: event.target.value,
 			wc: count(event.target.value),
 			pages: Math.round(this.state.wc / 275) || 1
 		});
@@ -220,7 +223,7 @@ class NoteEditor extends React.Component {
 			t = Math.ceil(t);
 			if (t > this.state.pages) t = this.state.pages;
 		} else t = 1;
-		this.setState({ pages: t });
+		this.setState({ pageOf: t });
 	}
 
 	stickyStats() {
