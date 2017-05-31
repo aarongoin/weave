@@ -1,0 +1,1670 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"thr",
+				"threadNotesInSlice"
+			],
+			[
+				"get",
+				"getThread"
+			],
+			[
+				"undo",
+				"undoAction"
+			],
+			[
+				"store",
+				"_store"
+			],
+			[
+				"b",
+				"browserify"
+			],
+			[
+				"wa",
+				"watchify"
+			],
+			[
+				"re",
+				"resize"
+			],
+			[
+				"on",
+				"onClick"
+			],
+			[
+				"he",
+				"header"
+			],
+			[
+				"st",
+				"style"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"St",
+				"Style"
+			],
+			[
+				"note",
+				"notes"
+			],
+			[
+				"sli",
+				"sliceIndex"
+			],
+			[
+				"slice",
+				"sliceIndex"
+			],
+			[
+				"old",
+				"oldName"
+			],
+			[
+				"to",
+				"toSliceIndex"
+			],
+			[
+				"from",
+				"fromSliceIndex"
+			],
+			[
+				"new",
+				"newHead"
+			],
+			[
+				"m",
+				"modifyNote"
+			],
+			[
+				"dec",
+				"decompressFromUTF16"
+			],
+			[
+				"de",
+				"decompressFromUTF16"
+			],
+			[
+				"index",
+				"indexOf"
+			],
+			[
+				"thread",
+				"threads"
+			],
+			[
+				"remo",
+				"removeThread"
+			],
+			[
+				"cre",
+				"createNoteBefore"
+			],
+			[
+				"marg",
+				"margin"
+			],
+			[
+				"da",
+				"data-thread"
+			],
+			[
+				"cr",
+				"crossThread"
+			],
+			[
+				"th",
+				"threads"
+			],
+			[
+				"thre",
+				"threads"
+			],
+			[
+				"render",
+				"renderSpaces"
+			],
+			[
+				"ba",
+				"babelify"
+			],
+			[
+				"edi",
+				"editNote"
+			],
+			[
+				"lo",
+				"local"
+			],
+			[
+				"che",
+				"checkStatus"
+			],
+			[
+				"loc",
+				"localStorage"
+			],
+			[
+				"remov",
+				"removeSlice"
+			],
+			[
+				"create",
+				"createNote"
+			],
+			[
+				"crea",
+				"createSlice"
+			],
+			[
+				"CRE",
+				"CREATE_SLICE"
+			],
+			[
+				"sl",
+				"slices"
+			],
+			[
+				"scrol",
+				"scrollY"
+			],
+			[
+				"Sli",
+				"SliceView"
+			],
+			[
+				"Thre",
+				"ThreadLabels"
+			],
+			[
+				"sc",
+				"scrollX"
+			],
+			[
+				"Thread",
+				"ThreadView"
+			],
+			[
+				"sta",
+				"state"
+			],
+			[
+				"stat",
+				"state"
+			],
+			[
+				"ren",
+				"renderButtons"
+			],
+			[
+				"sty",
+				"styles"
+			],
+			[
+				"u",
+				"updateBody"
+			],
+			[
+				"App",
+				"AppMenu"
+			],
+			[
+				"i",
+				"idReturn"
+			],
+			[
+				"use",
+				"user_id"
+			],
+			[
+				"user",
+				"userEl"
+			],
+			[
+				"curr",
+				"currentTime"
+			],
+			[
+				"item",
+				"itemEndTime"
+			],
+			[
+				"flex-",
+				"flex-wrap"
+			],
+			[
+				"ca",
+				"categories"
+			],
+			[
+				"spl",
+				"splitDateString"
+			],
+			[
+				"tex",
+				"text-decoration"
+			],
+			[
+				"spac",
+				"space-around"
+			],
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"spa",
+				"space-around"
+			],
+			[
+				"fle",
+				"flex-direction"
+			],
+			[
+				"flex",
+				"flex"
+			],
+			[
+				"time",
+				"time_left"
+			],
+			[
+				"cur",
+				"current"
+			],
+			[
+				"en",
+				"end_time"
+			],
+			[
+				"for",
+				"formatTime"
+			],
+			[
+				"s",
+				"space-around"
+			],
+			[
+				"padding",
+				"padding-bottom"
+			],
+			[
+				"space",
+				"space-between"
+			],
+			[
+				"padd",
+				"padding"
+			],
+			[
+				"border",
+				"border-radius"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"max",
+				"max-width"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"algi",
+				"align-items"
+			],
+			[
+				"res",
+				"results"
+			],
+			[
+				"opt",
+				"option\tTag"
+			],
+			[
+				"_",
+				"_template"
+			],
+			[
+				"t",
+				"template"
+			],
+			[
+				"_re",
+				"_registerListener"
+			],
+			[
+				"f",
+				"function"
+			],
+			[
+				"ch",
+				"cachedEvents"
+			],
+			[
+				"comp",
+				"component"
+			],
+			[
+				"e",
+				"etype"
+			],
+			[
+				"place",
+				"placeholder"
+			],
+			[
+				"handle",
+				"handleProps"
+			],
+			[
+				"ha",
+				"handleProps"
+			],
+			[
+				"proto",
+				"prototype"
+			],
+			[
+				"p",
+				"prototype"
+			],
+			[
+				"rg",
+				"rgxImg"
+			],
+			[
+				"HT",
+				"HTTP_200_OK"
+			],
+			[
+				"HTTP",
+				"HTTP_404_NOT_FOUND"
+			],
+			[
+				"dat",
+				"dateFile"
+			],
+			[
+				"cu",
+				"curDay"
+			],
+			[
+				"Da",
+				"DAY"
+			],
+			[
+				"tick",
+				"tickerFile"
+			],
+			[
+				"rand",
+				"randLoop"
+			],
+			[
+				"box",
+				"boxHeader"
+			],
+			[
+				"view",
+				"viewBox"
+			],
+			[
+				"add",
+				"addEventListener"
+			],
+			[
+				"w",
+				"widescreen"
+			],
+			[
+				"av",
+				"avgNetworkLatency"
+			],
+			[
+				"Ne",
+				"NETWORK"
+			],
+			[
+				"scr",
+				"scrolledAmount"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"ov",
+				"overflow-y"
+			],
+			[
+				"scro",
+				"scrollY"
+			],
+			[
+				"bord",
+				"border-color"
+			],
+			[
+				"border-s",
+				"border-style"
+			],
+			[
+				"of",
+				"offsetHeight"
+			],
+			[
+				"fo",
+				"focused"
+			],
+			[
+				"conn",
+				"connection"
+			],
+			[
+				"arg",
+				"argv"
+			],
+			[
+				"fl",
+				"flex-start"
+			],
+			[
+				"threa",
+				"thread"
+			],
+			[
+				"ph",
+				"phantomHeight"
+			],
+			[
+				"Th",
+				"ThreadLabels"
+			],
+			[
+				"temp",
+				"tempBody"
+			],
+			[
+				"no",
+				"note"
+			],
+			[
+				"class",
+				"classes"
+			],
+			[
+				"ed",
+				"editFunc"
+			],
+			[
+				"bod",
+				"body"
+			],
+			[
+				"not",
+				"noteBody"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/App.vue",
+			"settings":
+			{
+				"buffer_size": 1707,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main.js",
+			"settings":
+			{
+				"buffer_size": 470,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/AppMenu.vue",
+			"settings":
+			{
+				"buffer_size": 1256,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/ExpandingTextarea.vue",
+			"settings":
+			{
+				"buffer_size": 1070,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/NoteEditor.vue",
+			"settings":
+			{
+				"buffer_size": 4529,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/DateTime.vue",
+			"settings":
+			{
+				"buffer_size": 2538,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/NoteView.vue",
+			"settings":
+			{
+				"buffer_size": 2431,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/SliceDivider.vue",
+			"settings":
+			{
+				"buffer_size": 1360,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/SliceView.vue",
+			"settings":
+			{
+				"buffer_size": 2544,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/TextEditor.vue",
+			"settings":
+			{
+				"buffer_size": 7957,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/ThreadLabels.vue",
+			"settings":
+			{
+				"buffer_size": 1591,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/ThreadView.vue",
+			"settings":
+			{
+				"buffer_size": 462,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/WeaveView.vue",
+			"settings":
+			{
+				"buffer_size": 3510,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/input.js",
+			"settings":
+			{
+				"buffer_size": 1652,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/Aaron/Documents/Game Ideas/Submarine Wargame/code/mapCreator/src/hex.js",
+			"settings":
+			{
+				"buffer_size": 5086,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 367.0,
+		"last_filter": "Package Control: ",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"dis",
+				"Package Control: Discover Packages"
+			],
+			[
+				"p",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"packin",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 485.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/Aaron/Dev/weave"
+	],
+	"file_history":
+	[
+		"/Users/Aaron/Dev/weave/src/store.js",
+		"/Users/Aaron/Dev/weave/index.js",
+		"/Users/Aaron/Dev/weave/src/components/TextEditor.vue",
+		"/Users/Aaron/Dev/weave/src/Sourcery.js",
+		"/Users/Aaron/Dev/weave/package.json",
+		"/Users/Aaron/Dev/weave/src/components/ThreadView.js",
+		"/Users/Aaron/Dev/weave/src/components/ThreadLabels.js",
+		"/Users/Aaron/Dev/weave/src/components/SliceView.js",
+		"/Users/Aaron/Dev/weave/src/components/NoteView.js",
+		"/Users/Aaron/.Trash/style.vue",
+		"/Users/Aaron/Dev/weave/src/components/SliceDivider.js",
+		"/Users/Aaron/Dev/weave/src/components/WeaveView.js",
+		"/Users/Aaron/Dev/weave/src/components/NoteEditor.js",
+		"/Users/Aaron/Dev/weave/index.html",
+		"/Users/Aaron/Dev/weave/src/App.js",
+		"/Users/Aaron/Dev/weave/node_modules/preact/dist/preact.js",
+		"/Users/Aaron/Dev/weave/src/history.js",
+		"/Users/Aaron/Dev/weave/src/index.js",
+		"/Users/Aaron/Dev/weave/src/components/AppMenu.js",
+		"/Users/Aaron/Dev/weave/src/components/ExpandingTextarea.js",
+		"/Users/Aaron/Dev/weave/node_modules/preact/dist/preact.dev.js",
+		"/Users/Aaron/Dev/weave/src/MOCK.js",
+		"/Users/Aaron/Dev/weave/src/lz-string.js",
+		"/Users/Aaron/Dev/weave/src/style.vue",
+		"/Users/Aaron/Dev/weave/src/components/SliceView.vue",
+		"/Users/Aaron/Dev/weave/src/components/ThreadLabels.vue",
+		"/Users/Aaron/Dev/weave/src/components/ThreadView.vue",
+		"/Users/Aaron/Dev/weave/src/components/NoteView.vue",
+		"/Users/Aaron/Dev/weave/src/components/SliceDivider.vue",
+		"/Users/Aaron/Dev/weave/src/App.jsx",
+		"/Users/Aaron/Dev/weave/src/components/DateTime.js",
+		"/Users/Aaron/Library/Application Support/Sublime Text 3/Packages/User/Foggy-Morning.tmTheme",
+		"/Users/Aaron/Dev/weave/Makefile",
+		"/Users/Aaron/Dev/weave/build/App.js",
+		"/Users/Aaron/Dev/stocks/history.py",
+		"/Users/Aaron/Dev/weave/monte_cristo.txt",
+		"/Users/Aaron/Library/Application Support/Sublime Text 3/Packages/Boa/Boa.tmTheme",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/search.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/app_base.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/auction_item.html",
+		"/Users/Aaron/Dev/webcrawlGroup/templates/description.html",
+		"/Users/Aaron/Dev/weave/src/components/ExpandingTextarea.vue",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/timetable.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/select_time.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/sqlitedb.py",
+		"/Users/Aaron/Dev/cs351_project/create.sql",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/add_user.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/static/styles/styles.css",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/place_bid.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/search_results.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/auctionbase.py",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/user_login.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/current_time.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/static/scripts/main.js",
+		"/Users/Aaron/Dev/webcrawlGroup/templates/index.html",
+		"/Users/Aaron/Dev/weave/src/components/WeaveView.vue",
+		"/Users/Aaron/Dev/weave/dist/build.js",
+		"/Users/Aaron/Dev/weave/src/components/NoteEditor.vue",
+		"/Users/Aaron/Dev/weave/src/components/DateTime.vue",
+		"/Users/Aaron/Dev/weave/src/App.vue",
+		"/Users/Aaron/Dev/weave/src/components/AppMenu.vue",
+		"/Users/Aaron/Dev/weave/vanilla.js",
+		"/Users/Aaron/Dev/weave/ExpandingTextArea.js",
+		"/Users/Aaron/Dev/weave/NoteView.js",
+		"/Users/Aaron/Dev/weave/minnnnn.js",
+		"/Users/Aaron/Dev/dat/src/dat.js",
+		"/Users/Aaron/Dev/calculon/core.js",
+		"/Users/Aaron/Dev/calculon/calculon.js",
+		"/Users/Aaron/Dev/webcrawlGroup/searcher.py",
+		"/Users/Aaron/Dev/webcrawlGroup/server.py",
+		"/Users/Aaron/Dev/webcrawlGroup/static/scripts/index.js",
+		"/Users/Aaron/Dev/webcrawlGroup/templates/results.html",
+		"/Users/Aaron/Dev/webcrawlGroup/index.js",
+		"/Users/Aaron/Dev/webcrawlGroup/style.css",
+		"/Users/Aaron/Dev/webcrawlGroup/test.html",
+		"/Users/Aaron/Dev/webcrawlGroup/index.html",
+		"/Users/Aaron/Dev/cs351_project/createDatabase.sh",
+		"/Users/Aaron/Dev/webcrawlGroup/parser.py",
+		"/Users/Aaron/Dev/cs351_project/parser.py",
+		"/Users/Aaron/Dev/cs351_project/runParser.sh",
+		"/Users/Aaron/Dev/webcrawlGroup/names/Apple.html",
+		"/Users/Aaron/Dev/webcrawlGroup/names/Chocolate.html",
+		"/Users/Aaron/Dev/webcrawlGroup/templates/welcome_page.html",
+		"/Users/Aaron/Desktop/get-pip.py",
+		"/Users/Aaron/Dev/cs360-sockets/server.h",
+		"/Users/Aaron/Dev/cs360-sockets/server.c",
+		"/Users/Aaron/Dev/cs360-sockets/makefile",
+		"/Users/Aaron/Dev/cs360-sockets/daytime.c",
+		"/Users/Aaron/Dev/cs360-sockets/dayserve.c",
+		"/Users/Aaron/Dev/weave/.eslintrc",
+		"/Users/Aaron/Dev/react-sticky/components/sticky.js",
+		"/Users/Aaron/Dev/weave/dist/img/location.svg",
+		"/Users/Aaron/Dev/weave/dist/img/redo.svg",
+		"/Users/Aaron/Dev/weave/dist/img/undo.svg",
+		"/Users/Aaron/Dev/weave/dist/img/datetime.svg",
+		"/Users/Aaron/Dev/weave/dist/build.css",
+		"/Users/Aaron/Dev/weave/src/components/ThreadLabel.vue",
+		"/Users/Aaron/Downloads/webStuff/server.py",
+		"/Users/Aaron/Downloads/webStuff/templates/results.html",
+		"/Users/Aaron/Downloads/webStuff/templates/welcome_page.html",
+		"/Users/Aaron/Desktop/diff_match_patch.js",
+		"/Users/Aaron/Dev/cs360-readable/makefile",
+		"/Users/Aaron/Dev/cs360-sort/sort-threads.c",
+		"/Users/Aaron/Desktop/tinymce.js",
+		"/Users/Aaron/Dev/weave/dist/crunch.js",
+		"/Users/Aaron/Dev/in-the-woods/src/js/contentEditable.js",
+		"/Users/Aaron/Dev/weave/src/components/Hello.vue",
+		"/Users/Aaron/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/Users/Aaron/Library/Application Support/Sublime Text 3/Packages/User/vue.sublime-settings",
+		"/Users/Aaron/.bashrc",
+		"/Users/Aaron/Dev/weave/karma.conf.js",
+		"/Users/Aaron/Dev/weave/index copy.html",
+		"/Users/Aaron/Dev/cs351_project/trigger2_drop.sql",
+		"/Users/Aaron/Dev/cs351_project/trigger1_drop.sql",
+		"/Users/Aaron/Dev/zephyr/js/reader.jsx",
+		"/Users/Aaron/Dev/zephyr/js/image.jsx",
+		"/Users/Aaron/Dev/react-sticky/node_modules/react/dist/react.js",
+		"/Users/Aaron/Dev/aarongoin.github.io/style.css",
+		"/Users/Aaron/Dev/aarongoin.github.io/res/2017-2-27/rcc_example.js",
+		"/Users/Aaron/Dev/aarongoin.github.io/index.js",
+		"/Users/Aaron/Dev/aarongoin.github.io/index.html",
+		"/Users/Aaron/Dev/aarongoin.github.io/post/2017-2-27_rogueColorConsole.html",
+		"/Users/Aaron/Dev/aarongoin.github.io/post/2017-2-27/rogueColorConsole.html",
+		"/Users/Aaron/Dev/aarongoin.github.io/post/2017-3-13/ogremage.html",
+		"/Users/Aaron/Dev/aarongoin.github.io/post/2017-2-27/fold.html",
+		"/Users/Aaron/Dev/aarongoin.github.io/post/2017-3-13/fold.html",
+		"/Users/Aaron/Dev/aarongoin.github.io/post/2017-3-13/fold",
+		"/Users/Aaron/Dev/aarongoin.github.io/post/2017-2-27/rogueColorConsole.htm"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Users/Aaron/Dev/weave/src/",
+			"/Users/Aaron/Dev/weave/",
+			"/Users/Aaron/Dev/ogremage/",
+			"/Users/Aaron/Dev/ogremage/*",
+			"/Users/Aaron/Dev/ogremage/js",
+			"<open folders>",
+			"/core"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"$tore",
+			"#tore",
+			"Store.",
+			".Store",
+			"slices",
+			"store",
+			"slices",
+			"threads",
+			"store",
+			"getThread",
+			".",
+			"setAccessor",
+			"shouldC",
+			"set",
+			"class",
+			"Source",
+			"editFunc",
+			"res",
+			"ref",
+			"App.js",
+			"App.vue",
+			"focus",
+			"WeaveView.prototype.",
+			"NoteEditor.prototype.",
+			"class",
+			"prea",
+			"outputBuffer",
+			"inputBuffer",
+			"buf1",
+			"buf2",
+			"^\\d*m",
+			"^",
+			"$",
+			"dd6600",
+			"metho",
+			"update",
+			"«",
+			"__",
+			"this.stats",
+			"this.body",
+			"this.head",
+			"this.threads",
+			"this.menu",
+			"Component",
+			"Component(",
+			"descrip",
+			"base",
+			"'",
+			"Search",
+			"TextForResult",
+			"sys",
+			"^.*:null,$",
+			"null",
+			",",
+			"boxText",
+			"result\"",
+			"pointer-",
+			"z-in",
+			"error connect",
+			"->connection->",
+			"v-bind:",
+			"'",
+			"^",
+			"\"$",
+			"initial",
+			"first",
+			"firs",
+			"last",
+			"input",
+			"return",
+			"\t",
+			"^",
+			"$",
+			": ",
+			" {",
+			"this.",
+			"_view",
+			"_threads",
+			"_notes",
+			"img/",
+			"/ogremage/",
+			">>",
+			"size",
+			"base",
+			"img",
+			"comment",
+			"00aa00",
+			"commen",
+			"comment",
+			"open",
+			"border.all",
+			"chooseClosestCornerTo",
+			"chooseClosestNeighbor",
+			"border.all",
+			"closed",
+			"tile",
+			"bakeon",
+			"draw",
+			"id",
+			"Mover",
+			"isOn",
+			"img",
+			"Frame",
+			"300",
+			"sprite",
+			"margin",
+			"left",
+			"width",
+			"min",
+			"img",
+			">\n",
+			"span",
+			"{",
+			"10rem",
+			"width",
+			"37o-i6-h67",
+			"Yo",
+			"z-inde",
+			"rad",
+			"^",
+			"$",
+			"^",
+			"&nbsp;",
+			"\\n\" +",
+			"m2",
+			"TransactionQue",
+			"displayMain",
+			"TODO"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"Store",
+			"$tore.",
+			".$tore",
+			".$store",
+			"",
+			"outBuff",
+			"inBuff",
+			"inputBuffer",
+			"outputBuffer",
+			"∑",
+			"«",
+			"requestDescription",
+			"boxDetails",
+			"->connection.",
+			":",
+			"\",",
+			"",
+			":",
+			"{",
+			"",
+			"threads",
+			"notes",
+			"/",
+			"|",
+			"this",
+			"out",
+			"time",
+			"\\n{",
+			"",
+			"\" +",
+			"Life",
+			"21",
+			"12",
+			"10",
+			"1",
+			"`",
+			"console.log(",
+			"VibrancyView",
+			"",
+			"this.state.vessels",
+			"false",
+			"true",
+			"'Detect",
+			"'Stealth",
+			"orange",
+			"333333",
+			"000000",
+			"333366",
+			"ff0033",
+			"ff3333",
+			"996699",
+			"333366",
+			"336666",
+			"003333",
+			"663333",
+			"336633",
+			"cc6633",
+			"996633",
+			"ff6600",
+			"ff9933",
+			"993333",
+			"990000",
+			"cc3333",
+			"ff6600",
+			"6633ff",
+			"6633cc",
+			"cc33cc",
+			"ff0066",
+			"ff3333",
+			"006633",
+			"336666",
+			"006633",
+			"ff6600",
+			"ff9900",
+			"993366",
+			"3366cc",
+			"339999",
+			"339966",
+			"33cc66",
+			"cc3333",
+			"cc0000",
+			"cc3366",
+			"99cc33",
+			"00ff99",
+			"cc5033",
+			"0099ff",
+			"ff6632",
+			"ff6633",
+			"993399",
+			"33cc33",
+			"ff6633",
+			"993399",
+			"66cc66",
+			"599a40",
+			"9553a1",
+			"101010",
+			"10101010",
+			"eeeeee",
+			"101010",
+			"111111"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 14,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/App.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1707,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1578,
+								1578
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 543.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 470,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								372,
+								372
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/components/AppMenu.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1256,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 294.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/components/ExpandingTextarea.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1070,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/components/NoteEditor.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4529,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								281,
+								281
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2754.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/components/DateTime.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2538,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								938,
+								938
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/components/NoteView.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2431,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1956,
+								1964
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1564.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/components/SliceDivider.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1360,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1059,
+								1059
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 682.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "src/components/SliceView.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2544,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2022,
+								2030
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1396.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "src/components/TextEditor.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7957,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "src/components/ThreadLabels.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1591,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1143,
+								1152
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 826.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "src/components/ThreadView.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 462,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								324,
+								324
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "src/components/WeaveView.vue",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3510,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1313,
+								1313
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vue Syntax Highlight/vue.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1152.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "src/input.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1652,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "/Users/Aaron/Documents/Game Ideas/Submarine Wargame/code/mapCreator/src/hex.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5086,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2934,
+								2501
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 909.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "weave.sublime-project",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"sm",
+				"js/core/util/sma.js"
+			],
+			[
+				"con",
+				"js/core/console.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 183.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 1
+	}
+}
