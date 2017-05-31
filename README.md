@@ -1,24 +1,27 @@
-# weave
+# Weave
 
-> A Vue.js project
+Weave is a web application for writing stories.
+
+## Features
+
+- Divide story into discrete scenes, each with it's own summary text.
+- Assign each scene to a named location and time.
+- See all scenes laid out by location and time.
+- Edit each scene in a simple, distraction-free editor.
 
 ## Build Setup
 
 ``` bash
 # install dependencies
-npm install
+yarn install
 
-# serve with hot reload at localhost:8080
-npm run dev
+# watchify dev build 
+yarn run dev
+
+# serve at localhost:8080
+yarn run serve
 
 # build for production with minification
-npm run build
+yarn run build
 
-# lint all *.js and *.vue files
-npm run lint
-
-# run unit tests
-npm test
 ```
-
-For more information see the [docs for vueify](https://github.com/vuejs/vueify).
