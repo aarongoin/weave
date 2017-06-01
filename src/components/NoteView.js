@@ -6,7 +6,6 @@ const
 
 	Style = {
 		box: {
-			zIndex: '0',
 			maxWidth: '50rem',
 			backgroundColor: '#fff',
 			color: '#222',
@@ -47,6 +46,7 @@ const
 		button: {
 			fontSize: '0.9rem',
 			color: '#fff',
+			backgroundColor: 'rgba(0,0,0,0)',
 			border: 'none',
 			outline: 'none',
 			cursor: 'pointer'
@@ -98,7 +98,7 @@ class NoteView extends React.Component {
 				>
 					<button 
 						onclick={this.onEdit} 
-						style={Object.assign({}, Style.button, {backgroundColor: props.thread.color})}
+						style={Style.button}
 					>edit</button>
 					<span style={Style.wordcount}>{props.note.wc} words</span>
 				</span>
@@ -110,20 +110,16 @@ class NoteView extends React.Component {
 		//
 	}
 
-	onEdit() {
-		this.props.editFunc(this.props.sliceIndex, this.props.noteIndex);
-	}
-
 	onCreateNote(event) {
 		this.newNote(event);
 	}
 
 	onFocus() {
-		if (!this.state.focused) this.setState({ focused: true });
+		if (!this.state.focused) this.select();
 	}
 
 	onChange(event) {
-		if (this.state.focused) this.setState({ focused: false });
+		if (this.state.focused) this.deselect();
 		this.context.do('MODIFY_NOTE_HEAD', {
 			sliceIndex: this.props.sliceIndex,
 			noteIndex: this.props.noteIndex,
@@ -132,11 +128,27 @@ class NoteView extends React.Component {
 	}
 
 	onBlur() {
-		if (this.state.focused) this.setState({ focused: false });
+		if (this.state.focused) this.deselect();
 	}
 
 	onClick(event) {
 		this.el.base.focus();
+	}
+
+	select() {
+		this.setState({ focused: true });
+		this.props.onSelect({
+			sliceIndex: this.props.sliceIndex,
+			noteIndex: this.props.noteIndex
+		});
+	}
+
+	deselect() {
+		this.setState({ focused: false });
+		this.props.onDeselect({
+			sliceIndex: this.props.sliceIndex,
+			noteIndex: this.props.noteIndex
+		});
 	}
 }
 

@@ -6,13 +6,13 @@ const
 			zIndex: '-5',
 			position: 'absolute',
 			left: '7rem',
-			top: '5rem',
+			top: '2.5rem',
 			minWidth: '100vw',
 			minHeight: '100vh'
 		},
 		inner: {
 			position: 'absolute',
-			top: 0,
+			top: '2rem',
 			left: 0,
 			width: '100%',
 			height: '100%'
@@ -38,7 +38,8 @@ class WeaveBackground extends React.Component {
 	}
 
 	shouldComponentUpdate(props, state, context) {
-		return ((props.locations !== this.props.locations) ||
+		return ((props.menuOffset !== this.props.menuOffset) ||
+				(props.locations !== this.props.locations) ||
 				(props.slices !== this.props.slices));
 	}
 
@@ -47,6 +48,7 @@ class WeaveBackground extends React.Component {
 			<div
 				data-is="WeaveBackground"
 				style={Object.assign({}, Style.outer, {
+					top: props.menuOffset,
 					width: (props.slices * 18 + 2) + 'rem',
 					height: (props.locations * 14 + 16) + 'rem'
 				})}

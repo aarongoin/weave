@@ -6,28 +6,27 @@ const
 
 	Style = {
 		outer: {
-			zIndex: '10',
 			position: 'absolute',
 			left: 0,
-			top: 0,
 			minWidth: '100vw',
 			minHeight: '100vh'
 		},
 		locations: {
+			zIndex: '10',
 			position: 'absolute',
-			backgroundColor: "rgba(0,0,0,0.9)",
+			backgroundColor: "#111",
 			top: 0,
 			width: '7rem',
 			minHeight: '100vh',
-			paddingTop: '5rem'
+			paddingTop: '2rem'
 		},
 		slices: {
 			zIndex: '11',
 			position: 'absolute',
-			backgroundColor: "rgba(0,0,0,0.9)",
-			left: '7rem',
+			backgroundColor: "#111",
+			left: 0,
 			height: '2rem',
-			paddingTop: '3rem',
+			paddingLeft: '7rem',
 			minWidth: '100vw'
 		},
 		location: {

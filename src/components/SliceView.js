@@ -47,7 +47,6 @@ const
 		*/
 
 module.exports = function(props, state) {
-	var context = this.context;
 	
 	return (
 		<div style={Style.slice}>
@@ -59,12 +58,13 @@ module.exports = function(props, state) {
 							noteIndex={i}
 							note={note}
 							thread={props.threads[note.thread]}
-							editFunc={props.editFunc}
+							onSelect={props.onSelect}
+							onDeselect={props.onDeselect}
 						/>
 					:
 						<button
 							style={Style.button}
-							onclick={() => context.do('NEW_NOTE', {
+							onclick={() => this.context.do('NEW_NOTE', {
 								sliceIndex: props.id,
 								noteIndex: i
 							})}

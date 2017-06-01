@@ -9,8 +9,9 @@ const
 			left: '0',
 			right: '0',
 
-			width: '100%',
-			height: '3rem',
+			height: '2.5rem',
+			border: 'none',
+			borderBottom: 'thin solid #777',
 
 			backgroundColor: '#000000',
 
@@ -18,88 +19,170 @@ const
 		},
 		menu: {
 			width: '100%',
-			maxWidth: '50rem',
-			height: '3rem',
-
-			marginLeft: 'auto',
-			marginRight: 'auto',
+			height: '2.5rem',
 
 			display: 'flex',
-			justifyContent: 'space-around'
+			flexWrap: 'wrap',
+			justifyContent: 'space-between'
 		},
 		ul: {
 			display: 'flex',
 			justifyContent: 'space-between',
+			alignItems: 'center',
 
 			listStyle: 'none'
 		},
 		li: {
-			display: 'inline',
-			flexBasis: '3rem'
+			display: 'inline-flex',
+			justifyContent: 'center',
+			alignItems: 'center',
+			margin: '0 0.5rem'
 		},
-		button: {
-			height: '3rem',
-			padding: '0.75rem',
+		item: {
+			height: '2.5rem',
+			padding: '0 0.75rem',
 
 			border: 'none',
 			outline: 'none',
-			backgroundColor: '#222',
-
-			display: 'inline',
+			backgroundColor: '#000000',
 
 			color: '#fff',
-			fontSize: '1.5rem',
+			fontSize: '1.2rem',
 
 			cursor: 'pointer'
 		},
 		img: {
-			width: '1.5rem',
-			height: '1.5rem'
+			width: '1.2rem',
+			height: '1.2rem'
 		},
 		span: {
 			position: 'relative',
 			bottom: '0.1rem'
+		},
+		text: {
+			fontSize: '1rem'
+		},
+		input: {
+			height: '2rem',
+			padding: '0 0.75rem',
+			border: 'none',
+			borderBottom: 'thin solid #fff',
+			outline: 'none',
+			backgroundColor: '#000',
+			fontSize: '1.2rem',
+			color: '#fff'
+		},
+		mainButton: {
+			minHeight: '2.5rem',
+			marginTop: '1px',
+			padding: '0.5rem 0.75rem',
+			width: '7rem',
+			position: 'fixed',
+			left: 0,
+
+			outline: 'none',
+			backgroundColor: '#000000',
+
+			border: 'none',
+			borderBottom: 'thin solid #777',
+
+			color: '#fff',
+			fontSize: '1.2rem',
+
+			cursor: 'pointer'
 		}
 	};
 
+class AppMenu extends React.Component {
+	constructor(props, context) {
+		super(props, context);
 
-function renderButtons(g) {
-	var buttons = [],
-		i = -1;
-	while (++i < g.length) buttons.push(
-		<li>
-			<button onclick={g[i].click} name={g[i].name}>
-				{g[i].icon ?
-					<img src={g[i].icon}/>
-				:
-					<span style={Style.span}>
-						{g[i].text}
-					</span>
-				}
-			</button>
-		</li>			
-	);
+		this.state = {
+			open: false
+		};
+	}
+
+
+	shouldComponentUpdate(props) {
+		return (props.groups !== this.props.groups);
+	}
+
+	render(props, state) {
+		var mainButton = state.open ? props.groups.shift().opened : props.groups.shift().closed;
+
+		return (
+			<div 
+				id="toolbar"
+				style={Object.assign({width: state.open ? '100%' : '7rem'}, Style.toolbar)}
+			>	
+				{(state.open ? 
+					<menu 
+						type="toolbar"
+						style={Style.menu}
+					>
+						{props.groups.map((group) =>
+							<ul style={Style.ul}>
+								{group.map((item) => {
+								// BUTTON ITEM
+									if (item.onClick) return (
+										<li style={Style.li}>
+											<button
+												style={item.style ? Object.assign({}, Style.item, item.style) : Style.item}
+												onClick={(e) => {
+													e.target.style.color = "#fff";
+													item.onClick(e);
+												}}
+												onMouseDown={(e) => e.target.style.color = "#777"}
+												name={item.name}>
+												{item.icon ?
+													<img
+														style={Style.img}
+														src={item.icon}
+													/>
+												:
+													item.value
+												}
+											</button>
+										</li>
+									);
+								// TEXT INPUT ITEM
+									if (item.onInput) return (
+										<li style={Style.li}>
+											<input
+												style={item.style ? Object.assign({}, Style.input, item.style) : Style.input}
+												type="text"
+												size={item.value.length}
+												onInput={item.onInput}
+												value={item.value}
+											/>
+										</li>
+
+									);
+								// TEXT ITEM
+									return (
+										<li style={Object.assign({}, Style.li, Style.text, item.style ? item.style : {})}>
+											<span>{item.value}</span>
+										</li>
+									);
+								})}
+							</ul>
+						)}
+					</menu>
+				: "")}
+				<button
+					style={Object.assign({top: state.open ? '2.5rem' : '0rem'}, Style.mainButton)}
+					onClick={(e) => {
+						if (mainButton.onClick) mainButton.onClick(e)
+						this.props.setOffset(state.open ? '0rem' : '2.5rem');
+						this.setState({ open: !this.state.open });
+					}}
+				>
+					{mainButton.value}
+				</button>
+				)}
+			</div>
+		)
+	}
 }
 
-function renderGroups(g) {
-	var groups = [],
-		i = -1;
-
-	while (++i < g.length) groups.push( <ul>renderButtons(g[i])</ul> );
-}
-
-module.exports = function(props) {
-	return (
-		<div 
-			id="toolbar"
-			style={Style.toolbar}
-		>
-			<menu 
-				type="toolbar"
-				style={Style.menu}
-			>
-				{props.buttons ? renderGroups(props.buttons) : ""}
-			</menu>
-		</div>
-	)
-}
+module.exports = AppMenu;

@@ -21,6 +21,7 @@ module.exports = {
 
 // NOTE ACTIONS
 	NEW_NOTE: function(action, store) {
+		store.slices = Object.assign([], store.slices);
 		store.slices[action.sliceIndex].notes.splice(action.noteIndex, 1, {
 			thread: 0,
 			head: '',
@@ -31,7 +32,7 @@ module.exports = {
 	},
 	DELETE_NOTE: function(action, store) {
 		store.slices = Object.assign([], store.slices);
-		store.slices[action.sliceIndex].notes.splice(action.noteIndex, 1);
+		store.slices[action.sliceIndex].notes[action.noteIndex] = null;
 		return store;
 	},
 	MODIFY_NOTE_HEAD: function(action, store) {

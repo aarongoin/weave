@@ -126,11 +126,9 @@ class NoteEditor extends React.Component {
 					style={Style.noteHead}
 					maxLength="250"
 					oninput={(e) => this.setState({head: e.target.value})}
-					change={() => this.context.do('MODIFY_NOTE_HEAD', {
-						sliceIndex: this.props.indices[0],
-						noteIndex: this.props.indices[1],
-						newHead: this.state.head
-					})}
+					change={() => this.context.do('MODIFY_NOTE_HEAD', 
+						Object.assign({newHead: this.state.head}, props.coords)
+					)}
 					value={state.head}
 					baseHeight="1.7em"
 					placeholder="Title/Summary"
@@ -139,12 +137,9 @@ class NoteEditor extends React.Component {
 					ref={this.bodyMounted}
 					style={Style.noteBody}
 					oninput={this.onBody}
-					change={() => this.context.do('MODIFY_NOTE_BODY', {
-						sliceIndex: this.props.indices[0],
-						noteIndex: this.props.indices[1],
-						newBody: this.state.body,
-						wc: this.state.wc
-					})}
+					change={() => this.context.do('MODIFY_NOTE_BODY', 
+						Object.assign({newBody: this.state.body, wc: this.state.wc}, props.coords)
+					)}
 					value={state.body}
 					baseHeight="1.1em"
 					placeholder="Body"
@@ -170,18 +165,23 @@ class NoteEditor extends React.Component {
 		window.addEventListener('scroll', this.onScroll);
 		window.addEventListener('resize', this.onResize);
 
-		this.context.menu([
-			{ 
-				name: 'undo',
-				icon: './dist/img/undo.svg',
-				click: (event) => document.execCommand('undo')
-			},
-			{ 
-				name: 'redo',
-				icon: './dist/img/redo.svg',
-				click: (event) => document.execCommand('redo')
-			}
+		this.context.setMenu(false, [
+			[
+				{ 
+					icon: './dist/img/undo.svg',
+					onClick: (event) => document.execCommand('undo')
+				},
+				{ 
+					icon: './dist/img/redo.svg',
+					onClick: (event) => document.execCommand('redo')
+				}
 
+			],[
+				{ 
+					value: 'done',
+					onClick: () => this.props.onDone()
+				}
+			]
 		]);
 
 	}
