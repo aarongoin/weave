@@ -3,7 +3,7 @@ module.exports = {
 	NEW_SLICE: function(action, store) {
 		store.slices = Object.assign([], store.slices);
 		store.slices.splice(action.atIndex, 0, {
-			datetime: 'Datetime',
+			datetime: '',
 			notes: store.locations.map(()=>null)
 		});
 		return store;
@@ -53,7 +53,7 @@ module.exports = {
 		var i = store.slices.length;
 		store.locations = Object.assign([], store.locations);
 		store.slices = Object.assign([], store.slices);
-		store.locations.push('Location');
+		store.locations.push('');
 		while (i--) store.slices[i].notes.push(null);
 		return store;
 	},

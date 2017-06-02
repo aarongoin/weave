@@ -29,10 +29,10 @@ class ExpandingTextarea extends React.Component {
 				style={style}
 				maxlength={props.maxlength}
 				placeholder={props.placeholder}
-				oninput={this.onInput}
-				onchange={props.change}
-				onfocus={props.focus}
-				onblur={props.blur}
+				onInput={this.onInput}
+				onChange={props.change}
+				onFocus={props.focus}
+				onBlur={props.blur}
 			/>
 		)
 	}
@@ -43,12 +43,12 @@ class ExpandingTextarea extends React.Component {
 		window.addEventListener('resize', this.doResize);
 	}
 
-	componentDidUnmount() {
+	componentWillUnmount() {
 		window.removeEventListener('resize', this.doResize);
 	}
 
 	onInput(event) {
-		if (this.props.oninput) this.props.oninput(event);
+		if (this.props.input) this.props.input(event);
 		this.doResize();
 	}
 

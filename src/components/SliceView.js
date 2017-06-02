@@ -36,16 +36,6 @@ const
 		}
 	};
 
-
-	/*
-		this.props: {
-			id=#
-			slice={}
-			threads=[{}]
-			scrollY=""
-		};
-		*/
-
 module.exports = function(props, state) {
 	
 	return (
@@ -60,6 +50,7 @@ module.exports = function(props, state) {
 							thread={props.threads[note.thread]}
 							onSelect={props.onSelect}
 							onDeselect={props.onDeselect}
+							onEdit={props.editNote}
 						/>
 					:
 						<button

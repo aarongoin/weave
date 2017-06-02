@@ -27,6 +27,9 @@ const
 		}
 	};
 
+function MeasureText(text) {
+	return text.length ? (text.length * 1.1) : 5;
+}
 
 class SliceHeader extends React.Component {
 	constructor(props, context) {
@@ -54,9 +57,9 @@ class SliceHeader extends React.Component {
 					type="text"
 					style={Style.sliceHeader}
 					maxLength="24"
-					size={state.value.length + 2}
+					size={MeasureText(state.value)}
 					value={state.value}
-					placeholder="Datetime"
+					placeholder="time"
 					oninput={(event) => this.setState({value: event.target.value})}
 					onchange={this.onChange}
 				/>

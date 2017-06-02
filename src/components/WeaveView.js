@@ -57,6 +57,7 @@ class WeaveView extends React.Component {
 							threads={props.threads}
 							onSelect={this.onSelect}
 							onDeselect={this.onDeselect}
+							editNote={props.editNote}
 						/>
 					)}
 				</div>
@@ -65,7 +66,7 @@ class WeaveView extends React.Component {
 	}
 
 	activeNoteMenu() {
-		this.context.setMenu(false, [
+		this.context.useMenu([
 			[{
 				value: 'delete',
 				style: {color: '#f00'},
@@ -96,7 +97,7 @@ class WeaveView extends React.Component {
 			else this.selection.push(this.selection.splice(i, 1));
 		} else {
 			this.selection[0] = coords;
-			this.activeNoteMenu();
+			//this.activeNoteMenu();
 		}
 	}
 
@@ -109,14 +110,14 @@ class WeaveView extends React.Component {
 				this.forceUpdate();
 			}
 		} else {
-			setTimeout(this.noteDeselected, 100);			
+			//setTimeout(this.noteDeselected, 100);			
 		}
 	}
 
 	noteDeselected() {
 		if (this.allowDeselect) {
 			this.selection.pop();
-			this.context.setMenu(true, []);
+			this.context.releaseMenu();
 		}
 	}
 }

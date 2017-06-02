@@ -2,6 +2,7 @@ const
 	React = require('preact'),
 
 	ExpandingTextarea = require('./ExpandingTextarea.js'),
+	AppMenu = require('./AppMenu.js'),
 
 	Bind = require('../bind.js'),
 
@@ -16,7 +17,6 @@ const
 
 			marginLeft: 'auto',
 			marginRight: 'auto',
-			marginTop: '3rem',
 			paddingTop: '1.5rem',
 
 			display: 'flex',
@@ -112,7 +112,7 @@ class NoteEditor extends React.Component {
 		return (
 			<div
 				ref={this.mounted}
-				style={Style.box}
+				style={Object.assign({marginTop: props.menuOffset === '0rem' ? '1rem' : props.menuOffset}, Style.box)}
 			>
 				<span style={Style.top}>
 					<span style={state.threadStyle}>
@@ -125,7 +125,7 @@ class NoteEditor extends React.Component {
 				<ExpandingTextarea
 					style={Style.noteHead}
 					maxLength="250"
-					oninput={(e) => this.setState({head: e.target.value})}
+					input={(e) => this.setState({head: e.target.value})}
 					change={() => this.context.do('MODIFY_NOTE_HEAD', 
 						Object.assign({newHead: this.state.head}, props.coords)
 					)}
@@ -136,9 +136,9 @@ class NoteEditor extends React.Component {
 				<ExpandingTextarea
 					ref={this.bodyMounted}
 					style={Style.noteBody}
-					oninput={this.onBody}
+					input={this.onBody}
 					change={() => this.context.do('MODIFY_NOTE_BODY', 
-						Object.assign({newBody: this.state.body, wc: this.state.wc}, props.coords)
+						Object.assign({newBody: state.body, wc: state.wc}, props.coords)
 					)}
 					value={state.body}
 					baseHeight="1.1em"
@@ -157,15 +157,12 @@ class NoteEditor extends React.Component {
 	}
 
 	componentDidMount() {
-		// get reference to toolbar so we can measure it
-		this.toolbar = document.getElementById('toolbar');
-
 		this.onScroll();
 
 		window.addEventListener('scroll', this.onScroll);
 		window.addEventListener('resize', this.onResize);
 
-		this.context.setMenu(false, [
+		this.context.useMenu(null, [
 			[
 				{ 
 					icon: './dist/img/undo.svg',
@@ -176,23 +173,18 @@ class NoteEditor extends React.Component {
 					onClick: (event) => document.execCommand('redo')
 				}
 
-			],[
-				{ 
-					value: 'done',
-					onClick: () => this.props.onDone()
-				}
-			]
+			],
+			[AppMenu.btn('done', () => this.props.onDone())]
 		]);
 
 	}
 
-	componentDidUnmount() {
+	componentWillUnmount() {
 		window.removeEventListener('scroll', this.onScroll);
 		window.removeEventListener('resize', this.onResize);
 	}
 
 	onBody(event) {
-		
 		this.setState({
 			body: event.target.value,
 			wc: count(event.target.value),
@@ -226,7 +218,7 @@ class NoteEditor extends React.Component {
 	}
 
 	stickyStats() {
-		if (this.el.clientHeight > (window.innerHeight - this.toolbar.clientHeight)) {
+		if (this.el.clientHeight > (window.innerHeight - 40)) {
 			this.setState({ statStyle: Style.statSticky })
 		} else {
 			this.setState({ statStyle: Style.statFree })

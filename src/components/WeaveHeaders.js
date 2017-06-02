@@ -97,7 +97,8 @@ class WeaveHeaders extends React.Component {
 	}
 
 	shouldComponentUpdate(props, state, context) {
-		return ((state !== this.state) ||
+		return ((state.x !== this.state.x) ||
+				(state.y !== this.state.y) ||
 				(props.slices !== this.props.slices) ||
 				(props.locations !== this.props.locations));
 	}

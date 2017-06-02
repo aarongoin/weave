@@ -97,7 +97,7 @@ class NoteView extends React.Component {
 					style={Object.assign({}, Style.stats, {backgroundColor: props.thread.color})}
 				>
 					<button 
-						onclick={this.onEdit} 
+						onclick={() => props.onEdit({sliceIndex: props.sliceIndex, noteIndex: props.noteIndex})} 
 						style={Style.button}
 					>edit</button>
 					<span style={Style.wordcount}>{props.note.wc} words</span>

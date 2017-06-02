@@ -10,7 +10,26 @@ const
 	Source = require('./Sourcery.js'),
 	Actions = require('./actions.js'),
 	Style = {
-		app: 'width: 100vw;'
+		app: 'width: 100vw;',
+		menuButton: {
+			zIndex: 22,
+			minHeight: '2.5rem',
+			padding: '0.5rem 0.75rem',
+			width: '7rem',
+			position: 'fixed',
+			left: 0,
+
+			outline: 'none',
+			backgroundColor: '#000000',
+
+			border: 'none',
+			borderBottom: 'thin solid #777',
+
+			color: '#fff',
+			fontSize: '1.2rem',
+
+			cursor: 'pointer'
+		}
 	};
 
 class App extends React.Component {
@@ -23,15 +42,17 @@ class App extends React.Component {
 			targetNote: undefined,
 			noteCoords: undefined,
 
+			menuOpen: false,
 			menuOffset: '0rem',
 			menuGroups: [],
+			menuButton: {},
 
 			project: Source.getLocal('weave-project'),
 			store: Source.getLocal('weave-store')
 		}
 
 		if (this.state.project) this.state.project = JSON.parse(this.state.project);
-		else this.state.project = { title: 'Welcome to Weave', wordCount: 4, sceneCount: 1, historySize: 0 }
+		else this.state.project = { title: 'Welcome to Weave', wordCount: 4, sceneCount: 1}
 
 		if (this.state.store) this.state.store = JSON.parse(LZW.decompressFromUTF16(this.state.store));
 		else this.state.store = {
@@ -40,9 +61,11 @@ class App extends React.Component {
 			locations: ['Star Labs']
 		};
 
-		this.state.project = Object.assign({title: this.state.project.title}, this.countProject());
-
 		Bind(this);
+
+		this.state.project = Object.assign({title: this.state.project.title}, this.countProject());
+		this.state.menuButton = this.projectButton();
+		this.state.menuGroups = this.projectMeta();
 	}
 
 	countProject() {
@@ -59,10 +82,30 @@ class App extends React.Component {
 	render(props, state) {
 		return (
 			<div id="app" style={Style.app}>
-				<AppMenu
-					groups={(state.menuGroups.length ? state.menuGroups : this.projectMeta())}
-					setOffset={(offset) => this.setState({ menuOffset: offset })}
-				/>
+				{(state.menuOpen ? 
+					[<AppMenu
+						groups={state.menuGroups}
+					/>,
+					(state.menuButton ? <button
+						style={Object.assign({top: '2.5rem', marginTop: '1px'}, Style.menuButton)}
+						onClick={(e) => {
+							if (state.menuButton.onClick) state.menuButton.onClick(e)
+							this.setState({ menuOpen: false, menuOffset: '0rem' });
+						}}
+					>
+						{state.menuButton.opened.value}
+					</button> : "")]
+					:
+					<button
+						style={Object.assign({top: '0rem'}, Style.menuButton)}
+						onClick={(e) => {
+							if (state.menuButton.closed.onClick) state.menuButton.closed.onClick(e)
+							this.setState({ menuOpen: true, menuOffset: '2.5rem' });
+						}}
+					>
+						{state.menuButton.closed.value}
+					</button>
+				)}
 				{(state.isEditing ?
 					<NoteEditor
 						menuOffset={state.menuOffset}
@@ -92,66 +135,70 @@ class App extends React.Component {
 			isEditing: true,
 			noteCoords: coords,
 			targetNote: this.state.store.slices[coords.sliceIndex].notes[coords.noteIndex],
-			menuGroups: []
+			menuOpen: true 
 		});
+	}
+
+	projectButton() {
+		return AppMenu.main(AppMenu.text('done'), AppMenu.text(this.state.project.title));
 	}
 
 	projectMeta() {
 		return [
-			{ 
-				closed: {
-					value: this.state.project.title
-				},
-				opened: {
-					value: 'done'
-				}
-			},[
-				{ 
-					value: this.state.project.title,
-					onInput: (event) => {
-						this.state.project.title = event.target.value;
-						this.forceUpdate();
-						this.saveProject();
-					}
-				},{
-					value: this.state.project.sceneCount + ' scenes'
-				},{
-					value: this.state.project.wordCount + ' words'
-				}
+			[
+				AppMenu.input(this.state.project.title, (event) => {
+					this.state.project.title = event.target.value;
+					this.setState({ menuGroups: this.projectMeta(event.target.value), menuButton: this.projectButton() });
+					this.saveProject();
+				}),
+				AppMenu.text(this.state.project.sceneCount + ' scenes'),
+				AppMenu.text(this.state.project.wordCount + ' words')
 			],[
-				{
-					value: 'new',
-					onClick: (event) => console.log("TODO!")
-				},{
-					value: 'import',
-					onClick: (event) => console.log("TODO!")
-				},{
-					value: 'export',
-					onClick: (event) => console.log("TODO!")
-				},{
-					value: 'print',
-					onClick: (event) => console.log("TODO!")
-				}
-
-
-			]
+				AppMenu.btn('import', (event) => console.log("TODO!")),
+				AppMenu.btn('export', (event) => console.log("TODO!")),
+				AppMenu.btn('print', (event) => console.log("TODO!"))
+			],
+			[AppMenu.deleteBtn(this.delete)]
 		];
 	}
 
 	onDone() {
 		this.setState({
-			targetNote: undefined,
-			noteCoords: [],
+			targetNote: null,
+			noteCoords: null,
 			isEditing: false,
-			projectMeta: true,
-			menuGroups: []
+			menuOpen: false,
+			menuButton: this.projectButton(),
+			menuGroups: this.projectMeta(),
+			menuOffset: '0rem' 
 		});
 	}
 
 	do(action, data) {
+		this.state.store = Actions[action](data, this.state.store);
+		this.state.project = Object.assign({}, this.state.project, this.countProject());
 		this.setState({
-			state: Actions[action](data, this.state.store),
-			project: Object.assign({}, this.state.project, this.countProject())
+			menuGroups: (this.state.menuGroups[0][0].onInput) ? this.projectMeta() : this.state.menuGroups
+		});
+		this.save();
+	}
+
+	delete() {
+		this.state.project = {
+			title: 'Project Title',
+			wordCount: 0,
+			sceneCount: 0
+		};
+		this.setState({
+			menuOpen: false,
+			menuButton: this.projectButton(),
+			menuGroups: this.projectMeta(),
+			menuOffset: '0rem',
+			store: {
+				slices: [{datetime: '', notes: [null] }],
+				threads: [{name: '', color: '#f60'}],
+				locations: ['']
+			}
 		});
 		this.save();
 	}
@@ -172,11 +219,13 @@ class App extends React.Component {
 	getChildContext() {
 		return {
 			do: this.do,
-			useMenu: (menuGroups) => this.setState({ menuGroups: menuGroups }),
-			releaseMenu: () => this.setState({ menuGroups: [] }),
+			useMenu: (menuButton, menuGroups) => this.setState({ menuOpen: true, menuButton: menuButton, menuGroups: menuGroups, menuOffset: '2.5rem' }),
+			releaseMenu: () => this.setState({ menuOpen: false, menuButton: this.projectButton(), menuGroups: this.projectMeta(), menuOffset: '0rem' }),
 			modal: (contents) => this.setState({ modal: contents })
 		};
 	}
 }
+
+React.options.debounceRendering = window.requestAnimationFrame;
 
 React.render(<App/>, document.body);

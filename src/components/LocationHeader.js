@@ -18,7 +18,6 @@ const
 		}
 	};
 
-
 class LocationHeader extends React.Component {
 	constructor(props, context) {
 		super(props, context);
@@ -28,8 +27,8 @@ class LocationHeader extends React.Component {
 	}
 
 	shouldComponentUpdate(props, state, context) {
-		return ((state !== this.state) ||
-				(props.value !== this.props.value));
+		return ((props.value !== this.props.value) &&
+				(state.value !== this.state.value));
 	}
 
 	render(props, state) {
@@ -40,7 +39,7 @@ class LocationHeader extends React.Component {
 				maxLength="24"
 				baseHeight="0.9rem"
 				value={state.value}
-				placeholder="Location"
+				placeholder="place"
 				input={(event) => this.setState({value: event.target.value})}
 				change={(event) => this.context.do('MODIFY_LOCATION_NAME', {
 					atIndex: this.props.id,
