@@ -113,8 +113,11 @@ class NoteView extends React.Component {
 	}
 
 	onClick(event) {
-		this.select();
-		this.el.base.focus();
+		event.stopPropagation();
+		if (!this.props.selected) {
+			this.select();
+			this.el.base.focus();
+		}
 	}
 
 	select() {

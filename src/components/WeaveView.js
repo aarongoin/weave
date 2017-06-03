@@ -13,7 +13,7 @@ const
 			marginLeft: '7rem',
 			display: 'inline-flex'
 		},
-		slices: {
+		scenes: {
 			marginTop: '2rem',
 			display: 'flex',
 			justifyContent: 'flex-start',
@@ -29,24 +29,30 @@ class WeaveView extends React.Component {
 			selection: null
 		}
 
+		this.allowDeselect = true;
+
 		Bind(this);
 	}
 
 	render(props, state) {
 		return (
-			<div data-is="WeaveView" style={Object.assign({marginTop: props.menuOffset}, Style.weave)}>
+			<div
+				data-is="WeaveView"
+				style={Object.assign({marginTop: props.menuOffset}, Style.weave)}
+				onclick={this.onDeselect}
+			>
 				<WeaveHeaders
-					slices={props.slices}
+					scenes={props.scenes}
 					locations={props.locations}
 					windowWidth={props.windowWidth}
 				/>
 				<WeaveBackground
-					slices={props.slices.length}
+					scenes={props.scenes.length}
 					locations={props.locations.length}
 					menuOffset={props.menuOffset}
 				/>
-				<div data-is="Weave" style={Style.slices}>
-					{props.slices.map((slice, i) =>
+				<div data-is="Weave" style={Style.scenes}>
+					{props.scenes.map((slice, i) =>
 						<SliceView
 							id={i}
 							selection={(state.selection && state.selection.sliceIndex === i) ? state.selection : null}
@@ -89,13 +95,13 @@ class WeaveView extends React.Component {
 		//this.activeNoteMenu();
 	}
 
-	onDeselect(coords, i) {
+	onDeselect(event) {
+		this.noteDeselected();
 	}
 
 	noteDeselected() {
 		if (this.allowDeselect) {
-			this.selection.pop();
-			//this.context.releaseMenu();
+			this.setState({selection: null});
 		}
 	}
 }

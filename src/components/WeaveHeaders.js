@@ -18,7 +18,7 @@ const
 			minHeight: '100vh',
 			paddingTop: '2rem'
 		},
-		slices: {
+		scenes: {
 			zIndex: '11',
 			position: 'absolute',
 			backgroundColor: "#111",
@@ -97,7 +97,7 @@ class WeaveHeaders extends React.Component {
 	shouldComponentUpdate(props, state, context) {
 		return ((state.x !== this.state.x) ||
 				(state.y !== this.state.y) ||
-				(props.slices !== this.props.slices) ||
+				(props.scenes !== this.props.scenes) ||
 				(props.locations !== this.props.locations) ||
 				(props.windowWidth !== this.props.windowWidth));
 	}
@@ -110,7 +110,7 @@ class WeaveHeaders extends React.Component {
 			>
 				<div
 					data-is="SliceHeaders"
-					style={Object.assign({}, Style.slices, { top: state.y, width: ((props.slices.length*18 + 2) + 'rem')  })}
+					style={Object.assign({}, Style.scenes, { top: state.y, width: ((props.scenes.length*18 + 2) + 'rem')  })}
 				>
 					{[
 						<button
@@ -119,7 +119,7 @@ class WeaveHeaders extends React.Component {
 							onmouseenter={e => e.target.style.backgroundColor = 'rgba(255,255,255,0.2)'}
 							onmouseleave={e => e.target.style.backgroundColor = 'rgba(0,0,0,0)'}
 						>+</button>
-					].concat(props.slices.map((slice, i) => 
+					].concat(props.scenes.map((slice, i) => 
 						<div style={{display: 'inline', width: '18rem'}}>
 							<SliceHeader
 								id={i}

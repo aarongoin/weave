@@ -40,7 +40,7 @@ class WeaveBackground extends React.Component {
 	shouldComponentUpdate(props, state, context) {
 		return ((props.menuOffset !== this.props.menuOffset) ||
 				(props.locations !== this.props.locations) ||
-				(props.slices !== this.props.slices));
+				(props.scenes !== this.props.scenes));
 	}
 
 	render(props, state) {
@@ -49,7 +49,7 @@ class WeaveBackground extends React.Component {
 				data-is="WeaveBackground"
 				style={Object.assign({}, Style.outer, {
 					top: props.menuOffset,
-					width: (props.slices * 18 + 2) + 'rem',
+					width: (props.scenes * 18 + 2) + 'rem',
 					height: (props.locations * 14 + 16) + 'rem'
 				})}
 			>
@@ -57,7 +57,7 @@ class WeaveBackground extends React.Component {
 					{Array(props.locations).fill(0).map((v, i) => <div style={Style.location}>&nbsp;</div>)}
 				</div>
 				<div style={Style.inner}>
-					{Array(props.slices).fill(0).map((v, i) => <div style={Style.slice}>&nbsp;</div>)}
+					{Array(props.scenes).fill(0).map((v, i) => <div style={Style.slice}>&nbsp;</div>)}
 				</div>
 			</div>
 		)
