@@ -12,9 +12,7 @@ const
 			minHeight: '100vh'
 		},
 		locations: {
-			zIndex: '10',
 			position: 'absolute',
-			backgroundColor: "#111",
 			top: 0,
 			width: '7rem',
 			minHeight: '100vh',
@@ -100,7 +98,8 @@ class WeaveHeaders extends React.Component {
 		return ((state.x !== this.state.x) ||
 				(state.y !== this.state.y) ||
 				(props.slices !== this.props.slices) ||
-				(props.locations !== this.props.locations));
+				(props.locations !== this.props.locations) ||
+				(props.windowWidth !== this.props.windowWidth));
 	}
 
 	render(props, state) {
@@ -137,7 +136,11 @@ class WeaveHeaders extends React.Component {
 				</div>
 				<div 
 					data-is="LocationHeaders"
-					style={Object.assign({}, Style.locations, { left: state.x, height: ((props.locations.length*14 + 16) + 'rem') })}
+					style={Object.assign({}, Style.locations, {
+						left: state.x,
+						height: ((props.locations.length*14 + 16) + 'rem'),
+						backgroundColor: (props.windowWidth < 700) ? 'rgba(0,0,0,0)' : '#111',
+						zIndex: (props.windowWidth < 700) ? 8 : 10 })}
 				>
 					{((props.locations.map((location, i) =>
 						<div style={Style.location}>

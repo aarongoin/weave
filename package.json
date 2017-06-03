@@ -5,16 +5,19 @@
   "author": "Aaron Goin <aaron.goin@wsu.edu>",
   "scripts": {
     "serve": "http-server -c 1 -a localhost",
-
     "dev": "watchify -d -v -t [ babelify --presets [ env react ] ] -e src/App.js -o dist/build.js",
     "lint": "eslint --ext .js src test/unit",
     "test": "echo TODO",
     "build": "browserify -g -t [ babelify --no-sourceMaps --presets [ env react ] ] -e src/App.js | uglifyjs -c warnings=false -m > dist/build.js"
   },
   "browserify": {
-    "transform": [ "babelify" ]
+    "transform": [
+      "babelify"
+    ]
   },
   "dependencies": {
+    "file-saver": "^1.3.3",
+    "lz-string": "^1.4.4",
     "preact": "^8.1.0"
   },
   "devDependencies": {
@@ -22,17 +25,10 @@
     "watchify": "^3.4.0",
     "uglify-js": "^2.5.0",
     "http-server": "^0.9.0",
-
     "babelify": "^7.3.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-preset-env": "^1.4.0",
-    "babel-preset-react": "^6.24.1",
-
-    "eslint": "^3.3.0",
-    "eslint-config-standard": "^5.3.5",
-    "eslint-plugin-html": "^1.5.2",
-    "eslint-plugin-promise": "^2.0.1",
-    "eslint-plugin-standard": "^2.0.0"
+    "babel-preset-react": "^6.24.1"
   }
 }

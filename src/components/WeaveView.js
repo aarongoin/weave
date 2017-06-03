@@ -6,6 +6,7 @@ const
 	SliceView = require('./SliceView.js'),
 	WeaveHeaders = require('./WeaveHeaders.js'),
 	WeaveBackground = require('./WeaveBackground.js'),
+	AppMenu = require('./AppMenu.js'),
 
 	Style = {
 		weave: {
@@ -24,17 +25,11 @@ class WeaveView extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
-		this.selection = [];
-		this.allowDeselect = true;
+		this.state = {
+			selection: null
+		}
 
 		Bind(this);
-	}
-
-	shouldComponentUpdate(props, state, context) {
-		return ((props.menuOffset !== this.props.menuOffset) ||
-				(props.locations !== this.props.locations) ||
-				(props.slices !== this.props.slices) ||
-				(props.threads !== this.props.threads));
 	}
 
 	render(props, state) {
@@ -43,6 +38,7 @@ class WeaveView extends React.Component {
 				<WeaveHeaders
 					slices={props.slices}
 					locations={props.locations}
+					windowWidth={props.windowWidth}
 				/>
 				<WeaveBackground
 					slices={props.slices.length}
@@ -53,6 +49,7 @@ class WeaveView extends React.Component {
 					{props.slices.map((slice, i) =>
 						<SliceView
 							id={i}
+							selection={(state.selection && state.selection.sliceIndex === i) ? state.selection : null}
 							slice={slice}
 							threads={props.threads}
 							onSelect={this.onSelect}
@@ -66,58 +63,39 @@ class WeaveView extends React.Component {
 	}
 
 	activeNoteMenu() {
-		this.context.useMenu([
-			[{
-				value: 'delete',
-				style: {color: '#f00'},
-				onClick: () => {
-					this.context.do('DELETE_NOTE', this.selection[0])
-					noteDeselected();
-				}
-			}],[{
-				value: 'move',
-				onClick: () => {
+		this.context.useMenu(undefined, [
+			[
+				AppMenu.btn('move',() => {
 					this.allowDeselect = false;
 					console.log("TODO!")
-				}
-			}],[{
-				value: 'edit',
-				onClick: () => {
+				})
+			],[
+				AppMenu.btn('edit',() => {
 					this.allowDeselect = false;
 					this.props.editNote(this.selection[0])
-				}
-			}]
+				})
+			],[
+				AppMenu.deleteBtn(() => {
+					this.context.do('DELETE_NOTE', this.selection[0])
+					this.allowDeselect = true;
+					this.noteDeselected();
+				})
+			]
 		]);
 	}
 
 	onSelect(coords, i) {
-		if (this.props.canSelectMany) {
-			i = this.selection.findIndex((c) => (c.sliceIndex === coords.sliceIndex && c.noteIndex === coords.noteIndex));
-			if (i < 0) this.selection.push(coords);
-			else this.selection.push(this.selection.splice(i, 1));
-		} else {
-			this.selection[0] = coords;
-			//this.activeNoteMenu();
-		}
+		this.setState({selection: coords});
+		//this.activeNoteMenu();
 	}
 
 	onDeselect(coords, i) {
-		if (this.canSelectMany) {
-			i = i || this.selection.findIndex((c) => (c.sliceIndex === coords.sliceIndex && c.noteIndex === coords.noteIndex));
-			this.selection.splice(i, 1);
-			if (!this.selection.length) {
-				this.selected = 0;
-				this.forceUpdate();
-			}
-		} else {
-			//setTimeout(this.noteDeselected, 100);			
-		}
 	}
 
 	noteDeselected() {
 		if (this.allowDeselect) {
 			this.selection.pop();
-			this.context.releaseMenu();
+			//this.context.releaseMenu();
 		}
 	}
 }

@@ -1,12 +1,14 @@
 require('./polyfills.js');
 const
 	React = require('preact'),
+	FileSaver = require('file-saver'),
+
 	AppMenu = require('./components/AppMenu.js'),
 	WeaveView = require('./components/WeaveView.js'),
 	NoteEditor = require('./components/NoteEditor.js'),
 
 	Bind = require('./bind.js'),
-	LZW = require('./lz-string.js'),
+	LZW = require('lz-string'),
 	Source = require('./Sourcery.js'),
 	Actions = require('./actions.js'),
 	Style = {
@@ -79,15 +81,26 @@ class App extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		window.addEventListener('resize', this.onResize);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.onResize);
+	}
+
 	render(props, state) {
 		return (
 			<div id="app" style={Style.app}>
 				{(state.menuOpen ? 
 					[<AppMenu
 						groups={state.menuGroups}
+						ref={(el) => {
+							if (el && el.base.clientHeight != this.state.menuOffset) this.setState({ menuOffset: el.base.clientHeight });
+						}}
 					/>,
 					(state.menuButton ? <button
-						style={Object.assign({top: '2.5rem', marginTop: '1px'}, Style.menuButton)}
+						style={Object.assign({top: state.menuOffset, marginTop: '1px'}, Style.menuButton)}
 						onClick={(e) => {
 							if (state.menuButton.onClick) state.menuButton.onClick(e)
 							this.setState({ menuOpen: false, menuOffset: '0rem' });
@@ -123,7 +136,7 @@ class App extends React.Component {
 						locations={state.store.locations}
 						menu={this.layoutMenu}
 						editNote={this.editNote}
-						canSelectMany={false}
+						windowWidth={window.innerWidth}
 					/>
 				)}
 			</div>
@@ -140,26 +153,31 @@ class App extends React.Component {
 	}
 
 	projectButton() {
-		return AppMenu.main(AppMenu.text('done'), AppMenu.text(this.state.project.title));
+		return AppMenu.main(AppMenu.text('done'), AppMenu.text(this.state.project.title.length ? this.state.project.title : 'Project'));
 	}
 
 	projectMeta() {
 		return [
 			[
-				AppMenu.input(this.state.project.title, (event) => {
+				AppMenu.input('Project Title', this.state.project.title, (event) => {
 					this.state.project.title = event.target.value;
 					this.setState({ menuGroups: this.projectMeta(event.target.value), menuButton: this.projectButton() });
 					this.saveProject();
-				}),
+				})
+			],[
 				AppMenu.text(this.state.project.sceneCount + ' scenes'),
 				AppMenu.text(this.state.project.wordCount + ' words')
 			],[
 				AppMenu.btn('import', (event) => console.log("TODO!")),
-				AppMenu.btn('export', (event) => console.log("TODO!")),
+				AppMenu.btn('export', (event) => FileSaver.saveAs(new Blob([JSON.stringify(Object.assign({}, this.state.project, this.state.store))], {type: "text/plain;charset=utf-8"}), this.state.project.title + '.weave')),
 				AppMenu.btn('print', (event) => console.log("TODO!"))
 			],
 			[AppMenu.deleteBtn(this.delete)]
 		];
+	}
+
+	onResize() {
+		this.forceUpdate();
 	}
 
 	onDone() {

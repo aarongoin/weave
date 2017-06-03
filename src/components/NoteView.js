@@ -58,22 +58,13 @@ class NoteView extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
-		this.state = {
-			focused: false
-		}
-
 		Bind(this);
-	}
-
-	componentDidMount() {
-		this.base.style.border = (this.state.focused) ? ('0.2rem solid ' + props.thread.color) : '0 solid rgba(0,0,0,0)';
-		this.base.style.margin = (this.state.focused) ? '0' : '0.2rem';
 	}
 
 	render(props, state) {
 		var argyle = Object.assign({}, Style.box, {
-			border: ((state.focused) ? ('0.2rem solid ' + props.thread.color) : '0 solid rgba(0,0,0,0)'),
-			margin: (state.focused) ? '0' : '0.2rem'
+			border: (props.selected ? ('0.2rem solid ' + props.thread.color) : '0 solid rgba(0,0,0,0)'),
+			margin: props.selected ? '0' : '0.2rem'
 		});
 
 		return (
@@ -90,7 +81,6 @@ class NoteView extends React.Component {
 					value={props.note.head}
 					focus={this.onFocus}
 					change={this.onChange}
-					blur={this.onBlur}
 					ref={el => this.el = el}
 				/>
 				<span 
@@ -106,20 +96,15 @@ class NoteView extends React.Component {
 		)
 	}
 
-	onInput(event) {
-		//
-	}
-
 	onCreateNote(event) {
 		this.newNote(event);
 	}
 
-	onFocus() {
-		if (!this.state.focused) this.select();
+	onFocus(event) {
+		if (!this.props.selected) this.select();
 	}
 
 	onChange(event) {
-		if (this.state.focused) this.deselect();
 		this.context.do('MODIFY_NOTE_HEAD', {
 			sliceIndex: this.props.sliceIndex,
 			noteIndex: this.props.noteIndex,
@@ -127,25 +112,13 @@ class NoteView extends React.Component {
 		});
 	}
 
-	onBlur() {
-		if (this.state.focused) this.deselect();
-	}
-
 	onClick(event) {
+		this.select();
 		this.el.base.focus();
 	}
 
 	select() {
-		this.setState({ focused: true });
 		this.props.onSelect({
-			sliceIndex: this.props.sliceIndex,
-			noteIndex: this.props.noteIndex
-		});
-	}
-
-	deselect() {
-		this.setState({ focused: false });
-		this.props.onDeselect({
 			sliceIndex: this.props.sliceIndex,
 			noteIndex: this.props.noteIndex
 		});

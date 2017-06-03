@@ -45,6 +45,7 @@ module.exports = function(props, state) {
 					{(note) ?
 						<NoteView
 							sliceIndex={props.id}
+							selected={(props.selection && props.selection.noteIndex === i)}
 							noteIndex={i}
 							note={note}
 							thread={props.threads[note.thread]}

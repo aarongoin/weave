@@ -9,7 +9,6 @@ const
 			left: '0',
 			right: '0',
 
-			height: '2.5rem',
 			width: '100%',
 			border: 'none',
 			borderBottom: 'thin solid #777',
@@ -20,7 +19,6 @@ const
 		},
 		menu: {
 			width: '100%',
-			height: '2.5rem',
 
 			display: 'flex',
 			flexWrap: 'wrap',
@@ -57,14 +55,15 @@ const
 			height: '1.2rem'
 		},
 		span: {
-			position: 'relative',
-			bottom: '0.1rem'
+			paddingTop: '1rem',
+			height: '2rem'
 		},
 		text: {
 			fontSize: '1rem'
 		},
 		input: {
 			height: '2rem',
+			maxWidth: '95vw',
 			padding: '0 0.75rem',
 			border: 'none',
 			borderBottom: 'thin solid #fff',
@@ -94,6 +93,7 @@ function AppMenu(props, state) {
 			<menu 
 				type="toolbar"
 				style={Style.menu}
+				ref={props.ref}
 			>
 				{props.groups.map((group) =>
 					<ul style={Style.ul}>
@@ -113,7 +113,7 @@ function AppMenu(props, state) {
 										}}
 										onMouseDown={(e) => {
 											e.target.style.color = "#777";
-											if (item.onHold) item.timer = setTimeout(item.onHold, 500, e);
+											if (item.onHold) item.timer = setTimeout(item.onHold, 1000, e);
 										}}
 										name={item.name}>
 										{item.icon ?
@@ -133,7 +133,9 @@ function AppMenu(props, state) {
 									<input
 										style={item.style ? Object.assign({}, Style.input, item.style) : Style.input}
 										type="text"
-										size={MeasureText(item.value)}
+										placeholder={item.placeholder}
+										maxLength={40}
+										size={Math.max(MeasureText(item.value.length ? item.value : (props.placeholder || '')), 20)}
 										onInput={item.onInput}
 										value={item.value}
 									/>
@@ -143,7 +145,7 @@ function AppMenu(props, state) {
 						// TEXT ITEM
 							return (
 								<li style={Object.assign({}, Style.li, Style.text, item.style ? item.style : {})}>
-									<span>{item.value}</span>
+									<span style={Style.span}>{item.value}</span>
 								</li>
 							);
 						})}
@@ -159,16 +161,16 @@ AppMenu.main = (o, c) => ({
 	closed: c
 });
 
-AppMenu.input = (v, f) => ({ value: v, onInput: f });
+AppMenu.input = (p, v, f, s) => ({ placeholder: p, value: v, onInput: f, style: s ? s : undefined });
 
-AppMenu.text = (v) => ({ value: v });
+AppMenu.text = (v, s) => ({ value: v, style: s ? s : undefined });
 
-AppMenu.btn = (v, f) => ({ value: v, onClick: f });
+AppMenu.btn = (v, f, s) => ({ value: v, onClick: f, style: s ? s : undefined });
 
 AppMenu.deleteBtn = (f) => ({
 	value: 'delete',
 	style: {color: '#f00', transition: 'color 1s'},
-	onHold: (e) => {e.target.style.color='#777'; setTimeout(f, 1000);}
+	onHold: f
 });
 
 module.exports = AppMenu;
