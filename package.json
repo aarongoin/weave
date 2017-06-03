@@ -8,7 +8,8 @@
     "dev": "watchify -d -v -t [ babelify --presets [ env react ] ] -e src/App.js -o dist/build.js",
     "lint": "eslint --ext .js src test/unit",
     "test": "echo TODO",
-    "build": "browserify -t [ babelify --no-sourceMaps --presets [ env react ] ] -e src/App.js | uglifyjs -c warnings=false -m > dist/build.js"
+    "build": "browserify -t [ babelify --no-sourceMaps --presets [ env react ] ] -e src/App.js | uglifyjs -c warnings=false -m > dist/build.js",
+    "deploy": "cp -R dist/ docs/dist/ && cp index.html docs/app.html"
   },
   "browserify": {
     "transform": [
