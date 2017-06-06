@@ -1,4 +1,5 @@
 require('./polyfills.js');
+require('./assert.js').pollute(); // inject Assert and Test into window global object
 const
 	React = require('preact'),
 	FileSaver = require('file-saver'),
