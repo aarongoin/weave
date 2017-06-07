@@ -3,6 +3,7 @@ const
 
 	ExpandingTextarea = require('./ExpandingTextarea.js'),
 	AppMenu = require('./AppMenu.js'),
+	ThreadLabel = require('./ThreadLabel.js'),
 
 	Bind = require('../bind.js'),
 
@@ -35,6 +36,7 @@ const
 		thread: {
 			color: '#fff',
 			fontSize: '0.75rem',
+			height: '1rem',
 
 			borderRadius: '1rem',
 
@@ -115,12 +117,17 @@ class NoteEditor extends React.Component {
 				style={Object.assign({marginTop: props.menuOffset === '0rem' ? '1rem' : props.menuOffset}, Style.box)}
 			>
 				<span style={Style.top}>
-					<span style={state.threadStyle}>
-						{props.thread.name}
-					</span>
-					<span style={state.threadStyle}>
+					<ThreadLabel
+						style={state.threadStyle}
+						value={props.thread.name}
+						onChange={(e) => this.context.do('MODIFY_THREAD_NAME', {
+							atIndex: props.note.thread,
+							newName: e.target.value
+						})}
+					/>
+					{/*<span style={state.threadStyle}>
 						{'+'}
-					</span>
+					</span>*/}
 				</span>
 				<ExpandingTextarea
 					style={Style.noteHead}

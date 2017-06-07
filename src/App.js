@@ -34,7 +34,27 @@ const
 
 			cursor: 'pointer'
 		}
-	};
+	},
+	THREADS = [
+		{ name: '', color: '#000000' },
+		{ name: '', color: '#333333' },
+		{ name: '', color: '#666666' },
+		{ name: '', color: '#999999' },
+		{ name: '', color: '#b21f35' },
+		{ name: '', color: '#d82735' },
+		{ name: '', color: '#ff7435' },
+		{ name: '', color: '#ffa135' },
+		{ name: '', color: '#ffcb35' },
+		{ name: '', color: '#00753a' },
+		{ name: '', color: '#009e47' },
+		{ name: '', color: '#16dd36' },
+		{ name: '', color: '#0052a5' },
+		{ name: '', color: '#0079e7' },
+		{ name: '', color: '#06a9fc' },
+		{ name: '', color: '#681e7e' },
+		{ name: '', color: '#7d3cb5' },
+		{ name: '', color: '#bd7af6' }
+	];
 
 class App extends React.Component {
 	constructor(props, context) {
@@ -61,7 +81,7 @@ class App extends React.Component {
 		if (this.state.store) this.state.store = JSON.parse(LZW.decompressFromUTF16(this.state.store));
 		else this.state.store = {
 			scenes: [{datetime: '1999-10-26', notes: [{ thread: 0, head: 'Welcome to Weave!', body: 'This is the place!', wc: 4 }] }],
-			threads: [{ color: '#00cc66', name: 'Barry Allen'}],
+			threads: Object.assign([], THREADS),
 			locations: ['Star Labs']
 		};
 
@@ -230,7 +250,7 @@ class App extends React.Component {
 			menuOffset: '0rem',
 			store: {
 				scenes: [{datetime: '', notes: [null] }],
-				threads: [{name: '', color: '#f60'}],
+				threads: Object.assign([], THREADS),
 				locations: ['']
 			}
 		});

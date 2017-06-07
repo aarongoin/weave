@@ -61,33 +61,12 @@ class WeaveView extends React.Component {
 							onSelect={this.onSelect}
 							onDeselect={this.onDeselect}
 							editNote={props.editNote}
+							moveNote={this.moveNote}
 						/>
 					)}
 				</div>
 			</div>
 		)
-	}
-
-	activeNoteMenu() {
-		this.context.useMenu(undefined, [
-			[
-				AppMenu.btn('move',() => {
-					this.allowDeselect = false;
-					console.log("TODO!")
-				})
-			],[
-				AppMenu.btn('edit',() => {
-					this.allowDeselect = false;
-					this.props.editNote(this.selection[0])
-				})
-			],[
-				AppMenu.deleteBtn(() => {
-					this.context.do('DELETE_NOTE', this.selection[0])
-					this.allowDeselect = true;
-					this.noteDeselected();
-				})
-			]
-		]);
 	}
 
 	onSelect(coords, i) {

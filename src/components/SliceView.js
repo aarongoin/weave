@@ -52,6 +52,7 @@ module.exports = function(props, state) {
 							onSelect={props.onSelect}
 							onDeselect={props.onDeselect}
 							onEdit={props.editNote}
+							moveNote={props.moveNote}
 						/>
 					:
 						<button

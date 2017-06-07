@@ -1,6 +1,13 @@
 const
 	React = require('preact'),
 
+	AppMenu = require('./AppMenu.js'),
+	DeleteButton = require('./DeleteButton.js'),
+
+	nextColor = require('../colors.js'),
+
+	ThreadLabel = require('./ThreadLabel.js'),
+
 	Bind = require('../bind.js'),
 	ExpandingTextarea = require('./ExpandingTextarea.js'),
 
@@ -30,26 +37,59 @@ const
 			display: 'flex',
 			justifyContent: 'space-around',
 			alignItems: 'center',
-			padding: '0.5rem 0.75rem 0.5rem 0.75rem',
-			fontSize: '0.9rem'
+			fontSize: '0.9rem',
+			height: '2rem'
 		},
 
 		wordcount: {
-			fontSize: '0.9rem'
+			fontSize: '0.9rem',
+			padding: '0.5rem'
 		},
 
 		textarea: {
 			fontSize: '1.1rem',
-			margin: '0.75rem'
+			margin: '0.75rem',
+			maxHeight: '9rem'
 		},
 
 		button: {
 			fontSize: '0.9rem',
+			padding: '0.5rem',
 			color: '#fff',
 			backgroundColor: 'rgba(0,0,0,0)',
 			border: 'none',
 			outline: 'none',
 			cursor: 'pointer'
+		},
+		colorButton: {
+			width: '1rem',
+			height: '1rem',
+			border: 'thin solid #fff',
+			borderRadius: '1rem',
+			color: '#fff',
+			backgroundColor: 'rgba(0,0,0,0)',
+			outline: 'none',
+			cursor: 'pointer'
+		},
+		moveButton: {
+			zIndex: 25,
+			fontSize: '0.9rem',
+			position: 'absolute',
+			padding: '0.5rem',
+			bottom: '-2.5rem',
+			left: '3rem',
+			border: 'none',
+			color: '#fff',
+			backgroundColor: '#000',
+			outline: 'none',
+			cursor: 'pointer'
+		},
+		deleteButton: {
+			zIndex: 25,
+			fontSize: '0.9rem',
+			position: 'absolute',
+			top: '-1rem',
+			right: '-1rem'
 		}
 	};
 
@@ -83,14 +123,42 @@ class NoteView extends React.Component {
 					change={this.onChange}
 					ref={el => this.el = el}
 				/>
-				<span 
-					style={Object.assign({}, Style.stats, {backgroundColor: props.thread.color})}
-				>
-					<button 
-						onclick={() => props.onEdit({sliceIndex: props.sliceIndex, noteIndex: props.noteIndex})} 
-						style={Style.button}
-					>edit</button>
-					<span style={Style.wordcount}>{props.note.wc} words</span>
+					<span 
+						style={Object.assign({}, Style.stats, {backgroundColor: props.thread.color})}
+					>
+						{!props.selected ? [
+							<button 
+								onclick={() => props.onEdit({sliceIndex: props.sliceIndex, noteIndex: props.noteIndex})} 
+								style={Style.button}
+							>edit</button>,
+							<span style={Style.wordcount}>{props.note.wc} words</span>
+						] : [
+							<button
+								style={Style.colorButton}
+								onClick={() => this.context.do('MODIFY_NOTE_THREAD', {
+									sliceIndex: props.sliceIndex,
+									noteIndex: props.noteIndex
+								})}
+							></button>,
+							<ThreadLabel
+								value={props.thread.name}
+								onChange={(e) => this.context.do('MODIFY_THREAD_NAME', {
+									atIndex: props.note.thread,
+									newName: e.target.value
+								})}
+							/>,
+							/*<button
+								style={Style.moveButton}
+								onClick={props.moveNote}
+							>move</button>,*/
+							<DeleteButton
+								style={Style.deleteButton}
+								onHold={() => this.context.do('DELETE_NOTE', {
+									sliceIndex: props.sliceIndex,
+									noteIndex: props.noteIndex
+								})}
+							/>							
+						]}
 				</span>
 			</div>
 		)

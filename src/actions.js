@@ -47,6 +47,13 @@ module.exports = {
 		note.wc = action.wc;
 		return store;
 	},
+	MODIFY_NOTE_THREAD: function(action, store) {
+		var note;
+		store.slices = Object.assign([], store.slices);
+		note = store.scenes[action.sliceIndex].notes[action.noteIndex];
+		if (++note.thread === store.threads.length) note.thread = 0;
+		return store;
+	},
 
 // LOCATION ACTIONS
 	NEW_LOCATION: function(action, store) {
@@ -84,18 +91,21 @@ module.exports = {
 
 // THREAD ACTIONS
 	NEW_THREAD: function(action, store) {
-		store.thread.push({
-			color: '#ffffff',
-			name: 'Thread'
+		store.threads = Object.assign([], store.threads);
+		store.threads.push({
+			color: action.color,
+			name: action.name
 		});
 		return store;
 	},
 	DELETE_THREAD: function(action, store) {
+		store.threads = Object.assign([], store.threads);
 		store.splice(action.atIndex, 1);
 		return store;
 	},
-	MODIFY_THREAD_COLOR: function(action, store) {
-		store.thread[action.atIndex].color = action.newColor;
+	MODIFY_THREAD_NAME: function(action, store) {
+		store.threads = Object.assign([], store.threads);
+		store.threads[action.atIndex].name = action.newName;
 		return store;
-	},
+	}
 };
