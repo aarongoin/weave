@@ -5,38 +5,19 @@ const
 	FileSaver = require('file-saver'),
 	FileOpener = require('./components/FileOpener.js'),
 
-	AppMenu = require('./components/AppMenu.js'),
+	PrintModal = require('./components/PrintModal.js'),
+
 	WeaveView = require('./components/WeaveView.js'),
-	NoteEditor = require('./components/NoteEditor.js'),
+	SceneWriter = require('./components/SceneWriter.js'),
 
 	Bind = require('./bind.js'),
 	LZW = require('lz-string'),
 	Source = require('./Sourcery.js'),
 	Actions = require('./actions.js'),
 	Style = {
-		app: 'width: 100vw;',
-		menuButton: {
-			zIndex: 22,
-			minHeight: '2.5rem',
-			padding: '0.5rem 0.75rem',
-			width: '7rem',
-			position: 'fixed',
-			left: 0,
-
-			outline: 'none',
-			backgroundColor: '#000000',
-
-			border: 'none',
-			borderBottom: 'thin solid #777',
-
-			color: '#fff',
-			fontSize: '1.2rem',
-
-			cursor: 'pointer'
-		}
+		app: 'width: 100vw;'
 	},
 	THREADS = [
-		{ name: '', color: '#000000' },
 		{ name: '', color: '#333333' },
 		{ name: '', color: '#666666' },
 		{ name: '', color: '#999999' },
@@ -63,42 +44,42 @@ class App extends React.Component {
 		this.state = {
 
 			isEditing: false,
+			isPrinting: false,
 			targetNote: undefined,
-			noteCoords: undefined,
-
-			menuOpen: false,
-			menuOffset: '0rem',
-			menuGroups: [],
-			menuButton: {},
+			sceneCoords: undefined,
 
 			project: Source.getLocal('weave-project'),
 			store: Source.getLocal('weave-store')
 		}
 
 		if (this.state.project) this.state.project = JSON.parse(this.state.project);
-		else this.state.project = { title: 'Welcome to Weave', wordCount: 4, sceneCount: 1}
+		else this.state.project = {
+			title: 'Welcome to Weave',
+			wordCount: 4,
+			sceneCount: 1,
+			author: 'Aaron Goin'
+		};
 
 		if (this.state.store) this.state.store = JSON.parse(LZW.decompressFromUTF16(this.state.store));
 		else this.state.store = {
-			scenes: [{datetime: '1999-10-26', notes: [{ thread: 0, head: 'Welcome to Weave!', body: 'This is the place!', wc: 4 }] }],
+			slices: [{datetime: '1999-10-26', scenes: [{ thread: 0, head: 'Welcome to Weave!', body: 'This is the place!', wc: 4 }] }],
 			threads: Object.assign([], THREADS),
-			locations: ['Star Labs']
+			locations: ['Star Labs'],
+			layout: [['Chapter One'], [0, 0]]
 		};
 
 		Bind(this);
 
-		this.state.project = Object.assign({title: this.state.project.title}, this.countProject());
-		this.state.menuButton = this.projectButton();
-		this.state.menuGroups = this.projectMeta();
+		this.state.project = Object.assign(this.state.project, this.countProject());
 	}
 
 	countProject() {
 		return {
-			wordCount: this.state.store.scenes.reduce((wc, slice) => 
-				(wc + slice.notes.reduce((wc, note) => ((note) ? (wc + note.wc) : wc), 0))
+			wordCount: this.state.store.slices.reduce((wc, slice) => 
+				(wc + slice.scenes.reduce((wc, scene) => ((scene) ? (wc + scene.wc) : wc), 0))
 			, 0),
-			sceneCount: this.state.store.scenes.reduce((scenes, slice) => 
-				(scenes + slice.notes.reduce((scenes, note) => ((note) ? (scenes + 1) : scenes), 0))
+			sceneCount: this.state.store.slices.reduce((scenes, slice) => 
+				(scenes + slice.scenes.reduce((scenes, scene) => ((scene) ? (scenes + 1) : scenes), 0))
 			, 0)
 		};
 	}
@@ -112,69 +93,55 @@ class App extends React.Component {
 	}
 
 	render(props, state) {
-		var children = [
-			<FileOpener
-				ref={(el) => (this.FileOpener = el.base)}
-				onChange={this.openProject}
-			/>
-		];
-
-		if (state.menuOpen) {
-			children.push(
-				<AppMenu
-					groups={state.menuGroups}
-					ref={(el) => {
-						if (el && el.base.clientHeight != this.state.menuOffset) this.setState({ menuOffset: el.base.clientHeight });
-					}}
-				/>
-			);
-			if (state.menuButton) children.push(
-				<button
-					style={Object.assign({top: state.menuOffset, marginTop: '1px'}, Style.menuButton)}
-					onClick={(e) => {
-						if (state.menuButton.onClick) state.menuButton.onClick(e)
-						this.setState({ menuOpen: false, menuOffset: '0rem' });
-					}}
-				>
-					{state.menuButton.opened.value}
-				</button>
-			);
-		} else children.push(
-			<button
-				style={Object.assign({top: '0rem'}, Style.menuButton)}
-				onClick={(e) => {
-					if (state.menuButton.closed.onClick) state.menuButton.closed.onClick(e)
-					this.setState({ menuOpen: true, menuOffset: '2.5rem' });
-				}}
-			>
-				{state.menuButton.closed.value}
-			</button>
-		);
-
-		children.push(state.isEditing ?
-			<NoteEditor
-				menuOffset={state.menuOffset}
-				note={state.targetNote}
-				coords={state.noteCoords}
-				thread={state.store.threads[state.targetNote.thread]}
-				menu={this.layoutMenu}
-				onDone={this.onDone}
-			/>
-		:
-			<WeaveView
-				menuOffset={state.menuOffset}
-				scenes={state.store.scenes}
-				threads={state.store.threads}
-				locations={state.store.locations}
-				menu={this.layoutMenu}
-				editNote={this.editNote}
-				windowWidth={window.innerWidth}
-			/>
-		);
-
 		return (
 			<div id="app" style={Style.app}>
-				{children}
+				<FileOpener
+					ref={(el) => (this.FileOpener = el.base)}
+					onChange={this.openProject}
+				/>
+				{(state.isEditing ?
+					<SceneWriter
+						scene={state.targetNote}
+						coords={state.sceneCoords}
+						thread={state.store.threads[state.targetNote.thread]}
+						onDone={this.onDone}
+					/>
+				:
+					<WeaveView
+						title={state.project.title}
+						author={state.project.author}
+						slices={state.store.slices}
+						threads={state.store.threads}
+						locations={state.store.locations}
+						editNote={this.editNote}
+						windowWidth={window.innerWidth}
+						projectFuncs={{
+							onTitleChange: (event) => {
+								this.state.project.title = event.target.value;
+								this.forceUpdate();
+								this.saveProject();
+							},
+							onAuthorChange: (event) => {
+								this.state.project.author = event.target.value;
+								this.forceUpdate();
+								this.saveProject();
+							},
+							import: this.importProject,
+							export: this.exportProject,
+							print: () => this.setState({ isPrinting: true }),
+							delete: this.delete
+						}}
+					/>
+				)}
+				{state.isPrinting ?
+					<PrintModal
+						slices={state.store.slices}
+						threads={state.store.threads}
+						cancel={() => this.setState({ isPrinting: false })}
+					/>
+				:
+					''
+				}
 			</div>
 		);
 	}
@@ -182,34 +149,28 @@ class App extends React.Component {
 	editNote(coords) {
 		this.setState({
 			isEditing: true,
-			noteCoords: coords,
-			targetNote: this.state.store.scenes[coords.sliceIndex].notes[coords.noteIndex],
-			menuOpen: true 
+			sceneCoords: coords,
+			targetNote: this.state.store.slices[coords.sliceIndex].scenes[coords.sceneIndex],
 		});
 	}
 
-	projectButton() {
-		return AppMenu.main(AppMenu.text('done'), AppMenu.text(this.state.project.title.length ? this.state.project.title : 'Project'));
+	importProject() {
+		this.FileOpener.click();
 	}
 
-	projectMeta() {
-		return [
-			[
-				AppMenu.input('Project Title', this.state.project.title, (event) => {
-					this.state.project.title = event.target.value;
-					this.setState({ menuGroups: this.projectMeta(event.target.value), menuButton: this.projectButton() });
-					this.saveProject();
-				})
-			],[
-				AppMenu.text(this.state.project.sceneCount + ' scenes'),
-				AppMenu.text(this.state.project.wordCount + ' words')
-			],[
-				AppMenu.btn('import', (event) => this.FileOpener.click()),
-				AppMenu.btn('export', (event) => FileSaver.saveAs(new Blob([JSON.stringify(Object.assign({}, this.state.project, this.state.store))], {type: "text/plain;charset=utf-8"}), this.state.project.title + '.weave')),
-				AppMenu.btn('print', (event) => console.log("TODO!"))
-			],
-			[AppMenu.deleteBtn(this.delete)]
-		];
+	exportProject() {
+		FileSaver.saveAs(new Blob([JSON.stringify(Object.assign({}, this.state.project, this.state.store))], {type: "text/plain;charset=utf-8"}), this.state.project.title + '.weave');
+	}
+
+	print(sceneList) {
+		var text, slices = this.state.store.slices;
+		this.setState({printing: false});
+
+		text = sceneList.reduce((text, coords, i) => {
+			return text + '\n\n\n' + i + '\n\n' + slices[coords.sliceIndex].scenes[coords.sceneIndex].body
+		}, this.state.project.title);
+
+		FileSaver.saveAs(new Blob([text], {type: "text/plain;charset=utf-8"}), this.state.project.title + '_' + (new Date().toString()) + '.txt')
 	}
 
 	onResize() {
@@ -219,54 +180,41 @@ class App extends React.Component {
 	onDone() {
 		this.setState({
 			targetNote: null,
-			noteCoords: null,
-			isEditing: false,
-			menuOpen: false,
-			menuButton: this.projectButton(),
-			menuGroups: this.projectMeta(),
-			menuOffset: '0rem' 
+			sceneCoords: null,
+			isEditing: false
 		});
 	}
 
 	do(action, data) {
 		this.state.store = Actions[action](data, this.state.store);
 		this.state.project = Object.assign({}, this.state.project, this.countProject());
-		this.setState({
-			menuGroups: (this.state.menuGroups[0][0].onInput) ? this.projectMeta() : this.state.menuGroups
-		});
+		this.forceUpdate();
 		this.save();
 	}
 
 	delete() {
-		this.state.project = {
-			title: 'Project Title',
-			wordCount: 0,
-			sceneCount: 0
-		};
 		this.setState({
-			menuOpen: false,
-			menuButton: this.projectButton(),
-			menuGroups: this.projectMeta(),
-			menuOffset: '0rem',
+			project: {
+				title: '',
+				author: '',
+				wordCount: 0,
+				sceneCount: 0
+			},
 			store: {
-				scenes: [{datetime: '', notes: [null] }],
+				slices: [{datetime: '', scenes: [null] }],
 				threads: Object.assign([], THREADS),
-				locations: ['']
+				locations: [''],
+				layout: [['Chapter One'], [0, 0]]
 			}
 		});
 		this.save();
 	}
 
 	openProject(data) {
-
 		data = JSON.parse(data);
-		this.state.project = { title: data.title, wordCount: data.wordCount, sceneCount: data.sceneCount };
-		this.state.store = { scenes: data.scenes, threads: data.threads, locations: data.locations };
 		this.setState({
-			menuOpen: false,
-			menuButton: this.projectButton(),
-			menuGroups: this.projectMeta(),
-			menuOffset: '0rem',
+			project: { title: data.title, wordCount: data.wordCount, sceneCount: data.sceneCount, author: data.author },
+			store: { slices: data.scenes, threads: data.threads, locations: data.locations }
 		})
 		this.save();
 	}
@@ -286,10 +234,10 @@ class App extends React.Component {
 
 	getChildContext() {
 		return {
+			thread: (index) => {
+				return this.state.store.threads[index];
+			},
 			do: this.do,
-			useMenu: (menuButton, menuGroups) => this.setState({ menuOpen: true, menuButton: menuButton, menuGroups: menuGroups, menuOffset: '2.5rem' }),
-			releaseMenu: () => this.setState({ menuOpen: false, menuButton: this.projectButton(), menuGroups: this.projectMeta(), menuOffset: '0rem' }),
-			modal: (contents) => this.setState({ modal: contents })
 		};
 	}
 }

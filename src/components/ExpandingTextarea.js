@@ -1,6 +1,8 @@
 const
 	React = require('preact'),
 
+	Bind = require('../bind.js'),
+
 	Style = {
 		editBox: {
 			outline: 'none',
@@ -14,12 +16,11 @@ class ExpandingTextarea extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
+			value: props.value,
 			style: Object.assign({}, Style.editBox, { height: props.baseHeight })
 		};
 
-		this.onInput = this.onInput.bind(this);
-		this.doResize = this.doResize.bind(this);
-		this.resize = this.resize.bind(this);
+		Bind(this);
 	}
 
 	render(props, state) {
@@ -33,12 +34,17 @@ class ExpandingTextarea extends React.Component {
 				onChange={props.change}
 				onFocus={props.focus}
 				onBlur={props.blur}
+				value={state.value}
 			/>
 		)
 	}
 
+	shouldComponentUpdate(props, state) {
+		return ((props.value !== this.props.value) ||
+				(state.value !== this.state.value));
+	}
+
 	componentDidMount() {
-		this.base.value = (this.props.value !== undefined) ? this.props.value : "No default value set...";
 		this.doResize();
 		window.addEventListener('resize', this.doResize);
 	}
@@ -48,6 +54,7 @@ class ExpandingTextarea extends React.Component {
 	}
 
 	onInput(event) {
+		this.state.value = event.target.value;
 		if (this.props.input) this.props.input(event);
 		this.doResize();
 	}

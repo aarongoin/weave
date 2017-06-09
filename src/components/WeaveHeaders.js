@@ -4,6 +4,8 @@ const
 	LocationHeader = require('./LocationHeader.js'),
 	SliceHeader = require('./SliceHeader.js'),
 
+	Bind = require('../bind.js'),
+
 	Style = {
 		outer: {
 			position: 'absolute',
@@ -13,10 +15,17 @@ const
 		},
 		locations: {
 			position: 'absolute',
-			top: 0,
+			top: '0.25rem',
 			width: '7rem',
 			minHeight: '100vh',
 			paddingTop: '2rem'
+		},
+		location: {
+			display: 'flex',
+			flexDirection: 'column',
+			justifyContent: 'flex-end',
+			position: 'relative',
+			height: '14rem',
 		},
 		scenes: {
 			zIndex: '11',
@@ -26,12 +35,6 @@ const
 			height: '2rem',
 			paddingLeft: '7rem',
 			minWidth: '100vw'
-		},
-		location: {
-			display: 'flex',
-			flexDirection: 'column',
-			justifyContent: 'flex-end',
-			height: '14rem',
 		},
 		sliceButton: {
 			margin: '0 1.375rem',
@@ -83,7 +86,7 @@ class WeaveHeaders extends React.Component {
 			y: 0
 		}
 
-		this.onScroll = this.onScroll.bind(this);
+		Bind(this);
 	}
 
 	componentDidMount() {
@@ -94,12 +97,11 @@ class WeaveHeaders extends React.Component {
 		window.removeEventListener('scroll', this.onScroll);
 	}
 
-	shouldComponentUpdate(props, state, context) {
-		return ((state.x !== this.state.x) ||
-				(state.y !== this.state.y) ||
-				(props.scenes !== this.props.scenes) ||
+	shouldComponentUpdate(props, state) {
+		return ((props.windowWidth !== this.props.windowWidth) ||
 				(props.locations !== this.props.locations) ||
-				(props.windowWidth !== this.props.windowWidth));
+				(props.slices !== this.props.slices) ||
+				(state !== this.state))
 	}
 
 	render(props, state) {
@@ -110,7 +112,7 @@ class WeaveHeaders extends React.Component {
 			>
 				<div
 					data-is="SliceHeaders"
-					style={Object.assign({}, Style.scenes, { top: state.y, width: ((props.scenes.length*18 + 2) + 'rem')  })}
+					style={Object.assign({}, Style.scenes, { top: state.y, width: ((props.slices.length*18 + 2) + 'rem')  })}
 				>
 					{[
 						<button
@@ -119,7 +121,7 @@ class WeaveHeaders extends React.Component {
 							onmouseenter={e => e.target.style.backgroundColor = 'rgba(255,255,255,0.2)'}
 							onmouseleave={e => e.target.style.backgroundColor = 'rgba(0,0,0,0)'}
 						>+</button>
-					].concat(props.scenes.map((slice, i) => 
+					].concat(props.slices.map((slice, i) => 
 						<div style={{display: 'inline', width: '18rem'}}>
 							<SliceHeader
 								id={i}
@@ -143,12 +145,12 @@ class WeaveHeaders extends React.Component {
 						zIndex: (props.windowWidth < 700) ? 8 : 10 })}
 				>
 					{((props.locations.map((location, i) =>
-						<div style={Style.location}>
-							<LocationHeader
-								id={i}
-								value={location}
-							/>
-						</div>
+						<LocationHeader
+							id={i}
+							value={location}
+							onDrag={(id) => this.dragging = id}
+							onDrop={this.onLocationDrop}
+						/>
 					)).concat(
 						[<div style={Style.location}>
 							<button
@@ -168,6 +170,13 @@ class WeaveHeaders extends React.Component {
 		this.setState({
 			x: document.body.scrollLeft,
 			y: document.body.scrollTop
+		});
+	}
+
+	onLocationDrop(toIndex) {
+		this.context.do('MOVE_LOCATION', {
+			fromIndex: this.dragging,
+			toIndex: toIndex
 		});
 	}
 }

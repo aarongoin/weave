@@ -9,7 +9,7 @@ const
 			left: '0',
 			right: '0',
 
-			width: '100%',
+			width: '100vw',
 			border: 'none',
 			borderBottom: 'thin solid #777',
 
@@ -98,6 +98,8 @@ function AppMenu(props, state) {
 				{props.groups.map((group) =>
 					<ul style={Style.ul}>
 						{group.map((item) => {
+						// CUSTOM ITEM
+							if (item.custom) return item.custom;
 						// BUTTON ITEM
 							if (item.onClick || item.onHold) return (
 								<li style={Style.li}>

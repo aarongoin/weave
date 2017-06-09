@@ -1,7 +1,7 @@
 const
 	React = require('preact'),
 
-	NoteView = require('./NoteView.js'),
+	SceneEditor = require('./SceneEditor.js'),
 
 	Style = {
 		slice: {
@@ -16,6 +16,7 @@ const
 
 		space: {
 			height: '14rem',
+			width: '14rem',
 			display: 'flex',
 			justifyContent: 'center',
 			alignItems: 'flex-end'
@@ -40,31 +41,39 @@ module.exports = function(props, state) {
 	
 	return (
 		<div style={Style.slice}>
-			{props.slice.notes.map((note, i) => 
-				<div style={Style.space}>
-					{(note) ?
-						<NoteView
+			{props.slice.scenes.map((scene, i) => {
+				if (scene) return (
+					<div style={Style.space}>
+						<SceneEditor
 							sliceIndex={props.id}
-							selected={(props.selection && props.selection.noteIndex === i)}
-							noteIndex={i}
-							note={note}
-							thread={props.threads[note.thread]}
+							selected={(props.selection && props.selection.sceneIndex === i)}
+							sceneIndex={i}
+							scene={scene}
+							thread={props.threads[scene.thread]}
 							onSelect={props.onSelect}
 							onDeselect={props.onDeselect}
 							onEdit={props.editNote}
 							moveNote={props.moveNote}
+							onDrag={props.onDrag}
 						/>
-					:
+					</div>
+				);
+				else return (
+					<div
+						style={Style.space}
+						onDragOver={(e) => e.preventDefault()}
+						onDrop={() => props.onDrop({ sliceIndex: props.id, sceneIndex: i })}
+					>
 						<button
 							style={Style.button}
 							onclick={() => this.context.do('NEW_NOTE', {
 								sliceIndex: props.id,
-								noteIndex: i
+								sceneIndex: i
 							})}
 						>+</button>
-					}
-				</div>
-			)}
+					</div>
+				);
+			})}
 		</div>
 	)
 }

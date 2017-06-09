@@ -6,7 +6,7 @@ const
 	SliceView = require('./SliceView.js'),
 	WeaveHeaders = require('./WeaveHeaders.js'),
 	WeaveBackground = require('./WeaveBackground.js'),
-	AppMenu = require('./AppMenu.js'),
+	ProjectModal = require('./ProjectModal.js'),
 
 	Style = {
 		weave: {
@@ -18,6 +18,25 @@ const
 			display: 'flex',
 			justifyContent: 'flex-start',
 			alignItems: 'flex-start'
+		},
+		projectButton: {
+			zIndex: 22,
+			minHeight: '2.5rem',
+			padding: '0.5rem 0.75rem',
+			width: '7rem',
+			position: 'fixed',
+			left: 0,
+
+			outline: 'none',
+			backgroundColor: '#000000',
+
+			border: 'none',
+			borderBottom: 'thin solid #777',
+
+			color: '#fff',
+			fontSize: '1.2rem',
+
+			cursor: 'pointer'
 		}
 	};
  
@@ -26,7 +45,8 @@ class WeaveView extends React.Component {
 		super(props, context);
 
 		this.state = {
-			selection: null
+			selection: null,
+			projectModal: false
 		}
 
 		this.allowDeselect = true;
@@ -38,21 +58,20 @@ class WeaveView extends React.Component {
 		return (
 			<div
 				data-is="WeaveView"
-				style={Object.assign({marginTop: props.menuOffset}, Style.weave)}
+				style={Style.weave}
 				onclick={this.onDeselect}
 			>
 				<WeaveHeaders
-					scenes={props.scenes}
+					slices={props.slices}
 					locations={props.locations}
 					windowWidth={props.windowWidth}
 				/>
 				<WeaveBackground
-					scenes={props.scenes.length}
+					slices={props.slices.length}
 					locations={props.locations.length}
-					menuOffset={props.menuOffset}
 				/>
 				<div data-is="Weave" style={Style.scenes}>
-					{props.scenes.map((slice, i) =>
+					{props.slices.map((slice, i) =>
 						<SliceView
 							id={i}
 							selection={(state.selection && state.selection.sliceIndex === i) ? state.selection : null}
@@ -61,28 +80,55 @@ class WeaveView extends React.Component {
 							onSelect={this.onSelect}
 							onDeselect={this.onDeselect}
 							editNote={props.editNote}
-							moveNote={this.moveNote}
+							onDrag={this.onNoteDrag}
+							onDrop={this.onNoteDrop}
 						/>
 					)}
 				</div>
+				{(!state.projectModal ?
+					<button
+						style={Style.projectButton}
+						onClick={() => this.setState({ projectModal: true })}
+					>
+						{props.title}
+					</button>
+				:
+					<ProjectModal
+						title={props.title}
+						author={props.author}
+						functions={props.projectFuncs}
+						onDone={() => this.setState({ projectModal: false })}
+					/>
+				)}
 			</div>
 		)
 	}
 
 	onSelect(coords, i) {
 		this.setState({selection: coords});
-		//this.activeNoteMenu();
 	}
 
 	onDeselect(event) {
-		this.noteDeselected();
+		this.sceneDeselected();
 	}
 
-	noteDeselected() {
+	sceneDeselected() {
 		if (this.allowDeselect) {
 			this.setState({selection: null});
 		}
 	}
+
+	onNoteDrag(coords) {
+		this.dragging = coords;
+	}
+
+	onNoteDrop(coords) {
+		if (this.dragging) this.context.do('MOVE_NOTE', {
+			from: this.dragging,
+			to: coords
+		});
+	}
+
 }
 
 module.exports = WeaveView;

@@ -1,28 +1,28 @@
 module.exports = {
 // SLICE ACTIONS
 	NEW_SLICE: function(action, store) {
-		store.scenes = Object.assign([], store.scenes);
-		store.scenes.splice(action.atIndex, 0, {
+		store.slices = Object.assign([], store.slices);
+		store.slices.splice(action.atIndex, 0, {
 			datetime: '',
-			notes: store.locations.map(()=>null)
+			scenes: store.locations.map(()=>null)
 		});
 		return store;
 	},
 	DELETE_SLICE: function(action, store) {
-		store.scenes = Object.assign([], store.scenes);
-		action.slice = store.scenes.splice(action.atIndex, 1);
+		store.slices = Object.assign([], store.slices);
+		action.slice = store.slices.splice(action.atIndex, 1);
 		return store;
 	},
 	MODIFY_SLICE_DATE: function(action, store) {
-		store.scenes = Object.assign([], store.scenes);
-		store.scenes[action.atIndex].datetime = action.newDate;
+		store.slices = Object.assign([], store.slices);
+		store.slices[action.atIndex].datetime = action.newDate;
 		return store;
 	},
 
 // NOTE ACTIONS
 	NEW_NOTE: function(action, store) {
-		store.scenes = Object.assign([], store.scenes);
-		store.scenes[action.sliceIndex].notes.splice(action.noteIndex, 1, {
+		store.slices = Object.assign([], store.slices);
+		store.slices[action.sliceIndex].scenes.splice(action.sceneIndex, 1, {
 			thread: 0,
 			head: '',
 			body: '',
@@ -31,55 +31,61 @@ module.exports = {
 		return store;
 	},
 	DELETE_NOTE: function(action, store) {
-		store.scenes = Object.assign([], store.scenes);
-		store.scenes[action.sliceIndex].notes[action.noteIndex] = null;
+		store.slices = Object.assign([], store.slices);
+		store.slices[action.sliceIndex].scenes[action.sceneIndex] = null;
 		return store;
 	},
 	MODIFY_NOTE_HEAD: function(action, store) {
-		store.scenes = Object.assign([], store.scenes);
-		store.scenes[action.sliceIndex].notes[action.noteIndex].head = action.newHead;
+		store.slices = Object.assign([], store.slices);
+		store.slices[action.sliceIndex].scenes[action.sceneIndex].head = action.newHead;
 		return store;
 	},
 	MODIFY_NOTE_BODY: function(action, store) {
-		store.scenes = Object.assign([], store.scenes);
-		var note = store.scenes[action.sliceIndex].notes[action.noteIndex];
-		note.body = action.newBody;
-		note.wc = action.wc;
+		store.slices = Object.assign([], store.slices);
+		var scene = store.slices[action.sliceIndex].scenes[action.sceneIndex];
+		scene.body = action.newBody;
+		scene.wc = action.wc;
 		return store;
 	},
 	MODIFY_NOTE_THREAD: function(action, store) {
-		var note;
+		var scene;
 		store.slices = Object.assign([], store.slices);
-		note = store.scenes[action.sliceIndex].notes[action.noteIndex];
-		if (++note.thread === store.threads.length) note.thread = 0;
+		scene = store.slices[action.sliceIndex].scenes[action.sceneIndex];
+		if (++scene.thread === store.threads.length) scene.thread = 0;
+		return store;
+	},
+	MOVE_NOTE: function(action, store) {
+		store.slices = Object.assign([], store.slices);
+		store.slices[action.to.sliceIndex].scenes[action.to.sceneIndex] = store.slices[action.from.sliceIndex].scenes[action.from.sceneIndex];
+		store.slices[action.from.sliceIndex].scenes[action.from.sceneIndex] = null;
 		return store;
 	},
 
 // LOCATION ACTIONS
 	NEW_LOCATION: function(action, store) {
-		var i = store.scenes.length;
+		var i = store.slices.length;
 		store.locations = Object.assign([], store.locations);
-		store.scenes = Object.assign([], store.scenes);
+		store.slices = Object.assign([], store.slices);
 		store.locations.push('');
-		while (i--) store.scenes[i].notes.push(null);
+		while (i--) store.slices[i].scenes.push(null);
 		return store;
 	},
 	DELETE_LOCATION: function(action, store) {
-		var i = store.scenes.length;
+		var i = store.slices.length;
 		store.locations = Object.assign([], store.locations);
-		store.scenes = Object.assign([], store.scenes);
+		store.slices = Object.assign([], store.slices);
 		action.location = store.locations.splice(action.atIndex, 1);
-		while (i--) store.scenes[i].notes.splice(action.atIndex, 1);
+		while (i--) store.slices[i].scenes.splice(action.atIndex, 1);
 		return store;
 	},
 	MOVE_LOCATION: function(action, store) {
-		var i = store.scenes.length, notes;
+		var i = store.slices.length, scenes;
 		store.locations = Object.assign([], store.locations);
-		store.scenes = Object.assign([], store.scenes);
-		store.locations.splice(action.toIndex, 0, store.locations.splice(action.fromIndex, 1));
+		store.slices = Object.assign([], store.slices);
+		store.locations.splice(action.toIndex, 0, store.locations.splice(action.fromIndex, 1)[0]);
 		while (i--) {
-			notes = store.scenes[i].notes
-			notes.splice(action.toIndex, 0, notes.splice(action.fromIndex, 1));
+			scenes = store.slices[i].scenes;
+			scenes.splice(action.toIndex, 0, scenes.splice(action.fromIndex, 1)[0]);
 		}
 		return store;
 	},

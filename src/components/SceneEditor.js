@@ -1,7 +1,6 @@
 const
 	React = require('preact'),
 
-	AppMenu = require('./AppMenu.js'),
 	DeleteButton = require('./DeleteButton.js'),
 
 	nextColor = require('../colors.js'),
@@ -26,7 +25,7 @@ const
 			maxHeight: '13rem'
 		},
 
-		noteHead: {
+		sceneHead: {
 			fontSize: '1.1rem',
 			height: '1.3rem',
 			margin: '0.25rem 0.75rem'
@@ -88,13 +87,14 @@ const
 			zIndex: 25,
 			fontSize: '0.9rem',
 			position: 'absolute',
-			top: '-1rem',
-			right: '-1rem'
+			bottom: '-1.4rem',
+			right: '-1.4rem',
+			cursor: 'pointer'
 		}
 	};
 
 
-class NoteView extends React.Component {
+class SceneEditor extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
@@ -110,7 +110,9 @@ class NoteView extends React.Component {
 		return (
 			<div
 				style={argyle}
-				onclick={this.onClick}
+				onClick={this.onClick}
+				draggable
+				onDragStart={() => props.onDrag({sliceIndex: props.sliceIndex, sceneIndex: props.sceneIndex})}
 			>
 				<ExpandingTextarea
 					style={Style.textarea}
@@ -118,7 +120,7 @@ class NoteView extends React.Component {
 					oninput={this.onInput} 
 					baseHeight="1.3rem"
 					placeholder="Title/Summary"
-					value={props.note.head}
+					value={props.scene.head}
 					focus={this.onFocus}
 					change={this.onChange}
 					ref={el => this.el = el}
@@ -128,22 +130,22 @@ class NoteView extends React.Component {
 					>
 						{!props.selected ? [
 							<button 
-								onclick={() => props.onEdit({sliceIndex: props.sliceIndex, noteIndex: props.noteIndex})} 
+								onclick={() => props.onEdit({sliceIndex: props.sliceIndex, sceneIndex: props.sceneIndex})} 
 								style={Style.button}
 							>edit</button>,
-							<span style={Style.wordcount}>{props.note.wc} words</span>
+							<span style={Style.wordcount}>{props.scene.wc} words</span>
 						] : [
 							<button
 								style={Style.colorButton}
 								onClick={() => this.context.do('MODIFY_NOTE_THREAD', {
 									sliceIndex: props.sliceIndex,
-									noteIndex: props.noteIndex
+									sceneIndex: props.sceneIndex
 								})}
 							></button>,
 							<ThreadLabel
 								value={props.thread.name}
 								onChange={(e) => this.context.do('MODIFY_THREAD_NAME', {
-									atIndex: props.note.thread,
+									atIndex: props.scene.thread,
 									newName: e.target.value
 								})}
 							/>,
@@ -155,7 +157,7 @@ class NoteView extends React.Component {
 								style={Style.deleteButton}
 								onHold={() => this.context.do('DELETE_NOTE', {
 									sliceIndex: props.sliceIndex,
-									noteIndex: props.noteIndex
+									sceneIndex: props.sceneIndex
 								})}
 							/>							
 						]}
@@ -175,7 +177,7 @@ class NoteView extends React.Component {
 	onChange(event) {
 		this.context.do('MODIFY_NOTE_HEAD', {
 			sliceIndex: this.props.sliceIndex,
-			noteIndex: this.props.noteIndex,
+			sceneIndex: this.props.sceneIndex,
 			newHead: event.target.value
 		});
 	}
@@ -191,9 +193,9 @@ class NoteView extends React.Component {
 	select() {
 		this.props.onSelect({
 			sliceIndex: this.props.sliceIndex,
-			noteIndex: this.props.noteIndex
+			sceneIndex: this.props.sceneIndex
 		});
 	}
 }
 
-module.exports = NoteView;
+module.exports = SceneEditor;

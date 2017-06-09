@@ -23,6 +23,11 @@ class DeleteButton extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 	}
+
+	shouldComponentUpdate() {
+		return false;
+	}
+
 	render(props) {
 		return (
 			<button

@@ -1,9 +1,10 @@
 const
 	React = require('preact'),
 
-	NoteView = require('./NoteView.js'),
+	DeleteButton = require('./DeleteButton.js'),
 
 	Bind = require('../bind.js'),
+
 	Style = {
 		sliceHeader: {
 			zIndex: '11',
@@ -19,11 +20,20 @@ const
 			padding: '0.25rem'
 		},
 		slice: {
+			position: 'relative',
 			display: 'inline-flex',
 			justifyContent: 'center',
 			alignItems: 'center',
 			width: '14rem',
 			height: '100%'
+		},
+		deleteButton: {
+			zIndex: 25,
+			fontSize: '0.9rem',
+			position: 'absolute',
+			bottom: '-1.2rem',
+			right: '-1.2rem',
+			cursor: 'pointer'
 		}
 	};
 
@@ -35,34 +45,43 @@ class SliceHeader extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			value: props.value
+			value: props.value,
+			selected: false
 		};
 
 		Bind(this);
 	}
 
 	componentWillReceiveProps(props) {
-		this.setState({value: props.value});
-	}
-
-	shouldComponentUpdate(props, state, context) {
-		return ((state !== this.state) ||
-				(props.value !== this.props.value));
+		this.setState({value: props.value, selected: false});
 	}
 
 	render(props, state) {
 		return (
 			<div style={Style.slice}>
-				<input
-					type="text"
-					style={Style.sliceHeader}
-					maxLength="24"
-					size={MeasureText(state.value)}
-					value={state.value}
-					placeholder="time"
-					oninput={(event) => this.setState({value: event.target.value})}
-					onchange={this.onChange}
-				/>
+				<div style={{position: 'relative'}}>
+					<input
+						type="text"
+						style={Style.sliceHeader}
+						maxLength="24"
+						size={MeasureText(state.value)}
+						value={state.value}
+						placeholder="time"
+						onFocus={() => this.setState({ selected: true })}
+						onBlur={this.onBlur}
+						onInput={(event) => this.setState({value: event.target.value})}
+						onChange={this.onChange}
+					/>
+					{state.selected ?
+						<DeleteButton
+							ref={(c) => this.delBtn = c}
+							style={Style.deleteButton}
+							onHold={() => this.context.do('DELETE_SLICE', { atIndex: props.id })}
+						/>
+					:
+						''
+					}
+				</div>
 			</div>
 		)
 	}
@@ -72,6 +91,12 @@ class SliceHeader extends React.Component {
 			atIndex: this.props.id,
 			newDate: event.target.value
 		});
+	}
+
+	onBlur(e) {
+		setTimeout(() => {
+			if (!this.delBtn.timer) this.setState({selected: false});
+		}, 100);
 	}
 }
 

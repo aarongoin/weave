@@ -44,13 +44,13 @@ const
 			marginRight: '0.5rem',
 			padding: '0.25rem 0.5rem 0.2rem 0.5rem'
 		},
-		noteHead: {
+		sceneHead: {
 			color: '#222',
 			fontSize: '1.7rem',
 
 			margin: '0.5rem 1.5rem'
 		},
-		noteBody: {
+		sceneBody: {
 			color: '#222',
 			fontSize: '1.1rem',
 			margin: '0.5rem 1.5rem'
@@ -80,6 +80,14 @@ const
 		statFree: {
 			bottom: 'auto',
 			position: 'inherit'
+		},
+		doneButton: {
+			fontSize: '1rem',
+			fontWeight: 'bold',
+			border: 'none',
+			outline: 'none',
+			backgroundColor: 'rgba(0,0,0,0)',
+			cursor: 'pointer'
 		}
 	},
 
@@ -93,18 +101,18 @@ function count(text) {
 	return wc;
 }
 
-class NoteEditor extends React.Component {
+class SceneWriter extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
 		this.state = {
 			threadStyle: Object.assign({}, Style.thread, { backgroundColor: props.thread.color }),
-			head: props.note.head,
-			body: props.note.body,
-			wc: props.note.wc,
+			head: props.scene.head,
+			body: props.scene.body,
+			wc: props.scene.wc,
 			pages: 1,
 			pageOf: 1,
-			statStyle: {}
+			statStyle: Style.statSticky
 		}
 
 		Bind(this);
@@ -121,7 +129,7 @@ class NoteEditor extends React.Component {
 						style={state.threadStyle}
 						value={props.thread.name}
 						onChange={(e) => this.context.do('MODIFY_THREAD_NAME', {
-							atIndex: props.note.thread,
+							atIndex: props.scene.thread,
 							newName: e.target.value
 						})}
 					/>
@@ -130,7 +138,7 @@ class NoteEditor extends React.Component {
 					</span>*/}
 				</span>
 				<ExpandingTextarea
-					style={Style.noteHead}
+					style={Style.sceneHead}
 					maxLength="250"
 					input={(e) => this.setState({head: e.target.value})}
 					change={() => this.context.do('MODIFY_NOTE_HEAD', 
@@ -142,7 +150,7 @@ class NoteEditor extends React.Component {
 				/>
 				<ExpandingTextarea
 					ref={this.bodyMounted}
-					style={Style.noteBody}
+					style={Style.sceneBody}
 					input={this.onBody}
 					change={() => this.context.do('MODIFY_NOTE_BODY', 
 						Object.assign({newBody: state.body, wc: state.wc}, props.coords)
@@ -152,38 +160,26 @@ class NoteEditor extends React.Component {
 					placeholder="Body"
 				/>
 				<span style={Object.assign({}, Style.stats, state.statStyle)}>
-					<span>
-						{state.pageOf + '/' + state.pages}
-					</span>
 					<span style={Style.wc}>
 						{state.wc + ' words'}
 					</span>
+					<span>
+						{state.pageOf + '/' + state.pages}
+					</span>
+					<button
+						style={Style.doneButton}
+						onClick={props.onDone}
+					>done</button>
 				</span>
 			</div>
 		)
 	}
 
 	componentDidMount() {
-		this.onScroll();
-
 		window.addEventListener('scroll', this.onScroll);
 		window.addEventListener('resize', this.onResize);
 
-		this.context.useMenu(null, [
-			[
-				{ 
-					icon: './dist/img/undo.svg',
-					onClick: (event) => document.execCommand('undo')
-				},
-				{ 
-					icon: './dist/img/redo.svg',
-					onClick: (event) => document.execCommand('redo')
-				}
-
-			],
-			[AppMenu.btn('done', () => this.props.onDone())]
-		]);
-
+		window.scrollTo(0, 0);
 	}
 
 	componentWillUnmount() {
@@ -233,4 +229,4 @@ class NoteEditor extends React.Component {
 	}
 }
 
-module.exports = NoteEditor;
+module.exports = SceneWriter;
