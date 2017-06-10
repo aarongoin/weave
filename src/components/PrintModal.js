@@ -8,14 +8,15 @@ const
 	Style = {
 		scene: {
 			display: 'flex',
-			justifyContent: 'flex-start',
+			justifyContent: 'space-around',
 			fontSize: '0.9rem',
 			alignItems: 'center',
 			padding: '0.5rem',
 			margin: '0.5rem 0.5rem',
+			width: '20rem'
 		},
 		span: {
-			width: '9rem',
+			minWidth: '5rem',
 			marginRight: '1rem',
 			whiteSpace: 'nowrap',
 			overflow: 'hidden',
@@ -23,7 +24,7 @@ const
 		},
 		row: {
 			display: 'flex',
-			justifyContent: 'flex-start',
+			justifyContent: 'space-around',
 			alignItems: 'center',
 			width: '100%'
 		},
@@ -84,13 +85,15 @@ class PrintModal extends React.Component {
 		this.state = {
 			threads: [],
 			filtered: [],
-			printList: []
+			deselected: []
 		}
 
 		Bind(this);
 	}
 
 	render(props, state) {
+		const select = this.select;
+
 		return (
 			<ModalView
 				dismiss={props.cancel}
@@ -119,58 +122,98 @@ class PrintModal extends React.Component {
 					data-is="slices"
 					style={Style.sliceSection}
 				>
-					{props.slices.reduce((slices, slice) => {
-						var scenes = slice.scenes.reduce((scenes, scene) => {
-							if (scene && state.threads.indexOf(scene.thread) !== -1) {
-								return scenes.concat([
-									<div
-										style={Object.assign({}, Style.scene, {
-											color: '#fff',
-											backgroundColor: props.threads[scene.thread].color
-										})}
-									>
-										<span
-											style={Style.span}
-										>{scene.head}</span>
-										<span>{scene.wc + ' words'}</span>
-									</div>
-								]);
-							} else return scenes;
-						}, []);
-
-						if (scenes.length) {
-							scenes.unshift(<span style={Style.date}>{slice.datetime}</span>);
-							return slices.concat([
-								<div
-									style={Style.row}
-								>
-									{scenes}
-								</div>
-							]);
-						} else return slices;
-					}, [])}
+					{state.filtered.map((item, i) => (
+						<div
+							style={Object.assign({opacity: (state.deselected.indexOf(i) !== -1) ? '0.5' : '1' }, Style.scene, item.style)}
+							onClick={() => select(i)}
+						>
+							{item.values.map((value) => (
+								<span style={Style.span}>{value}</span>
+							))}
+						</div>
+					))}
 				</div>
-				<button
-					style={Style.item}
-					onClick={() => {
-						props.cancel();
-					}}
-				>
-					print
-				</button>
+				<div style={Style.row}>
+					<button
+						style={Style.item}
+						onClick={() => {
+							props.cancel();
+						}}
+					>
+						cancel
+					</button>
+					<button
+						style={Style.item}
+						onClick={this.print}
+					>
+						print
+					</button>
+				</div>
 			</ModalView>
 		);
 	}
 
 	filter(event) {
-		var id = Number(event.target.dataset.id),
+		var filtered,
+			id = Number(event.target.dataset.id),
 			i = this.state.threads.indexOf(id);
 
 		if (i === -1) this.state.threads.push(id);
 		else this.state.threads.splice(i, 1);
-		
-		this.setState({ filtered: [] });
 
+		filtered = this.props.slices.reduce((slices, slice, i) => {
+			var scenes = this.props.headers[i] ?
+				[
+					{
+						values: [this.props.headers[i]],
+						style: {
+							color: '#000',
+							backgroundColor: '#fff'
+						}
+					}
+				]
+			:
+				[];
+
+			scenes = scenes.concat(
+				slice.scenes.reduce((scenes, scene, i) => {
+					if (scene && (this.state.threads.indexOf(i) !== -1) && scene.wc !== 0) {
+						scenes.push({
+							values: [scene.head, scene.wc + ' words'],
+							body: scene.body,
+							style: {
+								color: '#fff',
+								backgroundColor: this.props.threads[i].color
+							}
+						});
+					}
+					return scenes;
+				}, [])
+			);
+
+			if (scenes.length) return slices.concat(scenes);
+			else return slices;
+
+		}, []);
+
+		this.setState({ filtered: filtered, deselected: [] });
+	}
+
+	select(index, i) {
+		i = this.state.deselected.indexOf(index);
+
+		if (i === -1) this.state.deselected.push(index);
+		else this.state.deselected.splice(i, 1);
+
+		this.forceUpdate();
+	}
+
+	print() {
+		this.props.print(this.state.filtered.reduce((list, item, i) => {
+			if (this.state.deselected.indexOf(i) === -1) list.push(item);
+			return list;
+		}, []))
+		this.props.cancel();
 	}
 }
 

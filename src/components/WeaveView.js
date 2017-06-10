@@ -62,26 +62,27 @@ class WeaveView extends React.Component {
 				onclick={this.onDeselect}
 			>
 				<WeaveHeaders
-					slices={props.slices}
-					locations={props.locations}
+					slices={props.project.slices}
+					threads={props.project.threads}
 					windowWidth={props.windowWidth}
 				/>
 				<WeaveBackground
-					slices={props.slices.length}
-					locations={props.locations.length}
+					slices={props.project.slices.length}
+					threads={props.project.threads}
 				/>
 				<div data-is="Weave" style={Style.scenes}>
-					{props.slices.map((slice, i) =>
+					{props.project.slices.map((slice, i) =>
 						<SliceView
 							id={i}
 							selection={(state.selection && state.selection.sliceIndex === i) ? state.selection : null}
 							slice={slice}
-							threads={props.threads}
+							threads={props.project.threads}
 							onSelect={this.onSelect}
 							onDeselect={this.onDeselect}
 							editNote={props.editNote}
 							onDrag={this.onNoteDrag}
 							onDrop={this.onNoteDrop}
+							header={props.project.headers[i]}
 						/>
 					)}
 				</div>
@@ -90,12 +91,12 @@ class WeaveView extends React.Component {
 						style={Style.projectButton}
 						onClick={() => this.setState({ projectModal: true })}
 					>
-						{props.title}
+						{props.project.title.length ? props.project.title : 'Project Title'}
 					</button>
 				:
 					<ProjectModal
-						title={props.title}
-						author={props.author}
+						title={props.project.title}
+						author={props.project.author}
 						functions={props.projectFuncs}
 						onDone={() => this.setState({ projectModal: false })}
 					/>

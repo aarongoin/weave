@@ -3,9 +3,7 @@ const
 
 	DeleteButton = require('./DeleteButton.js'),
 
-	nextColor = require('../colors.js'),
-
-	ThreadLabel = require('./ThreadLabel.js'),
+	LocationLabel = require('./LocationLabel.js'),
 
 	Bind = require('../bind.js'),
 	ExpandingTextarea = require('./ExpandingTextarea.js'),
@@ -117,7 +115,7 @@ class SceneEditor extends React.Component {
 				<ExpandingTextarea
 					style={Style.textarea}
 					maxLength={250} 
-					oninput={this.onInput} 
+					input={this.onInput} 
 					baseHeight="1.3rem"
 					placeholder="Title/Summary"
 					value={props.scene.head}
@@ -135,24 +133,14 @@ class SceneEditor extends React.Component {
 							>edit</button>,
 							<span style={Style.wordcount}>{props.scene.wc} words</span>
 						] : [
-							<button
-								style={Style.colorButton}
-								onClick={() => this.context.do('MODIFY_NOTE_THREAD', {
+							<LocationLabel
+								value={props.scene.location}
+								onChange={(e) => this.context.do('MODIFY_NOTE_LOCATION', {
 									sliceIndex: props.sliceIndex,
-									sceneIndex: props.sceneIndex
-								})}
-							></button>,
-							<ThreadLabel
-								value={props.thread.name}
-								onChange={(e) => this.context.do('MODIFY_THREAD_NAME', {
-									atIndex: props.scene.thread,
-									newName: e.target.value
+									sceneIndex: props.sceneIndex,
+									newLocation: e.target.value
 								})}
 							/>,
-							/*<button
-								style={Style.moveButton}
-								onClick={props.moveNote}
-							>move</button>,*/
 							<DeleteButton
 								style={Style.deleteButton}
 								onHold={() => this.context.do('DELETE_NOTE', {

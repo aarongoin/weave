@@ -71,6 +71,7 @@ class SliceHeader extends React.Component {
 						onBlur={this.onBlur}
 						onInput={(event) => this.setState({value: event.target.value})}
 						onChange={this.onChange}
+						
 					/>
 					{state.selected ?
 						<DeleteButton
@@ -95,7 +96,7 @@ class SliceHeader extends React.Component {
 
 	onBlur(e) {
 		setTimeout(() => {
-			if (!this.delBtn.timer) this.setState({selected: false});
+			if (this.delBtn && !this.delBtn.timer) this.setState({selected: false});
 		}, 100);
 	}
 }

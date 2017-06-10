@@ -1,9 +1,10 @@
 const
 	React = require('preact'),
 
-	LocationHeader = require('./LocationHeader.js'),
+	ThreadHeader = require('./ThreadHeader.js'),
 	SliceHeader = require('./SliceHeader.js'),
 
+	Colors = require('../colors.js'),
 	Bind = require('../bind.js'),
 
 	Style = {
@@ -13,19 +14,19 @@ const
 			minWidth: '100vw',
 			minHeight: '100vh'
 		},
-		locations: {
+		threads: {
 			position: 'absolute',
 			top: '0.25rem',
 			width: '7rem',
 			minHeight: '100vh',
 			paddingTop: '2rem'
 		},
-		location: {
+		thread: {
 			display: 'flex',
 			flexDirection: 'column',
 			justifyContent: 'flex-end',
 			position: 'relative',
-			height: '14rem',
+			height: '13.75rem',
 		},
 		scenes: {
 			zIndex: '11',
@@ -73,6 +74,18 @@ const
 			padding: '0.5rem 0.5rem',
 			backgroundColor: 'rgba(0,0,0,0)',
 			width: '100%'
+		},
+		header: {
+			display: 'flex',
+			justifyContent: 'center',
+			alignItems: 'center',
+			height: '2rem',
+			fontSize: '0.9rem',
+			color: '#fff',
+			border: 'none',
+			backgroundColor: '#000',
+			width: '100%',
+			border: 'none'
 		}
 	};
 
@@ -99,7 +112,7 @@ class WeaveHeaders extends React.Component {
 
 	shouldComponentUpdate(props, state) {
 		return ((props.windowWidth !== this.props.windowWidth) ||
-				(props.locations !== this.props.locations) ||
+				(props.threads !== this.props.threads) ||
 				(props.slices !== this.props.slices) ||
 				(state !== this.state))
 	}
@@ -137,30 +150,36 @@ class WeaveHeaders extends React.Component {
 					))}
 				</div>
 				<div 
-					data-is="LocationHeaders"
-					style={Object.assign({}, Style.locations, {
+					data-is="ThreadHeaders"
+					style={Object.assign({}, Style.threads, {
 						left: state.x,
-						height: ((props.locations.length*14 + 16) + 'rem'),
+						height: (((props.threads.length+1)*14 + 16) + 'rem'),
 						backgroundColor: (props.windowWidth < 700) ? 'rgba(0,0,0,0)' : '#111',
 						zIndex: (props.windowWidth < 700) ? 8 : 10 })}
 				>
-					{((props.locations.map((location, i) =>
-						<LocationHeader
+					{([
+						<div style={Object.assign({marginBottom: '0.25rem'}, Style.thread)}>
+							<span
+								style={Style.header}
+							>Header</span>
+						</div>
+					].concat((props.threads.map((thread, i) =>
+						<ThreadHeader
 							id={i}
-							value={location}
+							thread={thread}
 							onDrag={(id) => this.dragging = id}
-							onDrop={this.onLocationDrop}
+							onDrop={this.onThreadDrop}
 						/>
 					)).concat(
-						[<div style={Style.location}>
+						[<div style={Style.thread}>
 							<button
-								onclick={(event) => this.context.do('NEW_LOCATION')}
+								onclick={(event) => this.context.do('NEW_THREAD', {color: Colors.random()})}
 								style={Style.threadBtn}
 								onmouseenter={e => e.target.style.backgroundColor = 'rgba(255,255,255,0.2)'}
 								onmouseleave={e => e.target.style.backgroundColor = 'rgba(0,0,0,0)'}
 							>+</button>
 						</div>]
-					))}
+					)))}
 				</div>
 			</div>
 		)
@@ -173,8 +192,8 @@ class WeaveHeaders extends React.Component {
 		});
 	}
 
-	onLocationDrop(toIndex) {
-		this.context.do('MOVE_LOCATION', {
+	onThreadDrop(toIndex) {
+		this.context.do('MOVE_THREAD', {
 			fromIndex: this.dragging,
 			toIndex: toIndex
 		});

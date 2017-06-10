@@ -1,6 +1,5 @@
 const
 	colors = [
-		'#000000',
 		'#333333',
 		'#666666',
 		'#999999',
@@ -21,8 +20,11 @@ const
 		'#bd7af6'
 	];
 
-module.exports = function(old) {
-	var i = colors.indexOf(old);
-
-	return colors[++i === colors.length ? 0 : i];
-}
+module.exports = {
+	palette: colors,
+	random: function(old, color) {
+		color = colors[(Math.random() * colors.length) >> 0];
+		if (old) while (old === color) { color = colors[(Math.random() * colors.length) >> 0] }
+		return color;
+	}
+};

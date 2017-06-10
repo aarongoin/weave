@@ -2,6 +2,7 @@ const
 	React = require('preact'),
 
 	SceneEditor = require('./SceneEditor.js'),
+	HeaderEditor = require('./HeaderEditor.js'),
 
 	Style = {
 		slice: {
@@ -41,7 +42,15 @@ module.exports = function(props, state) {
 	
 	return (
 		<div style={Style.slice}>
-			{props.slice.scenes.map((scene, i) => {
+			{[
+				<div style={Style.space}>
+					<HeaderEditor
+						id={props.id}
+						onEdit={props.editHeader}
+						header={props.header}
+					/>
+				</div>
+			].concat(props.slice.scenes.map((scene, i) => {
 				if (scene) return (
 					<div style={Style.space}>
 						<SceneEditor
@@ -49,11 +58,10 @@ module.exports = function(props, state) {
 							selected={(props.selection && props.selection.sceneIndex === i)}
 							sceneIndex={i}
 							scene={scene}
-							thread={props.threads[scene.thread]}
+							thread={props.threads[i]}
 							onSelect={props.onSelect}
 							onDeselect={props.onDeselect}
 							onEdit={props.editNote}
-							moveNote={props.moveNote}
 							onDrag={props.onDrag}
 						/>
 					</div>
@@ -73,7 +81,7 @@ module.exports = function(props, state) {
 						>+</button>
 					</div>
 				);
-			})}
+			}))}
 		</div>
 	)
 }

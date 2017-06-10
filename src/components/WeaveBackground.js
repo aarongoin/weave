@@ -17,10 +17,10 @@ const
 			width: '100%',
 			height: '100%'
 		},
-		location: {
+		thread: {
 			margin: '12rem 0',
 			height: '2rem',
-			backgroundColor: '#444444'
+			opacity: '0.3'
 		},
 		slice: {
 			display: 'inline-block',
@@ -39,7 +39,7 @@ class WeaveBackground extends React.Component {
 
 	shouldComponentUpdate(props, state, context) {
 		return ((props.menuOffset !== this.props.menuOffset) ||
-				(props.locations !== this.props.locations) ||
+				(props.threads !== this.props.threads) ||
 				(props.slices !== this.props.slices));
 	}
 
@@ -50,11 +50,23 @@ class WeaveBackground extends React.Component {
 				style={Object.assign({}, Style.outer, {
 					top: props.menuOffset,
 					width: (props.slices * 18 + 2) + 'rem',
-					height: (props.locations * 14 + 16) + 'rem'
+					height: ((props.threads.length + 1) * 14 + 16) + 'rem'
 				})}
 			>
 				<div style={Style.inner}>
-					{Array(props.locations).fill(0).map((v, i) => <div style={Style.location}>&nbsp;</div>)}
+					{[
+						<div
+							style={Object.assign({}, Style.thread, {
+								backgroundColor: '#000'
+							})}
+						>&nbsp;</div>
+					].concat(props.threads.map((thread, i) => (
+						<div
+							style={Object.assign({}, Style.thread, {
+								backgroundColor: thread.color
+							})}
+						>&nbsp;</div>)
+					))}
 				</div>
 				<div style={Style.inner}>
 					{Array(props.slices).fill(0).map((v, i) => <div style={Style.slice}>&nbsp;</div>)}

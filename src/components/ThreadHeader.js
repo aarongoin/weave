@@ -4,13 +4,13 @@ const
 	DeleteButton = require('./DeleteButton.js'),
 	ExpandingTextarea = require('./ExpandingTextarea.js'),
 
+	Colors = require('../colors.js'),
 	Bind = require('../bind.js'),
 	Style = {
-		locationHeader: {
+		threadHeader: {
 			zIndex: '10',
 			width: '7rem',
 			color: '#fff',
-			backgroundColor: '#777777',
 			outline: 'none',
 			fontSize: '0.9rem',
 			border: 'none',
@@ -37,11 +37,11 @@ const
 		}
 	};
 
-class LocationHeader extends React.Component {
+class ThreadHeader extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			value: props.value,
+			value: props.thread.name,
 			selected: false
 		};
 
@@ -49,13 +49,14 @@ class LocationHeader extends React.Component {
 	}
 
 	shouldComponentUpdate(props, state) {
-		return ((props.value !== this.props.value) ||
+		return ((props.thread.name !== this.props.thread.name) ||
+				(props.thread.color !== this.props.thread.color) ||
 				(state.value !== this.state.value) ||
 				(state.selected !== this.state.selected));
 	}
 
 	componentWillReceiveProps(props) {
-		this.setState({value: props.value, selected: false});
+		this.setState({value: props.thread.name, selected: false});
 	}
 
 	render(props, state) {
@@ -68,19 +69,24 @@ class LocationHeader extends React.Component {
 				<div
 					style={Style.draggable}
 					draggable
-					onDragStart={(e) => props.onDrag(props.id)}
+					onDragStart={(e) => {
+						this.timer = undefined;
+						props.onDrag(props.id);
+					}}
+					onMouseDown={() => (this.timer = setTimeout(this.colorToggle, 1000))}
+					onMouseUp={() => (this.timer = undefined)}
 				>
 					<ExpandingTextarea
 						type="text"
-						style={Style.locationHeader}
+						style={Object.assign({}, Style.threadHeader, {backgroundColor: props.thread.color})}
 						maxLength="24"
 						baseHeight="0.9rem"
 						value={state.value}
-						placeholder="place"
+						placeholder="Name"
 						focus={this.onFocus}
 						blur={this.onBlur}
 						input={(event) => this.setState({value: event.target.value})}
-						change={(event) => this.context.do('MODIFY_LOCATION_NAME', {
+						change={(event) => this.context.do('MODIFY_THREAD_NAME', {
 							atIndex: this.props.id,
 							newName: event.target.value
 						})}
@@ -90,7 +96,7 @@ class LocationHeader extends React.Component {
 					<DeleteButton
 						ref={(c) => this.delBtn = c}
 						style={Style.deleteButton}
-						onHold={() => this.context.do('DELETE_LOCATION', { atIndex: props.id })}
+						onHold={() => this.context.do('DELETE_THREAD', { atIndex: props.id })}
 					/>
 				:
 					''
@@ -99,15 +105,25 @@ class LocationHeader extends React.Component {
 		)
 	}
 
+	colorToggle() {
+		if (this.timer) {
+			this.context.do('MODIFY_THREAD_COLOR', {
+				atIndex: this.props.id,
+				color: Colors.random(this.props.thread.color)
+			})
+			this.timer = undefined;
+		}
+	}
+
 	onFocus(e) {
 		this.setState({ selected: true });
 	}
 
 	onBlur(e) {
 		setTimeout(() => {
-			if (!this.delBtn.timer) this.setState({selected: false});
+			if (this.delBtn && !this.delBtn.timer) this.setState({selected: false});
 		}, 100);
 	}
 }
 
-module.exports = LocationHeader;
+module.exports = ThreadHeader;

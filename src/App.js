@@ -10,32 +10,15 @@ const
 	WeaveView = require('./components/WeaveView.js'),
 	SceneWriter = require('./components/SceneWriter.js'),
 
+	Colors = require('./colors.js'),
+
 	Bind = require('./bind.js'),
 	LZW = require('lz-string'),
 	Source = require('./Sourcery.js'),
 	Actions = require('./actions.js'),
 	Style = {
 		app: 'width: 100vw;'
-	},
-	THREADS = [
-		{ name: '', color: '#333333' },
-		{ name: '', color: '#666666' },
-		{ name: '', color: '#999999' },
-		{ name: '', color: '#b21f35' },
-		{ name: '', color: '#d82735' },
-		{ name: '', color: '#ff7435' },
-		{ name: '', color: '#ffa135' },
-		{ name: '', color: '#ffcb35' },
-		{ name: '', color: '#00753a' },
-		{ name: '', color: '#009e47' },
-		{ name: '', color: '#16dd36' },
-		{ name: '', color: '#0052a5' },
-		{ name: '', color: '#0079e7' },
-		{ name: '', color: '#06a9fc' },
-		{ name: '', color: '#681e7e' },
-		{ name: '', color: '#7d3cb5' },
-		{ name: '', color: '#bd7af6' }
-	];
+	};
 
 class App extends React.Component {
 	constructor(props, context) {
@@ -49,36 +32,28 @@ class App extends React.Component {
 			sceneCoords: undefined,
 
 			project: Source.getLocal('weave-project'),
-			store: Source.getLocal('weave-store')
 		}
 
-		if (this.state.project) this.state.project = JSON.parse(this.state.project);
+		if (this.state.project) this.state.project = JSON.parse(LZW.decompressFromUTF16(this.state.project));
 		else this.state.project = {
 			title: 'Welcome to Weave',
+			author: 'Aaron Goin',
 			wordCount: 4,
 			sceneCount: 1,
-			author: 'Aaron Goin'
-		};
-
-		if (this.state.store) this.state.store = JSON.parse(LZW.decompressFromUTF16(this.state.store));
-		else this.state.store = {
-			slices: [{datetime: '1999-10-26', scenes: [{ thread: 0, head: 'Welcome to Weave!', body: 'This is the place!', wc: 4 }] }],
-			threads: Object.assign([], THREADS),
-			locations: ['Star Labs'],
-			layout: [['Chapter One'], [0, 0]]
+			slices: [{datetime: '1999-10-26', scenes: [{ head: 'Introduction to Weave', body: 'Welcome to Weave!', wc: 4 , location: 'Bedroom'}] }],
+			threads: [{ name: 'Harry Potter', color: Colors.random() }],
+			headers: ['']
 		};
 
 		Bind(this);
-
-		this.state.project = Object.assign(this.state.project, this.countProject());
 	}
 
 	countProject() {
 		return {
-			wordCount: this.state.store.slices.reduce((wc, slice) => 
+			wordCount: this.state.project.slices.reduce((wc, slice) => 
 				(wc + slice.scenes.reduce((wc, scene) => ((scene) ? (wc + scene.wc) : wc), 0))
 			, 0),
-			sceneCount: this.state.store.slices.reduce((scenes, slice) => 
+			sceneCount: this.state.project.slices.reduce((scenes, slice) => 
 				(scenes + slice.scenes.reduce((scenes, scene) => ((scene) ? (scenes + 1) : scenes), 0))
 			, 0)
 		};
@@ -103,16 +78,12 @@ class App extends React.Component {
 					<SceneWriter
 						scene={state.targetNote}
 						coords={state.sceneCoords}
-						thread={state.store.threads[state.targetNote.thread]}
+						thread={state.project.threads[state.sceneCoords.sceneIndex]}
 						onDone={this.onDone}
 					/>
 				:
 					<WeaveView
-						title={state.project.title}
-						author={state.project.author}
-						slices={state.store.slices}
-						threads={state.store.threads}
-						locations={state.store.locations}
+						project={this.state.project}
 						editNote={this.editNote}
 						windowWidth={window.innerWidth}
 						projectFuncs={{
@@ -135,9 +106,11 @@ class App extends React.Component {
 				)}
 				{state.isPrinting ?
 					<PrintModal
-						slices={state.store.slices}
-						threads={state.store.threads}
+						slices={state.project.slices}
+						threads={state.project.threads}
+						headers={state.project.headers}
 						cancel={() => this.setState({ isPrinting: false })}
+						print={this.print}
 					/>
 				:
 					''
@@ -150,7 +123,7 @@ class App extends React.Component {
 		this.setState({
 			isEditing: true,
 			sceneCoords: coords,
-			targetNote: this.state.store.slices[coords.sliceIndex].scenes[coords.sceneIndex],
+			targetNote: this.state.project.slices[coords.sliceIndex].scenes[coords.sceneIndex],
 		});
 	}
 
@@ -159,16 +132,17 @@ class App extends React.Component {
 	}
 
 	exportProject() {
-		FileSaver.saveAs(new Blob([JSON.stringify(Object.assign({}, this.state.project, this.state.store))], {type: "text/plain;charset=utf-8"}), this.state.project.title + '.weave');
+		FileSaver.saveAs(new Blob([JSON.stringify(this.state.project)], {type: "text/plain;charset=utf-8"}), this.state.project.title + '.weave');
 	}
 
-	print(sceneList) {
-		var text, slices = this.state.store.slices;
+	print(printList) {
+		var text, slices = this.state.project.slices;
 		this.setState({printing: false});
 
-		text = sceneList.reduce((text, coords, i) => {
-			return text + '\n\n\n' + i + '\n\n' + slices[coords.sliceIndex].scenes[coords.sceneIndex].body
-		}, this.state.project.title);
+		text = printList.reduce((body, item) => {
+			if (item.body) return body + '\n\n' + item.body + '\n';
+			else return body + '\n\n\n' + item.values[0] + '\n';
+		}, this.state.project.title + '\n');
 
 		FileSaver.saveAs(new Blob([text], {type: "text/plain;charset=utf-8"}), this.state.project.title + '_' + (new Date().toString()) + '.txt')
 	}
@@ -186,7 +160,7 @@ class App extends React.Component {
 	}
 
 	do(action, data) {
-		this.state.store = Actions[action](data, this.state.store);
+		this.state.project = Actions[action](data, this.state.project);
 		this.state.project = Object.assign({}, this.state.project, this.countProject());
 		this.forceUpdate();
 		this.save();
@@ -198,13 +172,10 @@ class App extends React.Component {
 				title: '',
 				author: '',
 				wordCount: 0,
-				sceneCount: 0
-			},
-			store: {
-				slices: [{datetime: '', scenes: [null] }],
-				threads: Object.assign([], THREADS),
-				locations: [''],
-				layout: [['Chapter One'], [0, 0]]
+				sceneCount: 0,
+				slices: [],
+				threads: [],
+				headers: []
 			}
 		});
 		this.save();
@@ -212,30 +183,22 @@ class App extends React.Component {
 
 	openProject(data) {
 		data = JSON.parse(data);
-		this.setState({
-			project: { title: data.title, wordCount: data.wordCount, sceneCount: data.sceneCount, author: data.author },
-			store: { slices: data.scenes, threads: data.threads, locations: data.locations }
-		})
+		this.setState(data)
 		this.save();
 	}
 
 	save() {
 		this.saveProject();
-		this.saveStore();
 	}
 
 	saveProject() {
-		Source.setLocal('weave-project', JSON.stringify(this.state.project));
-	}
-
-	saveStore() {
-		Source.setLocal('weave-store', LZW.compressToUTF16(JSON.stringify(this.state.store)));
+		Source.setLocal('weave-project', LZW.compressToUTF16(JSON.stringify(this.state.project)));
 	}
 
 	getChildContext() {
 		return {
 			thread: (index) => {
-				return this.state.store.threads[index];
+				return this.state.project.threads[index];
 			},
 			do: this.do,
 		};
