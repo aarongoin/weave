@@ -77,6 +77,7 @@ class ThreadHeader extends React.Component {
 					onMouseUp={() => (this.timer = undefined)}
 				>
 					<ExpandingTextarea
+						ref={(c) => this.input = c}
 						type="text"
 						style={Object.assign({}, Style.threadHeader, {backgroundColor: props.thread.color})}
 						maxLength="24"
@@ -112,6 +113,7 @@ class ThreadHeader extends React.Component {
 				color: Colors.random(this.props.thread.color)
 			})
 			this.timer = undefined;
+			this.input.base.blur();
 		}
 	}
 

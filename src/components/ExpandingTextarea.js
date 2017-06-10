@@ -42,7 +42,7 @@ class ExpandingTextarea extends React.Component {
 	shouldComponentUpdate(props, state) {
 		return ((props.value !== this.props.value) ||
 				(state.value !== this.state.value) ||
-				(props.style !== this.props.style));
+				(props.style.backgroundColor !== this.props.style.backgroundColor));
 	}
 
 	componentDidMount() {
