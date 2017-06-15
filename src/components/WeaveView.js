@@ -7,6 +7,7 @@ const
 	WeaveHeaders = require('./WeaveHeaders.js'),
 	WeaveBackground = require('./WeaveBackground.js'),
 	ProjectModal = require('./ProjectModal.js'),
+	NewSliceButton = require('./NewSliceButton.js'),
 
 	Style = {
 		weave: {
@@ -14,26 +15,32 @@ const
 			display: 'inline-flex'
 		},
 		scenes: {
-			marginTop: '2rem',
 			display: 'flex',
 			justifyContent: 'flex-start',
 			alignItems: 'flex-start'
 		},
-		projectButton: {
+		titleSpace: {
 			zIndex: 22,
+			position: 'absolute',
+			left: 0,
+			top: 0,
+			height: '8rem',
+			display: 'flex',
+			justifyContent: 'center',
+			alignItems: 'center'
+		},
+		projectButton: {
+			
 			minHeight: '2.5rem',
 			padding: '0.5rem 0.75rem',
 			width: '7rem',
-			position: 'fixed',
-			left: 0,
-
+			
 			outline: 'none',
-			backgroundColor: '#000000',
+			backgroundColor: '#fff',
 
 			border: 'none',
-			borderBottom: 'thin solid #777',
 
-			color: '#fff',
+			color: '#000',
 			fontSize: '1.2rem',
 
 			cursor: 'pointer'
@@ -71,7 +78,12 @@ class WeaveView extends React.Component {
 					threads={props.project.threads}
 				/>
 				<div data-is="Weave" style={Style.scenes}>
-					{props.project.slices.map((slice, i) =>
+					{[
+						<NewSliceButton
+							halfWidth={true}
+							onClick={() => this.context.do('NEW_SLICE', {atIndex: 0})}
+						/>
+					].concat(props.project.slices.map((slice, i) => [
 						<SliceView
 							id={i}
 							selection={(state.selection && state.selection.sliceIndex === i) ? state.selection : null}
@@ -80,19 +92,26 @@ class WeaveView extends React.Component {
 							onSelect={this.onSelect}
 							onDeselect={this.onDeselect}
 							editNote={props.editNote}
-							onDrag={this.onNoteDrag}
-							onDrop={this.onNoteDrop}
-							header={props.project.headers[i]}
-						/>
-					)}
+							onSceneDrag={this.onSceneDrag}
+							onSceneDrop={this.onSceneDrop}
+							onHeaderDrop={this.onHeaderDrop}
+						/>,
+							<NewSliceButton
+								halfWidth={false}
+								onClick={() => this.context.do('NEW_SLICE', {atIndex: i+1})}
+							/>
+						]
+					))}
 				</div>
 				{(!state.projectModal ?
-					<button
-						style={Style.projectButton}
-						onClick={() => this.setState({ projectModal: true })}
-					>
-						{props.project.title.length ? props.project.title : 'Project Title'}
-					</button>
+					<div style={Style.titleSpace}>
+						<button
+							style={Style.projectButton}
+							onClick={() => this.setState({ projectModal: true })}
+						>
+							{props.project.title.length ? props.project.title : 'Project Title'}
+						</button>
+					</div>
 				:
 					<ProjectModal
 						title={props.project.title}
@@ -119,14 +138,22 @@ class WeaveView extends React.Component {
 		}
 	}
 
-	onNoteDrag(coords) {
-		this.dragging = coords;
+	onHeaderDrop(from, to) {
+		this.context.do('MOVE_SLICE_HEADER', {
+			from: from,
+			to: to
+		});
 	}
 
-	onNoteDrop(coords) {
-		if (this.dragging) this.context.do('MOVE_NOTE', {
-			from: this.dragging,
-			to: coords
+	onSceneDrag(coords) {
+		this.dragScene = coords;
+		this.setState({selection: null});
+	}
+
+	onSceneDrop(from, to) {
+		if (this.dragScene) this.context.do('MOVE_NOTE', {
+			from: from,
+			to: to
 		});
 	}
 

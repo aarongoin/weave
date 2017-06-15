@@ -10,6 +10,7 @@ const
 
 	Style = {
 		box: {
+			zIndex: 9,
 			maxWidth: '50rem',
 			backgroundColor: '#fff',
 			color: '#222',
@@ -31,6 +32,7 @@ const
 
 		stats: {
 			color: '#fff',
+			padding: '0 0.5rem',
 			display: 'flex',
 			justifyContent: 'space-around',
 			alignItems: 'center',
@@ -48,36 +50,13 @@ const
 			margin: '0.75rem',
 			maxHeight: '9rem'
 		},
-
 		button: {
 			fontSize: '0.9rem',
 			padding: '0.5rem',
 			color: '#fff',
 			backgroundColor: 'rgba(0,0,0,0)',
+			fontWeight: 'bold',
 			border: 'none',
-			outline: 'none',
-			cursor: 'pointer'
-		},
-		colorButton: {
-			width: '1rem',
-			height: '1rem',
-			border: 'thin solid #fff',
-			borderRadius: '1rem',
-			color: '#fff',
-			backgroundColor: 'rgba(0,0,0,0)',
-			outline: 'none',
-			cursor: 'pointer'
-		},
-		moveButton: {
-			zIndex: 25,
-			fontSize: '0.9rem',
-			position: 'absolute',
-			padding: '0.5rem',
-			bottom: '-2.5rem',
-			left: '3rem',
-			border: 'none',
-			color: '#fff',
-			backgroundColor: '#000',
 			outline: 'none',
 			cursor: 'pointer'
 		},
@@ -109,29 +88,29 @@ class SceneEditor extends React.Component {
 			<div
 				style={argyle}
 				onClick={this.onClick}
-				draggable
-				onDragStart={() => props.onDrag({sliceIndex: props.sliceIndex, sceneIndex: props.sceneIndex})}
 			>
 				<ExpandingTextarea
 					style={Style.textarea}
 					maxLength={250} 
 					input={this.onInput} 
 					baseHeight="1.3rem"
-					placeholder="Title/Summary"
+					placeholder="Scene Summary"
 					value={props.scene.head}
 					focus={this.onFocus}
-					change={this.onChange}
 					ref={el => this.el = el}
 				/>
 					<span 
 						style={Object.assign({}, Style.stats, {backgroundColor: props.thread.color})}
 					>
-						{!props.selected ? [
-							<button 
-								onclick={() => props.onEdit({sliceIndex: props.sliceIndex, sceneIndex: props.sceneIndex})} 
-								style={Style.button}
-							>edit</button>,
-							<span style={Style.wordcount}>{props.scene.wc} words</span>
+						{props.selected ? [
+							<span style={Style.wordcount}>{props.scene.wc} words</span>,
+							<DeleteButton
+								style={Style.deleteButton}
+								onHold={() => this.context.do('DELETE_NOTE', {
+									sliceIndex: props.sliceIndex,
+									sceneIndex: props.sceneIndex
+								})}
+							/>
 						] : [
 							<LocationLabel
 								value={props.scene.location}
@@ -141,13 +120,10 @@ class SceneEditor extends React.Component {
 									newLocation: e.target.value
 								})}
 							/>,
-							<DeleteButton
-								style={Style.deleteButton}
-								onHold={() => this.context.do('DELETE_NOTE', {
-									sliceIndex: props.sliceIndex,
-									sceneIndex: props.sceneIndex
-								})}
-							/>							
+							<button 
+								onclick={() => props.onEdit({sliceIndex: props.sliceIndex, sceneIndex: props.sceneIndex})} 
+								style={Style.button}
+							>edit</button>							
 						]}
 				</span>
 			</div>
@@ -162,7 +138,7 @@ class SceneEditor extends React.Component {
 		if (!this.props.selected) this.select();
 	}
 
-	onChange(event) {
+	onInput(event) {
 		this.context.do('MODIFY_NOTE_HEAD', {
 			sliceIndex: this.props.sliceIndex,
 			sceneIndex: this.props.sceneIndex,

@@ -162,10 +162,10 @@ class PrintModal extends React.Component {
 		else this.state.threads.splice(i, 1);
 
 		filtered = this.props.slices.reduce((slices, slice, i) => {
-			var scenes = this.props.headers[i] ?
+			var scenes = slice.header !== '' ?
 				[
 					{
-						values: [this.props.headers[i]],
+						values: [slice.header],
 						style: {
 							color: '#000',
 							backgroundColor: '#fff'

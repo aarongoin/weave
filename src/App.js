@@ -17,7 +17,7 @@ const
 	Source = require('./Sourcery.js'),
 	Actions = require('./actions.js'),
 	Style = {
-		app: 'width: 100vw;'
+		app: 'minWidth: 100vw;'
 	};
 
 class App extends React.Component {
@@ -40,9 +40,8 @@ class App extends React.Component {
 			author: 'Aaron Goin',
 			wordCount: 4,
 			sceneCount: 1,
-			slices: [{datetime: '1999-10-26', scenes: [{ head: 'Introduction to Weave', body: 'Welcome to Weave!', wc: 4 , location: 'Bedroom'}] }],
-			threads: [{ name: 'Harry Potter', color: Colors.random() }],
-			headers: ['']
+			slices: [{key: 0, header: 'Chapter One', scenes: [{ head: 'Introduction to Weave', body: 'Welcome to Weave!', wc: 4 , location: 'Bedroom'}] }],
+			threads: [{ name: 'Harry Potter', color: Colors.random() }]
 		};
 
 		Bind(this);
@@ -89,17 +88,17 @@ class App extends React.Component {
 						projectFuncs={{
 							onTitleChange: (event) => {
 								this.state.project.title = event.target.value;
-								this.forceUpdate();
+								this.cueRender();
 								this.saveProject();
 							},
 							onAuthorChange: (event) => {
 								this.state.project.author = event.target.value;
-								this.forceUpdate();
+								this.cueRender();
 								this.saveProject();
 							},
 							import: this.importProject,
 							export: this.exportProject,
-							print: () => this.setState({ isPrinting: true }),
+							print: () => this.setState(() => {return { isPrinting: true };}),
 							delete: this.delete
 						}}
 					/>
@@ -148,7 +147,7 @@ class App extends React.Component {
 	}
 
 	onResize() {
-		this.forceUpdate();
+		this.cueRender();
 	}
 
 	onDone() {
@@ -162,7 +161,7 @@ class App extends React.Component {
 	do(action, data) {
 		this.state.project = Actions[action](data, this.state.project);
 		this.state.project = Object.assign({}, this.state.project, this.countProject());
-		this.forceUpdate();
+		this.cueRender();
 		this.save();
 	}
 

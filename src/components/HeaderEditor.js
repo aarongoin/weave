@@ -27,7 +27,16 @@ const
 		textarea: {
 			fontSize: '1.1rem',
 			margin: '0.75rem',
-			maxHeight: '9rem'
+			maxHeight: '3.75rem',
+			textAlign: 'center'
+		},
+		deleteButton: {
+			zIndex: 25,
+			fontSize: '0.9rem',
+			position: 'absolute',
+			bottom: '-2.5rem',
+			left: '5.9rem',
+			cursor: 'pointer'
 		}
 	};
 
@@ -36,25 +45,69 @@ class HeaderEditor extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
+		this.state = {
+			selected: false,
+			value: props.value
+		}
+
 		Bind(this);
+	}
+
+	componentWillReceiveProps(props) {
+		this.setState({value: props.value, selected: this.state.selected});
 	}
 
 	render(props, state) {
 		return (
 			<div
-				style={Style.box}
+				style={(state.value.length ? Style.box : Object.assign({}, Style.box, {width: '3rem'}))}
 			>
 				<ExpandingTextarea
 					style={Style.textarea}
 					maxLength={250} 
 					baseHeight="1.3rem"
-					placeholder="Chapter/Scene Header"
-					value={props.header}
-					input={(e) => this.context.do('MODIFY_HEADER', {atIndex: props.id, newValue: e.target.value})}
+					placeholder="..."
+					value={state.value}
+					focus={() => this.setState({ selected: true })}
+					blur={this.onBlur}
+					input={(event) => this.setState({value: event.target.value})}
+					change={this.onChange}
 					ref={el => this.el = el}
 				/>
+				{state.selected ?
+					<DeleteButton
+						ref={(c) => this.delBtn = c}
+						style={(state.value.length ? Style.deleteButton : Object.assign({}, Style.deleteButton, {left: '0.5rem'}))}
+						onHold={() => {
+							this.setState({selected: false});
+							this.context.do('DELETE_SLICE', { atIndex: props.id });
+						}}
+					/>
+				:
+					''
+				}
 			</div>
 		)
+	}
+
+	onDragStart() {
+		event.dataTransfer.effectAllowed = 'move';
+		event.dataTransfer.setData('header', 'header');
+		this.el.base.blur();
+		if (this.props.onHeaderDrag) this.props.onHeaderDrag(this.props.id);
+	}
+
+	onChange(event) {
+		this.context.do('MODIFY_SLICE_HEADER', {
+			atIndex: this.props.id,
+			header: this.state.value
+		});
+	}
+
+	onBlur(e) {
+		setTimeout(() => {
+			if (this.delBtn && !this.delBtn.timer) this.setState({selected: false});
+		}, 100);
 	}
 
 }

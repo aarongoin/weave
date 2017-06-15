@@ -18,9 +18,9 @@ const
 			border: 'none',
 			borderBottom: 'thin solid #fff',
 			outline: 'none',
-			backgroundColor: '#000',
+			backgroundColor: '#eee',
 			fontSize: '1.2rem',
-			color: '#fff'
+			color: '#000'
 		},
 		author: {
 			height: '2rem',
@@ -29,9 +29,9 @@ const
 			border: 'none',
 			borderBottom: 'thin solid #fff',
 			outline: 'none',
-			backgroundColor: '#000',
+			backgroundColor: '#eee',
 			fontSize: '1rem',
-			color: '#fff'
+			color: '#000'
 		},
 		item: {
 			height: '2.5rem',
@@ -47,10 +47,25 @@ const
 			cursor: 'pointer'
 		},
 		row: {
+			width: '100%',
 			display: 'flex',
 			justifyContent: 'space-around',
 			alignItems: 'center',
-			marginTop: '1rem'
+			marginTop: '1.5rem',
+			color: '#fff'
+		},
+		rowLeft: {
+			width: '100%',
+			display: 'flex',
+			justifyContent: 'flex-start',
+			alignItems: 'center',
+			marginTop: '1rem',
+			color: '#fff'
+		},
+		label: {
+			marginRight: '1rem',
+			width: '3.5rem',
+			textAlign: 'right'
 		}
 
 	};
@@ -75,24 +90,27 @@ class ProjectModal extends React.Component {
 			<ModalView
 				dismiss={props.onDone}
 			>
-				<div style={Style.row}>
+				<div style={Style.rowLeft}>
+					<label style={Style.label}>Title</label>
 					<input
 						style={Style.title}
 						type="text"
 						placeholder="Project Title"
-						maxLength={40}
-						size={Math.max(MeasureText(props.title.length ? props.title : (props.placeholder || '')), 20)}
+						maxLength="40"
+						size="23"
 						onInput={props.functions.onTitleChange}
 						value={props.title}
 					/>
+					
 				</div>
-				<div style={Style.row}>
+				<div style={Style.rowLeft}>
+					<label style={Style.label}>Author</label>
 					<input
 						style={Style.author}
 						type="text"
 						placeholder="Author"
-						maxLength={40}
-						size={Math.max(MeasureText(props.author.length ? props.author : (props.placeholder || '')), 20)}
+						maxLength="40"
+						size="29"
 						onInput={props.functions.onAuthorChange}
 						value={props.author}
 					/>
@@ -126,8 +144,6 @@ class ProjectModal extends React.Component {
 					>
 						print
 					</button>
-				</div>
-				<div style={Style.row}>
 					<button
 						style={Object.assign({}, Style.item, { color: '#f00', transition: 'color 1s' })}
 						onClick={(e) => {
@@ -143,7 +159,6 @@ class ProjectModal extends React.Component {
 						}}
 					>delete</button>
 				</div>
-
 			</ModalView>
 		);
 	}

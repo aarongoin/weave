@@ -9,7 +9,7 @@ const
 			left: 0,
 			width: '100vw',
 			height: '100vh',
-			backgroundColor: 'rgba(0,0,0,0.5)',
+			backgroundColor: 'rgba(0,0,0,0.6)',
 			display: 'flex',
 			justifyContent: 'center',
 			alignItems: 'center'
@@ -20,7 +20,8 @@ const
 			flexDirection: 'column',
 			justifyContent: 'flex-start',
 			alignItems: 'center',
-			padding: '1rem'
+			padding: '1.5rem',
+			border: 'solid thick #222'
 		}
 	};
 

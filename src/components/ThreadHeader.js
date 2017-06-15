@@ -6,19 +6,27 @@ const
 
 	Colors = require('../colors.js'),
 	Bind = require('../bind.js'),
+
+	Draggable = require('./Draggable.js'),
+	DropZone = require('./DropZone.js'),
+
 	Style = {
 		threadHeader: {
-			zIndex: '10',
+			zIndex: '5',
+			position: 'relative',
 			width: '7rem',
 			color: '#fff',
 			outline: 'none',
 			fontSize: '0.9rem',
 			border: 'none',
-			textAlign: 'center',
-			paddingTop: '0.5rem'
+			textAlign: 'center'
 		},
 		draggable: {
-			minHeight: '0.9rem'
+			display: 'flex',
+			flexDirection: 'column',
+			justifyContent: 'center',
+			padding: '0.5rem 0 0.5rem 0',
+			width: '7rem'
 		},
 		box: {
 			position: 'relative',
@@ -31,8 +39,8 @@ const
 			zIndex: 25,
 			fontSize: '0.9rem',
 			position: 'absolute',
-			bottom: '-1.2rem',
-			right: '-1.2rem',
+			bottom: 0,
+			right: '-2.5rem',
 			cursor: 'pointer'
 		}
 	};
@@ -48,73 +56,80 @@ class ThreadHeader extends React.Component {
 		Bind(this);
 	}
 
-	shouldComponentUpdate(props, state) {
-		return ((props.thread.name !== this.props.thread.name) ||
-				(props.thread.color !== this.props.thread.color) ||
-				(state.value !== this.state.value) ||
-				(state.selected !== this.state.selected));
-	}
-
 	componentWillReceiveProps(props) {
-		this.setState({value: props.thread.name, selected: false});
+		this.setState({value: props.thread.name, selected: this.state.selected });
 	}
 
 	render(props, state) {
 		return (
-			<div
+			<DropZone
 				style={Style.box}
-				onDragOver={(e) => e.preventDefault()}
-				onDrop={() => props.onDrop(props.id)}
+				type="thread"
+				effect="move"
+				onDrop={(payload) => props.onDrop(payload, props.id)}
 			>
-				<div
-					style={Style.draggable}
-					draggable
-					onDragStart={(e) => {
+				<Draggable
+					style={Object.assign({}, Style.draggable, {backgroundColor: props.thread.color})}
+					type="thread"
+					effect="move"
+					payload={props.id}
+					onDrag={props.onDrag}
+					onMouseDown={() => (this.timer = setTimeout(this.colorToggle, 2000))}
+					onMouseUp={() => {
+						clearTimeout(this.timer);
 						this.timer = undefined;
-						props.onDrag(props.id);
 					}}
-					onMouseDown={() => (this.timer = setTimeout(this.colorToggle, 1000))}
-					onMouseUp={() => (this.timer = undefined)}
 				>
 					<ExpandingTextarea
 						ref={(c) => this.input = c}
 						type="text"
-						style={Object.assign({}, Style.threadHeader, {backgroundColor: props.thread.color})}
+						style={Object.assign({}, Style.threadHeader, {backgroundColor: 'rgba(0,0,0,0)'})}
 						maxLength="24"
 						baseHeight="0.9rem"
 						value={state.value}
 						placeholder="Name"
 						focus={this.onFocus}
 						blur={this.onBlur}
-						input={(event) => this.setState({value: event.target.value})}
-						change={(event) => this.context.do('MODIFY_THREAD_NAME', {
-							atIndex: this.props.id,
-							newName: event.target.value
-						})}
+						input={(event) => {
+							this.setState({value: event.target.value});
+							this.context.do('MODIFY_THREAD_NAME', {
+								atIndex: this.props.id,
+								newName: event.target.value
+							});
+						}}
 					/>
-				</div>
+				</Draggable>
 				{state.selected ?
 					<DeleteButton
 						ref={(c) => this.delBtn = c}
 						style={Style.deleteButton}
-						onHold={() => this.context.do('DELETE_THREAD', { atIndex: props.id })}
+						onHold={() => {
+							this.setState({selected: false});
+							this.context.do('DELETE_THREAD', { atIndex: props.id });
+						}}
 					/>
 				:
 					''
 				}
-			</div>
+			</DropZone>
 		)
 	}
 
+	onDrag(event) {
+		clearTimeout(this.timer);
+		this.timer = undefined;
+		this.input.base.blur();
+		this.setState({ selected: false });
+		this.props.onDrag(this.props.id);
+	}
+
 	colorToggle() {
-		if (this.timer) {
-			this.context.do('MODIFY_THREAD_COLOR', {
-				atIndex: this.props.id,
-				color: Colors.random(this.props.thread.color)
-			})
-			this.timer = undefined;
-			this.input.base.blur();
-		}
+		this.context.do('MODIFY_THREAD_COLOR', {
+			atIndex: this.props.id,
+			color: Colors.random(this.props.thread.color)
+		})
+		this.timer = undefined;
+		this.input.base.blur();
 	}
 
 	onFocus(e) {

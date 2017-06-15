@@ -1,25 +1,30 @@
+var key = 1;
+
 module.exports = {
 // SLICE ACTIONS
 	NEW_SLICE: function(action, store) {
 		store.slices = Object.assign([], store.slices);
-		store.headers = Object.assign([], store.headers);
 		store.slices.splice(action.atIndex, 0, {
-			datetime: '',
+			key: ++key,
+			header: '',
 			scenes: store.threads.map(()=>null)
 		});
-		store.headers.splice(action.atIndex, 0, '');
+		return store;
+	},
+	MOVE_SLICE_HEADER: function(action, store) {
+		store.slices = Object.assign([], store.slices);
+		store.slices[action.to].header = store.slices[action.from].header;
+		store.slices[action.from].header = '';
 		return store;
 	},
 	DELETE_SLICE: function(action, store) {
 		store.slices = Object.assign([], store.slices);
-		store.headers = Object.assign([], store.headers);
 		action.slice = store.slices.splice(action.atIndex, 1);
-		action.header = store.headers.splice(action.atIndex, 1);
 		return store;
 	},
-	MODIFY_SLICE_DATE: function(action, store) {
+	MODIFY_SLICE_HEADER: function(action, store) {
 		store.slices = Object.assign([], store.slices);
-		store.slices[action.atIndex].datetime = action.newDate;
+		store.slices[action.atIndex].header = action.header;
 		return store;
 	},
 
@@ -106,12 +111,7 @@ module.exports = {
 		store.threads[action.atIndex].color = action.color;
 		return store;
 	},
-
-	MODIFY_HEADER: function(action, store) {
-		store.headers = Object.assign([], store.headers);
-		store.headers[action.atIndex] = action.newValue;
-		return store;
-	},/*,
+/*,
 
 // LOCATION ACTIONS
 	NEW_LOCATION: function(action, store) {

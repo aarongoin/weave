@@ -2,7 +2,6 @@ const
 	React = require('preact'),
 
 	ThreadHeader = require('./ThreadHeader.js'),
-	SliceHeader = require('./SliceHeader.js'),
 
 	Colors = require('../colors.js'),
 	Bind = require('../bind.js'),
@@ -18,8 +17,7 @@ const
 			position: 'absolute',
 			top: '0.25rem',
 			width: '7rem',
-			minHeight: '100vh',
-			paddingTop: '2rem'
+			minHeight: '100vh'
 		},
 		thread: {
 			display: 'flex',
@@ -39,7 +37,7 @@ const
 		},
 		sliceButton: {
 			margin: '0 1.375rem',
-			fontSize: '0.9rem',
+			fontSize: '1.2rem',
 			color: '#fff',
 			border: 'none',
 			outline: 'none',
@@ -52,7 +50,7 @@ const
 		},
 		firstSliceButton: {
 			margin: '0 0.375rem',
-			fontSize: '0.9rem',
+			fontSize: '1.2rem',
 			color: '#fff',
 			border: 'none',
 			outline: 'none',
@@ -65,7 +63,7 @@ const
 		},
 		threadBtn: {
 			height: '2rem',
-			fontSize: '0.9rem',
+			fontSize: '1.2rem',
 			color: '#fff',
 			border: 'none',
 			outline: 'none',
@@ -76,6 +74,7 @@ const
 			width: '100%'
 		},
 		header: {
+			zIndex: 0,
 			display: 'flex',
 			justifyContent: 'center',
 			alignItems: 'center',
@@ -83,7 +82,7 @@ const
 			fontSize: '0.9rem',
 			color: '#fff',
 			border: 'none',
-			backgroundColor: '#000',
+			backgroundColor: 'rgba(0,0,0,0)',
 			width: '100%',
 			border: 'none'
 		}
@@ -95,8 +94,7 @@ class WeaveHeaders extends React.Component {
 		super(props, context);
 
 		this.state = {
-			x: 0,
-			y: 0
+			x: 0
 		}
 
 		Bind(this);
@@ -110,58 +108,26 @@ class WeaveHeaders extends React.Component {
 		window.removeEventListener('scroll', this.onScroll);
 	}
 
-	shouldComponentUpdate(props, state) {
-		return ((props.windowWidth !== this.props.windowWidth) ||
-				(props.threads !== this.props.threads) ||
-				(props.slices !== this.props.slices) ||
-				(state !== this.state))
-	}
-
 	render(props, state) {
 		return (
 			<div
 				data-is="WeaveHeaders"
-				style={Object.assign({}, Style.outer, state.style)}
+				style={Style.outer}
 			>
-				<div
-					data-is="SliceHeaders"
-					style={Object.assign({}, Style.scenes, { top: state.y, width: ((props.slices.length*18 + 2) + 'rem')  })}
-				>
-					{[
-						<button
-							onclick={(event) => this.context.do('NEW_SLICE', {atIndex: 0})}
-							style={Style.firstSliceButton}
-							onmouseenter={e => e.target.style.backgroundColor = 'rgba(255,255,255,0.2)'}
-							onmouseleave={e => e.target.style.backgroundColor = 'rgba(0,0,0,0)'}
-						>+</button>
-					].concat(props.slices.map((slice, i) => 
-						<div style={{display: 'inline', width: '18rem'}}>
-							<SliceHeader
-								id={i}
-								value={slice.datetime}
-							/>
-							<button
-								onclick={(event) => this.context.do('NEW_SLICE', {atIndex: i+1})}
-								style={Style.sliceButton}
-								onmouseenter={e => e.target.style.backgroundColor = 'rgba(255,255,255,0.2)'}
-								onmouseleave={e => e.target.style.backgroundColor = 'rgba(0,0,0,0)'}
-							>+</button>
-						</div>
-					))}
-				</div>
 				<div 
 					data-is="ThreadHeaders"
 					style={Object.assign({}, Style.threads, {
 						left: state.x,
 						height: (((props.threads.length+1)*14 + 16) + 'rem'),
-						backgroundColor: (props.windowWidth < 700) ? 'rgba(0,0,0,0)' : '#111',
-						zIndex: (props.windowWidth < 700) ? 8 : 10 })}
+						backgroundColor: 'rgba(0,0,0,0)',
+						zIndex: 8
+					})}
 				>
 					{([
-						<div style={Object.assign({marginBottom: '0.25rem'}, Style.thread)}>
+						<div style={Object.assign({}, Style.thread, {height: '5rem'})}>
 							<span
 								style={Style.header}
-							>Header</span>
+							>&nbsp;</span>
 						</div>
 					].concat((props.threads.map((thread, i) =>
 						<ThreadHeader
@@ -187,15 +153,14 @@ class WeaveHeaders extends React.Component {
 
 	onScroll() {
 		this.setState({
-			x: document.body.scrollLeft,
-			y: document.body.scrollTop
+			x: document.body.scrollLeft
 		});
 	}
 
-	onThreadDrop(toIndex) {
+	onThreadDrop(from, to) {
 		this.context.do('MOVE_THREAD', {
-			fromIndex: this.dragging,
-			toIndex: toIndex
+			fromIndex: from,
+			toIndex: to
 		});
 	}
 }

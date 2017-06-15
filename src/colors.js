@@ -1,6 +1,5 @@
 const
 	colors = [
-		'#333333',
 		'#666666',
 		'#999999',
 		'#b21f35',
@@ -8,7 +7,6 @@ const
 		'#ff7435',
 		'#ffa135',
 		'#ffcb35',
-		'#fff735',
 		'#00753a',
 		'#009e47',
 		'#16dd36',
@@ -23,8 +21,8 @@ const
 module.exports = {
 	palette: colors,
 	random: function(old, color) {
-		color = colors[(Math.random() * colors.length) >> 0];
-		if (old) while (old === color) { color = colors[(Math.random() * colors.length) >> 0] }
+		color = 'hsl(' + ((Math.random() * 360) >> 0) + ', 75%, 45%)';
+		//if (old) while (old === color) { color = colors[(Math.random() * colors.length) >> 0] }
 		return color;
 	}
 };

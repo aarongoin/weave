@@ -4,12 +4,136 @@
 		"selected_items":
 		[
 			[
-				"move",
-				"moveButton"
+				"st",
+				"state"
+			],
+			[
+				"sce",
+				"scene"
+			],
+			[
+				"fil",
+				"filtered"
+			],
+			[
+				"colo",
+				"color"
+			],
+			[
+				"i",
+				"id"
+			],
+			[
+				"loc",
+				"locations"
+			],
+			[
+				"from",
+				"fromIndex"
+			],
+			[
+				"re",
+				"relative"
+			],
+			[
+				"po",
+				"position"
+			],
+			[
+				"pro",
+				"project"
+			],
+			[
+				"a",
+				"author"
+			],
+			[
+				"on",
+				"onDrag"
+			],
+			[
+				"onNote",
+				"onNoteDrag"
+			],
+			[
+				"cna",
+				"cancel"
+			],
+			[
+				"fe",
+				"flex-start"
+			],
+			[
+				"fle",
+				"flex-start"
+			],
+			[
+				"ma",
+				"marginTop"
 			],
 			[
 				"thre",
-				"threadConfirmation"
+				"threadSection"
+			],
+			[
+				"slice",
+				"sliceSection"
+			],
+			[
+				"Pro",
+				"ProjectPrinter"
+			],
+			[
+				"fun",
+				"functions"
+			],
+			[
+				"pr",
+				"props"
+			],
+			[
+				"Project",
+				"ProjectModal"
+			],
+			[
+				"for",
+				"forceUpdate"
+			],
+			[
+				"is",
+				"isPrinting"
+			],
+			[
+				"ex",
+				"exportProject"
+			],
+			[
+				"impor",
+				"importProject"
+			],
+			[
+				"project",
+				"projectButton"
+			],
+			[
+				"sta",
+				"statSticky"
+			],
+			[
+				"done",
+				"doneButton"
+			],
+			[
+				"scene",
+				"sceneIndex"
+			],
+			[
+				"print",
+				"printList"
+			],
+			[
+				"move",
+				"moveButton"
 			],
 			[
 				"ne",
@@ -22,10 +146,6 @@
 			[
 				"Ass",
 				"AssertionError"
-			],
-			[
-				"pro",
-				"process"
 			],
 			[
 				"Fi",
@@ -88,14 +208,6 @@
 				"font-style"
 			],
 			[
-				"re",
-				"releaseMenu"
-			],
-			[
-				"pr",
-				"projectButton"
-			],
-			[
 				"set",
 				"setState"
 			],
@@ -112,10 +224,6 @@
 				"editNote"
 			],
 			[
-				"ma",
-				"mainButton"
-			],
-			[
 				"margin",
 				"marginTop"
 			],
@@ -126,18 +234,6 @@
 			[
 				"border",
 				"borderBottom"
-			],
-			[
-				"scene",
-				"sceneCount"
-			],
-			[
-				"on",
-				"onDeselect"
-			],
-			[
-				"a",
-				"activeNoteMenu"
 			],
 			[
 				"se",
@@ -172,24 +268,12 @@
 				"context"
 			],
 			[
-				"is",
-				"isEditing"
-			],
-			[
 				"Weav",
 				"WeaveView"
 			],
 			[
 				"min",
 				"minHeight"
-			],
-			[
-				"fle",
-				"flexDirection"
-			],
-			[
-				"loc",
-				"location"
 			],
 			[
 				"Loc",
@@ -236,10 +320,6 @@
 				"header"
 			],
 			[
-				"st",
-				"style"
-			],
-			[
 				"wi",
 				"width"
 			],
@@ -252,20 +332,12 @@
 				"sliceIndex"
 			],
 			[
-				"slice",
-				"sliceIndex"
-			],
-			[
 				"old",
 				"oldName"
 			],
 			[
 				"to",
 				"toSliceIndex"
-			],
-			[
-				"from",
-				"fromSliceIndex"
 			],
 			[
 				"m",
@@ -364,10 +436,6 @@
 				"ThreadView"
 			],
 			[
-				"sta",
-				"state"
-			],
-			[
 				"stat",
 				"state"
 			],
@@ -386,10 +454,6 @@
 			[
 				"App",
 				"AppMenu"
-			],
-			[
-				"i",
-				"idReturn"
 			],
 			[
 				"use",
@@ -450,75 +514,165 @@
 			[
 				"en",
 				"end_time"
-			],
-			[
-				"for",
-				"formatTime"
-			],
-			[
-				"s",
-				"space-around"
-			],
-			[
-				"padding",
-				"padding-bottom"
-			],
-			[
-				"space",
-				"space-between"
-			],
-			[
-				"padd",
-				"padding"
-			],
-			[
-				"pad",
-				"padding"
-			],
-			[
-				"algi",
-				"align-items"
-			],
-			[
-				"res",
-				"results"
-			],
-			[
-				"opt",
-				"option\tTag"
-			],
-			[
-				"_",
-				"_template"
-			],
-			[
-				"t",
-				"template"
-			],
-			[
-				"_re",
-				"_registerListener"
-			],
-			[
-				"f",
-				"function"
-			],
-			[
-				"ch",
-				"cachedEvents"
-			],
-			[
-				"comp",
-				"component"
-			],
-			[
-				"place",
-				"placeholder"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "src/App.js",
+			"settings":
+			{
+				"buffer_size": 5021,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/PrintModal.js",
+			"settings":
+			{
+				"buffer_size": 4245,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/colors.js",
+			"settings":
+			{
+				"buffer_size": 492,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/SliceView.js",
+			"settings":
+			{
+				"buffer_size": 1819,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/HeaderEditor.js",
+			"settings":
+			{
+				"buffer_size": 1194,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/SceneEditor.js",
+			"settings":
+			{
+				"buffer_size": 3963,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/LocationLabel.js",
+			"settings":
+			{
+				"buffer_size": 913,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/SliceHeader.js",
+			"settings":
+			{
+				"buffer_size": 2067,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/ExpandingTextarea.js",
+			"settings":
+			{
+				"buffer_size": 1516,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/ModalView.js",
+			"settings":
+			{
+				"buffer_size": 812,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "const"
+			}
+		},
+		{
+			"file": "src/components/ProjectModal.js",
+			"settings":
+			{
+				"buffer_size": 3106,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/WeaveView.js",
+			"settings":
+			{
+				"buffer_size": 2735,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/ThreadHeader.js",
+			"settings":
+			{
+				"buffer_size": 2924,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/DeleteButton.js",
+			"settings":
+			{
+				"buffer_size": 909,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/WeaveHeaders.js",
+			"settings":
+			{
+				"buffer_size": 4758,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/actions.js",
+			"settings":
+			{
+				"buffer_size": 4296,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/WeaveBackground.js",
+			"settings":
+			{
+				"buffer_size": 1620,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -600,18 +754,25 @@
 	],
 	"file_history":
 	[
-		"/Users/Aaron/Dev/weave/src/actions.js",
+		"/Users/Aaron/Dev/weave/src/components/SceneEditor.js",
 		"/Users/Aaron/Dev/weave/src/components/DeleteButton.js",
+		"/Users/Aaron/Dev/weave/src/components/SceneWriter.js",
 		"/Users/Aaron/Dev/weave/src/components/AppMenu.js",
+		"/Users/Aaron/Dev/weave/src/components/PrintModal.js",
+		"/Users/Aaron/Dev/weave/src/actions.js",
+		"/Users/Aaron/Dev/weave/src/components/ExpandingTextarea.js",
+		"/Users/Aaron/Dev/preact/src/component.js",
+		"/Users/Aaron/Dev/preact/package.json",
+		"/Users/Aaron/Dev/weave/node_modules/preact/dist/preact.dev.js",
+		"/Users/Aaron/Dev/weave/src/polyfills.js",
+		"/Users/Aaron/Dev/weave/src/components/SliceView.js",
+		"/Users/Aaron/Dev/weave/src/components/WeaveView.js",
+		"/Users/Aaron/Dev/weave/src/components/NoteView.js",
+		"/Users/Aaron/Dev/weave/src/components/SliceHeader.js",
 		"/Users/Aaron/Dev/weave/src/App.js",
 		"/Users/Aaron/Dev/weave/src/assert.js",
 		"/Users/Aaron/Dev/weave/src/components/NoteEditor.js",
-		"/Users/Aaron/Dev/weave/src/components/NoteView.js",
-		"/Users/Aaron/Dev/weave/src/components/SliceView.js",
-		"/Users/Aaron/Dev/weave/src/components/SliceHeader.js",
 		"/Users/Aaron/Dev/weave/src/components/LocationHeader.js",
-		"/Users/Aaron/Dev/weave/src/components/ExpandingTextarea.js",
-		"/Users/Aaron/Dev/weave/src/components/WeaveView.js",
 		"/Users/Aaron/Dev/weave/src/components/ThreadLabel.js",
 		"/Users/Aaron/Dev/weave/package.json",
 		"/Users/Aaron/Dev/weave/src/colors.js",
@@ -628,7 +789,6 @@
 		"/Users/Aaron/Dev/weave/src/lz-string.js",
 		"/Users/Aaron/Dev/weave/index.html",
 		"/Users/Aaron/Dev/weave/src/bind.js",
-		"/Users/Aaron/Dev/weave/node_modules/preact/dist/preact.dev.js",
 		"/Users/Aaron/Dev/weave/src/preactMOD.js",
 		"/Users/Aaron/Dev/weave/README.md",
 		"/Users/Aaron/Dev/weave/src/store.js",
@@ -721,13 +881,7 @@
 		"/Users/Aaron/Dev/weave/src/components/ThreadLabel.vue",
 		"/Users/Aaron/Downloads/webStuff/server.py",
 		"/Users/Aaron/Downloads/webStuff/templates/results.html",
-		"/Users/Aaron/Downloads/webStuff/templates/welcome_page.html",
-		"/Users/Aaron/Desktop/diff_match_patch.js",
-		"/Users/Aaron/Dev/cs360-readable/makefile",
-		"/Users/Aaron/Dev/cs360-sort/sort-threads.c",
-		"/Users/Aaron/Desktop/tinymce.js",
-		"/Users/Aaron/Dev/weave/dist/crunch.js",
-		"/Users/Aaron/Dev/in-the-woods/src/js/contentEditable.js"
+		"/Users/Aaron/Downloads/webStuff/templates/welcome_page.html"
 	],
 	"find":
 	{
@@ -749,9 +903,42 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": true,
+		"case_sensitive": false,
 		"find_history":
 		[
+			".color",
+			"id",
+			"thread.value",
+			"props.value",
+			"loca",
+			"location",
+			"props.slices",
+			"props.locations",
+			"location",
+			"loca",
+			"location",
+			"store",
+			"offset",
+			"marginOffset",
+			"should",
+			"ProjectModal",
+			"ProjectPrinter",
+			"obj",
+			"renderComponent(",
+			"layout",
+			"ProjectPrinter",
+			"menu",
+			"menuGroups",
+			"item",
+			"print",
+			"printList",
+			"sceneList",
+			"props.scenes",
+			"reduce",
+			"store.scenes",
+			"note",
+			"NoteEditor",
+			"NoteView",
 			"var _createClass = function () {\n\tfunction defineProperties(target, props) {\n\t\tfor (var i = 0; i < props.length; i++) {\n\t\t\tvar descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if (\"value\" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);\n\t\t}\n\t}return function (Constructor, protoProps, staticProps) {\n\t\tif (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;\n\t};\n}();",
 			"slices",
 			"span",
@@ -846,40 +1033,7 @@
 			"input",
 			"return",
 			"\t",
-			"^",
-			"$",
-			": ",
-			" {",
-			"this.",
-			"_view",
-			"_threads",
-			"_notes",
-			"img/",
-			"/ogremage/",
-			">>",
-			"size",
-			"base",
-			"img",
-			"comment",
-			"00aa00",
-			"commen",
-			"comment",
-			"open",
-			"border.all",
-			"chooseClosestCornerTo",
-			"chooseClosestNeighbor",
-			"border.all",
-			"closed",
-			"tile",
-			"bakeon",
-			"draw",
-			"id",
-			"Mover",
-			"isOn",
-			"img",
-			"Frame",
-			"300",
-			"sprite"
+			"^"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -887,6 +1041,14 @@
 		"regex": false,
 		"replace_history":
 		[
+			"props.project.threads",
+			"thread",
+			"project",
+			"ProjectModal",
+			"props.slices",
+			"scene",
+			"SceneWriter",
+			"SceneEditor",
 			"scenes",
 			"componentWillUnmount",
 			"wordCount",
@@ -1008,8 +1170,659 @@
 	"groups":
 	[
 		{
+			"selected": 14,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "src/App.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5021,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3727,
+								3727
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 1.0,
+						"translation.y": 1697.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/components/PrintModal.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4245,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3364,
+								3364
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3148.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/colors.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 492,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								321,
+								321
+							],
+							[
+								332,
+								332
+							],
+							[
+								412,
+								412
+							],
+							[
+								421,
+								421
+							],
+							[
+								485,
+								485
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/components/SliceView.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1819,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								807,
+								807
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 453.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/components/HeaderEditor.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1194,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								81,
+								81
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 322.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/components/SceneEditor.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3963,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3077,
+								3077
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2085.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/components/LocationLabel.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 913,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								855,
+								863
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 88.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/components/SliceHeader.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2067,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								81,
+								81
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1078.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "src/components/ExpandingTextarea.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1516,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								963,
+								963
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 383.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "src/components/ModalView.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 812,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								635,
+								642
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": 344,
+								"count": 12,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"auto_name": "const",
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "src/components/ProjectModal.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3106,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								240,
+								240
+							],
+							[
+								465,
+								465
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 6.0,
+						"translation.y": 1490.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "src/components/WeaveView.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2735,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2065,
+								2065
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1397.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "src/components/ThreadHeader.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2924,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1764,
+								1764
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 662.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "src/components/DeleteButton.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 909,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								570,
+								571
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 124.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "src/components/WeaveHeaders.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4758,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3932,
+								3932
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1746.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "src/actions.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4296,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1878,
+								1889
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1390.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "src/components/WeaveBackground.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1620,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1207,
+								1207
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 619.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1056,7 +1869,7 @@
 	"project": "weave.sublime-project",
 	"replace":
 	{
-		"height": 350.0
+		"height": 64.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1065,6 +1878,22 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"header",
+				"src/components/HeaderEditor.js"
+			],
+			[
+				"print",
+				"src/components/PrintModal.js"
+			],
+			[
+				"poly",
+				"src/polyfills.js"
+			],
+			[
+				"preact",
+				"node_modules/preact/dist/preact.dev.js"
+			],
 			[
 				"file",
 				"node_modules/file-saver/FileSaver.js"

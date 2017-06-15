@@ -3,16 +3,19 @@ const
 
 	Style = {
 		btn: {
+			position: 'relative',
+			zIndex: 25,
 			width: '2rem',
 			height: '2rem',
 			borderRadius: '1rem',
 
 			border: 'none',
 			outline: 'none',
-			backgroundColor: '#555',
+			backgroundColor: '#eee',
 
 			color: '#f00',
 			fontSize: '1.2rem',
+			fontWeight: 'bold',
 			transition: 'color 1s',
 
 			cursor: 'pointer'
@@ -22,10 +25,6 @@ const
 class DeleteButton extends React.Component {
 	constructor(props, context) {
 		super(props, context);
-	}
-
-	shouldComponentUpdate() {
-		return false;
 	}
 
 	render(props) {

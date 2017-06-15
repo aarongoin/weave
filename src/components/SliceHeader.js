@@ -31,8 +31,8 @@ const
 			zIndex: 25,
 			fontSize: '0.9rem',
 			position: 'absolute',
-			bottom: '-1.2rem',
-			right: '-1.2rem',
+			bottom: '-2.5rem',
+			left: '6rem',
 			cursor: 'pointer'
 		}
 	};
@@ -53,7 +53,7 @@ class SliceHeader extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
-		this.setState({value: props.value, selected: false});
+		this.setState({value: props.value, selected: this.state.selected});
 	}
 
 	render(props, state) {
