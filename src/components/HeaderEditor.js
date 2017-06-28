@@ -68,10 +68,10 @@ class HeaderEditor extends React.Component {
 					baseHeight="1.3rem"
 					placeholder="..."
 					value={state.value}
-					focus={() => this.setState({ selected: true })}
-					blur={this.onBlur}
-					input={(event) => this.setState({value: event.target.value})}
-					change={this.onChange}
+					onFocus={() => this.setState({ selected: true })}
+					onBlur={this.onBlur}
+					onInput={(event) => this.setState({value: event.target.value})}
+					onChange={this.onChange}
 					ref={el => this.el = el}
 				/>
 				{state.selected ?
@@ -80,7 +80,7 @@ class HeaderEditor extends React.Component {
 						style={(state.value.length ? Style.deleteButton : Object.assign({}, Style.deleteButton, {left: '0.5rem'}))}
 						onHold={() => {
 							this.setState({selected: false});
-							this.context.do('DELETE_SLICE', { atIndex: props.id });
+							this.context.do('DeleteSlice', { atIndex: props.id });
 						}}
 					/>
 				:
@@ -98,7 +98,7 @@ class HeaderEditor extends React.Component {
 	}
 
 	onChange(event) {
-		this.context.do('MODIFY_SLICE_HEADER', {
+		this.context.do('ModifySliceHeader', {
 			atIndex: this.props.id,
 			header: this.state.value
 		});

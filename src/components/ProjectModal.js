@@ -1,6 +1,9 @@
 const
 	React = require('preact'),
 
+	FileSaver = require('file-saver'),
+	FileOpener = require('./FileOpener.js'),
+
 	ModalView = require('./ModalView.js'),
 
 	Style = {
@@ -18,7 +21,7 @@ const
 			border: 'none',
 			borderBottom: 'thin solid #fff',
 			outline: 'none',
-			backgroundColor: '#eee',
+			backgroundColor: '#ddd',
 			fontSize: '1.2rem',
 			color: '#000'
 		},
@@ -29,7 +32,7 @@ const
 			border: 'none',
 			borderBottom: 'thin solid #fff',
 			outline: 'none',
-			backgroundColor: '#eee',
+			backgroundColor: '#ddd',
 			fontSize: '1rem',
 			color: '#000'
 		},
@@ -39,9 +42,9 @@ const
 
 			border: 'none',
 			outline: 'none',
-			backgroundColor: '#000000',
+			backgroundColor: '#fff',
 
-			color: '#fff',
+			color: '#000',
 			fontSize: '1.2rem',
 
 			cursor: 'pointer'
@@ -52,7 +55,7 @@ const
 			justifyContent: 'space-around',
 			alignItems: 'center',
 			marginTop: '1.5rem',
-			color: '#fff'
+			color: '#000'
 		},
 		rowLeft: {
 			width: '100%',
@@ -63,9 +66,18 @@ const
 			color: '#fff'
 		},
 		label: {
+			color: '#000',
 			marginRight: '1rem',
 			width: '3.5rem',
 			textAlign: 'right'
+		},
+		issues: {
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center',
+			marginTop: '1.5rem',
+			fontSize: '0.8rem',
+			color: '#000'
 		}
 
 	};
@@ -85,11 +97,15 @@ class ProjectModal extends React.Component {
 		super(props, context);
 	}
 
-	render(props, state) {
+	render(props, state, context) {
 		return (
 			<ModalView
 				dismiss={props.onDone}
 			>
+				<FileOpener
+					ref={(el) => (this.FileOpener = el ? el.base : undefined)}
+					onChange={(data) => context.do('ImportProject', {project: JSON.parse(data)})}
+				/>
 				<div style={Style.rowLeft}>
 					<label style={Style.label}>Title</label>
 					<input
@@ -98,8 +114,8 @@ class ProjectModal extends React.Component {
 						placeholder="Project Title"
 						maxLength="40"
 						size="23"
-						onInput={props.functions.onTitleChange}
-						value={props.title}
+						onInput={(e) => context.do('ModifyProjectTitle', {title: e.target.value})}
+						value={props.project.p}
 					/>
 					
 				</div>
@@ -111,17 +127,20 @@ class ProjectModal extends React.Component {
 						placeholder="Author"
 						maxLength="40"
 						size="29"
-						onInput={props.functions.onAuthorChange}
-						value={props.author}
+						onInput={(e) => context.do('ModifyProjectAuthor', {author: e.target.value})}
+						value={props.project.a}
 					/>
 				</div>
-
+				<div style={Style.row}>
+					<span>{props.project.w + ' words'}</span>
+					<span>{props.project.c + ' scenes'}</span>
+				</div>
 				<div style={Style.row}>
 					<button
 						style={Style.item}
 						onClick={() => {
+							this.importProject();
 							props.onDone();
-							props.functions.import()
 						}}
 					>
 						import
@@ -129,8 +148,8 @@ class ProjectModal extends React.Component {
 					<button
 						style={Style.item}
 						onClick={() => {
+							this.exportProject();
 							props.onDone();
-							props.functions.export()
 						}}
 					>
 						export
@@ -138,8 +157,7 @@ class ProjectModal extends React.Component {
 					<button
 						style={Style.item}
 						onClick={() => {
-							props.onDone();
-							props.functions.print()
+							props.onPrint();
 						}}
 					>
 						print
@@ -155,12 +173,30 @@ class ProjectModal extends React.Component {
 						}}
 						onMouseDown={(e) => {
 							e.target.style.color = "#777";
-							this.timer = setTimeout(props.functions.delete, 1000, e);
+							this.timer = setTimeout(context.do, 1000, 'NewProject');
 						}}
 					>delete</button>
 				</div>
+				<section style={Style.issues}>
+					<p>
+						Notice any bugs? Think something can be improved?
+					</p>
+					<a
+						style={Object.assign({}, Style.item, {fontSize: '0.8rem', fontWeight: '600', marginTop: '0.25rem'})}
+						href="https://github.com/aarongoin/weave/issues"
+						target="_blank"
+					>Report issues here.</a>
+				</section>
 			</ModalView>
 		);
+	}
+
+	importProject() {
+		this.FileOpener.click();
+	}
+
+	exportProject() {
+		FileSaver.saveAs(new Blob([JSON.stringify(this.props.project)], {type: "text/plain;charset=utf-8"}), this.props.project.t + '.weave');
 	}
 }
 

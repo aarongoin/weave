@@ -139,10 +139,10 @@ class WeaveHeaders extends React.Component {
 					)).concat(
 						[<div style={Style.thread}>
 							<button
-								onclick={(event) => this.context.do('NEW_THREAD', {color: Colors.random()})}
+								onClick={(event) => this.context.do('NewThread', {color: event.target.style.backgroundColor})}
 								style={Style.threadBtn}
-								onmouseenter={e => e.target.style.backgroundColor = 'rgba(255,255,255,0.2)'}
-								onmouseleave={e => e.target.style.backgroundColor = 'rgba(0,0,0,0)'}
+								onMouseenter={e => e.target.style.backgroundColor = Colors.random()}
+								onMouseleave={e => e.target.style.backgroundColor = 'rgba(0,0,0,0)'}
 							>+</button>
 						</div>]
 					)))}
@@ -158,7 +158,7 @@ class WeaveHeaders extends React.Component {
 	}
 
 	onThreadDrop(from, to) {
-		this.context.do('MOVE_THREAD', {
+		this.context.do('MoveThread', {
 			fromIndex: from,
 			toIndex: to
 		});

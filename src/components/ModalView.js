@@ -12,16 +12,18 @@ const
 			backgroundColor: 'rgba(0,0,0,0.6)',
 			display: 'flex',
 			justifyContent: 'center',
-			alignItems: 'center'
+			alignItems: 'flex-start',
+			overflow: 'scroll'
 		},
 		inner: {
-			backgroundColor: '#000',
+			backgroundColor: '#fff',
 			display: 'flex',
 			flexDirection: 'column',
 			justifyContent: 'flex-start',
 			alignItems: 'center',
 			padding: '1.5rem',
-			border: 'solid thick #222'
+			marginTop: '1rem'
+			//border: 'solid thick #999'
 		}
 	};
 

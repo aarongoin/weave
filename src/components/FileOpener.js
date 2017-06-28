@@ -14,8 +14,7 @@ module.exports = function(props) {
 				left: '-50'
 			}}
 			onchange={(e) => {
-				Reader.onloadend = () => 
-					props.onChange(Reader.result);
+				Reader.onloadend = () => props.onChange(Reader.result);
 				Reader.readAsText(e.target.files[0]);
 			}}
 		/>

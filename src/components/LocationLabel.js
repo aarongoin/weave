@@ -20,14 +20,6 @@ function MeasureText(text) {
 class LocationLabel extends React.Component {
 	constructor(props, context) {
 		super(props, context);
-
-		this.state = {
-			value: props.value
-		}
-	}
-
-	componentWillReceiveProps(props) {
-		this.setState({value: props.value});
 	}
 
 	render(props, state, context) {
@@ -37,10 +29,11 @@ class LocationLabel extends React.Component {
 				style={props.style ? Object.assign({}, Style.editor, props.style) : Style.editor}
 				maxLength="50"
 				size={20}
-				value={state.value}
+				value={props.value}
 				placeholder="location"
-				onInput={(event) => this.setState({value: event.target.value})}
-				onChange={props.onChange}
+				onInput={(event) => {
+					props.onInput(event.target.value);
+				}}
 			/>
 		);
 	}

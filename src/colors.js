@@ -20,9 +20,8 @@ const
 
 module.exports = {
 	palette: colors,
-	random: function(old, color) {
-		color = 'hsl(' + ((Math.random() * 360) >> 0) + ', 75%, 45%)';
-		//if (old) while (old === color) { color = colors[(Math.random() * colors.length) >> 0] }
+	random: function(color) {
+		color = 'hsl(' + (((Math.random() * 30) >> 0) * 12) + ', 75%, 45%)';
 		return color;
 	}
 };

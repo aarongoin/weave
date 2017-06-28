@@ -38,7 +38,7 @@ class LocationLabel extends React.Component {
 				maxLength="50"
 				size={20}
 				value={state.value}
-				placeholder="location"
+				placeholder="name"
 				onInput={(event) => this.setState({value: event.target.value})}
 				onChange={props.onChange}
 			/>

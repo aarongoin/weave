@@ -80,7 +80,7 @@ class SceneEditor extends React.Component {
 
 	render(props, state) {
 		var argyle = Object.assign({}, Style.box, {
-			border: (props.selected ? ('0.2rem solid ' + props.thread.color) : '0 solid rgba(0,0,0,0)'),
+			border: (props.selected ? ('0.2rem solid ' + props.thread.c) : '0 solid rgba(0,0,0,0)'),
 			margin: props.selected ? '0' : '0.2rem'
 		});
 
@@ -92,46 +92,35 @@ class SceneEditor extends React.Component {
 				<ExpandingTextarea
 					style={Style.textarea}
 					maxLength={250} 
-					input={this.onInput} 
+					onInput={this.onInput} 
 					baseHeight="1.3rem"
 					placeholder="Scene Summary"
-					value={props.scene.head}
-					focus={this.onFocus}
+					value={props.scene.h}
+					onFocus={this.onFocus}
 					ref={el => this.el = el}
 				/>
 					<span 
-						style={Object.assign({}, Style.stats, {backgroundColor: props.thread.color})}
+						style={Object.assign({}, Style.stats, {backgroundColor: props.thread.c})}
 					>
-						{props.selected ? [
-							<span style={Style.wordcount}>{props.scene.wc} words</span>,
-							<DeleteButton
-								style={Style.deleteButton}
-								onHold={() => this.context.do('DELETE_NOTE', {
-									sliceIndex: props.sliceIndex,
-									sceneIndex: props.sceneIndex
-								})}
-							/>
-						] : [
-							<LocationLabel
-								value={props.scene.location}
-								onChange={(e) => this.context.do('MODIFY_NOTE_LOCATION', {
-									sliceIndex: props.sliceIndex,
-									sceneIndex: props.sceneIndex,
-									newLocation: e.target.value
-								})}
-							/>,
-							<button 
-								onclick={() => props.onEdit({sliceIndex: props.sliceIndex, sceneIndex: props.sceneIndex})} 
-								style={Style.button}
-							>edit</button>							
-						]}
+						<LocationLabel
+							value={props.scene.l}
+							onInput={(value) => this.context.do('ModifySceneLocation', {
+								sliceIndex: props.sliceIndex,
+								sceneIndex: props.sceneIndex,
+								newLocation: value
+							})}
+						/>
+						<button 
+							onClick={() => props.onEditScene({ sliceIndex: props.sliceIndex, sceneIndex: props.sceneIndex })} 
+							style={Style.button}
+						>{props.scene.w > 0 ? 'edit' : 'write'}</button>
 				</span>
 			</div>
 		)
 	}
 
-	onCreateNote(event) {
-		this.newNote(event);
+	onCreateScene(event) {
+		this.newScene(event);
 	}
 
 	onFocus(event) {
@@ -139,7 +128,7 @@ class SceneEditor extends React.Component {
 	}
 
 	onInput(event) {
-		this.context.do('MODIFY_NOTE_HEAD', {
+		this.context.do('ModifySceneHead', {
 			sliceIndex: this.props.sliceIndex,
 			sceneIndex: this.props.sceneIndex,
 			newHead: event.target.value
@@ -150,7 +139,6 @@ class SceneEditor extends React.Component {
 		event.stopPropagation();
 		if (!this.props.selected) {
 			this.select();
-			this.el.base.focus();
 		}
 	}
 

@@ -58,7 +58,7 @@ class SliceView extends React.Component {
 				ref={el => this.el = el}
 			>
 					{[
-						( props.slice.header.length ?
+						( props.slice.h.length ?
 							<Draggable
 								style={Object.assign({}, Style.space, {height: '5.25rem', zIndex: 9})}
 								type="header"
@@ -67,7 +67,7 @@ class SliceView extends React.Component {
 							>
 								<HeaderEditor
 									id={props.id}
-									value={props.slice.header}
+									value={props.slice.h}
 								/>
 							</Draggable>
 						:
@@ -79,11 +79,11 @@ class SliceView extends React.Component {
 							>
 								<HeaderEditor
 									id={props.id}
-									value={props.slice.header}
+									value={props.slice.h}
 								/>
 							</DropZone>
 						)
-					].concat(props.slice.scenes.map((scene, i) => {
+					].concat(props.slice.s.map((scene, i) => {
 						if (scene) return (
 							<Draggable
 								style={Object.assign({}, Style.space, {zIndex: 9})}
@@ -101,7 +101,7 @@ class SliceView extends React.Component {
 									
 									onSelect={props.onSelect}
 									onDeselect={props.onDeselect}
-									onEdit={props.editNote}
+									onEditScene={props.onEditScene}
 								/>
 							</Draggable>
 						);
@@ -116,7 +116,7 @@ class SliceView extends React.Component {
 									style={Style.button}
 									onmouseenter={e => e.target.style.backgroundColor = 'rgba(255,255,255,0.2)'}
 									onmouseleave={e => e.target.style.backgroundColor = 'rgba(0,0,0,0)'}
-									onclick={() => this.context.do('NEW_NOTE', {
+									onclick={() => this.context.do('NewScene', {
 										sliceIndex: props.id,
 										sceneIndex: i
 									})}

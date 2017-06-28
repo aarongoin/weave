@@ -1,6 +1,8 @@
 const
 	React = require('preact'),
 
+	FileSaver = require('file-saver'),
+
 	ModalView = require('./ModalView.js'),
 
 	Bind = require('../bind.js'),
@@ -67,11 +69,13 @@ const
 			height: '2.5rem',
 			padding: '0 0.75rem',
 
+			marginTop: '1rem',
+
 			border: 'none',
 			outline: 'none',
-			backgroundColor: '#000000',
+			backgroundColor: '#fff',
 
-			color: '#fff',
+			color: '#000',
 			fontSize: '1.2rem',
 
 			cursor: 'pointer'
@@ -88,6 +92,8 @@ class PrintModal extends React.Component {
 			deselected: []
 		}
 
+		this.filter();
+
 		Bind(this);
 	}
 
@@ -96,23 +102,23 @@ class PrintModal extends React.Component {
 
 		return (
 			<ModalView
-				dismiss={props.cancel}
+				dismiss={props.onDone}
 			>
 				<div
 					data-is="threads"
 					style={Style.threadSection}
 				>
-					{props.threads.reduce((threads, t, i) => {
-						if (t.name.length) {
+					{props.project.t.reduce((threads, t, i) => {
+						if (t.n.length) {
 							return threads.concat([
 								<button
 									data-id={i}
 									style={Object.assign({}, Style.thread, {
-										backgroundColor: (state.threads.indexOf(i) !== -1) ? t.color : '#777'
+										backgroundColor: (state.threads.indexOf(i) !== -1) ? t.c : '#777'
 									})}
-									onClick={this.filter}
+									onClick={this.toggleFilter}
 								>
-									{t.name}
+									{t.n}
 								</button>
 							]);
 						} else return threads;
@@ -137,7 +143,7 @@ class PrintModal extends React.Component {
 					<button
 						style={Style.item}
 						onClick={() => {
-							props.cancel();
+							props.onDone();
 						}}
 					>
 						cancel
@@ -153,22 +159,25 @@ class PrintModal extends React.Component {
 		);
 	}
 
-	filter(event) {
-		var filtered,
-			id = Number(event.target.dataset.id),
+	toggleFilter(event) {
+		var id = Number(event.target.dataset.id),
 			i = this.state.threads.indexOf(id);
 
 		if (i === -1) this.state.threads.push(id);
 		else this.state.threads.splice(i, 1);
 
-		filtered = this.props.slices.reduce((slices, slice, i) => {
-			var scenes = slice.header !== '' ?
+		this.filter();
+	}
+
+	filter() {
+		var filtered = this.props.project.s.reduce((slices, slice, i) => {
+			var scenes = slice.h !== '' ?
 				[
 					{
-						values: [slice.header],
+						values: [slice.h],
 						style: {
 							color: '#000',
-							backgroundColor: '#fff'
+							backgroundColor: '#ccc'
 						}
 					}
 				]
@@ -176,14 +185,14 @@ class PrintModal extends React.Component {
 				[];
 
 			scenes = scenes.concat(
-				slice.scenes.reduce((scenes, scene, i) => {
-					if (scene && (this.state.threads.indexOf(i) !== -1) && scene.wc !== 0) {
+				slice.s.reduce((scenes, scene, i) => {
+					if (scene && (this.state.threads.indexOf(i) !== -1) && scene.w !== 0) {
 						scenes.push({
-							values: [scene.head, scene.wc + ' words'],
+							values: [scene.h, scene.w + ' words'],
 							body: scene.body,
 							style: {
 								color: '#fff',
-								backgroundColor: this.props.threads[i].color
+								backgroundColor: this.props.project.t[i].c
 							}
 						});
 					}
@@ -209,11 +218,23 @@ class PrintModal extends React.Component {
 	}
 
 	print() {
-		this.props.print(this.state.filtered.reduce((list, item, i) => {
+		var printList,
+			text,
+			slices = this.props.project.s;
+
+		printList = this.state.filtered.reduce((list, item, i) => {
 			if (this.state.deselected.indexOf(i) === -1) list.push(item);
 			return list;
-		}, []))
-		this.props.cancel();
+		}, []);
+
+		text = printList.reduce((body, item) => {
+			if (item.body) return body + '\n\n' + item.body + '\n';
+			else return body + '\n\n\n' + item.values[0] + '\n';
+		}, this.props.project.t + '\n');
+
+		FileSaver.saveAs(new Blob([text], {type: "text/plain;charset=utf-8"}), this.props.project.p + '_' + (new Date().toString()) + '.txt')
+	
+		this.props.onDone();
 	}
 }
 

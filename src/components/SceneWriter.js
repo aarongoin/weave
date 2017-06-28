@@ -3,6 +3,7 @@ const
 
 	ExpandingTextarea = require('./ExpandingTextarea.js'),
 	AppMenu = require('./AppMenu.js'),
+	LocationLabel = require('./LocationLabel.js'),
 	ThreadLabel = require('./ThreadLabel.js'),
 
 	Bind = require('../bind.js'),
@@ -16,9 +17,9 @@ const
 			backgroundColor: '#fff',
 			color: '#222',
 
+			marginTop: '1rem',
 			marginLeft: 'auto',
 			marginRight: 'auto',
-			paddingTop: '1.5rem',
 
 			display: 'flex',
 			flexDirection: 'column',
@@ -26,12 +27,10 @@ const
 			alignItems: 'stretch'
 		},
 		top: {
-			paddingLeft: '1.5rem',
-			paddingRight: '1.5rem',
+			padding: '0.5rem',
 
 			display: 'flex',
-			flexWrap: 'wrap',
-			justifyContent: 'flex-start'
+			justifyContent: 'space-around'
 		},
 		thread: {
 			color: '#fff',
@@ -46,7 +45,7 @@ const
 		},
 		sceneHead: {
 			color: '#222',
-			fontSize: '1.7rem',
+			fontSize: '1.3rem',
 
 			margin: '0.5rem 1.5rem'
 		},
@@ -106,11 +105,11 @@ class SceneWriter extends React.Component {
 		super(props, context);
 
 		this.state = {
-			threadStyle: Object.assign({}, Style.thread, { backgroundColor: props.thread.color }),
-			head: props.scene.head,
-			body: props.scene.body,
-			wc: props.scene.wc,
-			pages: 1,
+			threadStyle: Object.assign({}, Style.thread, { backgroundColor: props.thread.c }),
+			head: props.scene.h,
+			body: props.scene.b,
+			wc: props.scene.w,
+			pages: Math.round(props.scene.wc / 275) || 1,
 			pageOf: 1,
 			statStyle: Style.statSticky
 		}
@@ -122,26 +121,30 @@ class SceneWriter extends React.Component {
 		return (
 			<div
 				ref={this.mounted}
-				style={Object.assign({marginTop: props.menuOffset === '0rem' ? '1rem' : props.menuOffset}, Style.box)}
+				style={Style.box}
 			>
-				<span style={Style.top}>
+				<span style={Object.assign({}, Style.top, { backgroundColor: props.thread.c })}>
 					<ThreadLabel
-						style={state.threadStyle}
-						value={props.thread.name}
-						onChange={(e) => this.context.do('MODIFY_THREAD_NAME', {
-							atIndex: props.scene.thread,
+						value={props.thread.n}
+						onChange={(e) => this.context.do('ModifyThreadName', {
+							atIndex: props.sceneIndex,
 							newName: e.target.value
 						})}
 					/>
-					{/*<span style={state.threadStyle}>
-						{'+'}
-					</span>*/}
+					<LocationLabel
+						value={props.scene.l}
+						onInput={(value) => this.context.do('ModifySceneLocation', {
+							sliceIndex: props.sliceIndex,
+							sceneIndex: props.sceneIndex,
+							newLocation: value
+						})}
+					/>
 				</span>
 				<ExpandingTextarea
 					style={Style.sceneHead}
 					maxLength="250"
-					input={(e) => this.setState({head: e.target.value})}
-					change={() => this.context.do('MODIFY_NOTE_HEAD', 
+					onInput={(e) => this.setState({head: e.target.value})}
+					onChange={() => this.context.do('ModifySceneHead', 
 						Object.assign({newHead: this.state.head}, props.coords)
 					)}
 					value={state.head}
@@ -149,12 +152,9 @@ class SceneWriter extends React.Component {
 					placeholder="Title/Summary"
 				/>
 				<ExpandingTextarea
-					ref={this.bodyMounted}
+					ref={(el) => (this.body = el ? el.base : undefined)}
 					style={Style.sceneBody}
-					input={this.onBody}
-					change={() => this.context.do('MODIFY_NOTE_BODY', 
-						Object.assign({newBody: state.body, wc: state.wc}, props.coords)
-					)}
+					onInput={this.onBody}
 					value={state.body}
 					baseHeight="1.1em"
 					placeholder="Body"
@@ -194,14 +194,7 @@ class SceneWriter extends React.Component {
 			pages: Math.round(this.state.wc / 275) || 1
 		});
 		this.onScroll();
-	}
-
-	mounted(element) {
-		this.el = element;
-	}
-
-	bodyMounted(element) {
-		this.body = element;
+		this.context.do('ModifySceneBody', Object.assign({newBody: this.state.body, wc: this.state.wc}, this.props.coords));
 	}
 
 	onScroll(event) {
@@ -221,7 +214,7 @@ class SceneWriter extends React.Component {
 	}
 
 	stickyStats() {
-		if (this.el.clientHeight > (window.innerHeight - 40)) {
+		if (this.base.clientHeight > (window.innerHeight - 40)) {
 			this.setState({ statStyle: Style.statSticky })
 		} else {
 			this.setState({ statStyle: Style.statFree })

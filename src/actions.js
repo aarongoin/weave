@@ -1,132 +1,133 @@
-var key = 1;
-
 module.exports = {
+	NewProject(action, store) {
+		return {
+			p: '', // title
+			a: '', // author
+			w: 0, // word count
+			c: 0, // scene count
+			s: [], // slices
+			t: [] // threads
+		};
+	},
+	ImportProject({project}, store) {
+		return project;
+	},
+	ModifyProjectTitle({title}, store) {
+		store.p = title;
+
+		return store;
+	},
+	ModifyProjectAuthor({author}, store) {
+		store.a = author;
+
+		return store;
+	},
 // SLICE ACTIONS
-	NEW_SLICE: function(action, store) {
-		store.slices = Object.assign([], store.slices);
-		store.slices.splice(action.atIndex, 0, {
-			key: ++key,
-			header: '',
-			scenes: store.threads.map(()=>null)
+	NewSlice({atIndex}, store) {
+		store.s = Object.assign([], store.s);
+		store.s.splice(atIndex, 0, {
+			h: '', // header
+			s: store.t.map(()=>null) // scenes
 		});
+		
 		return store;
 	},
-	MOVE_SLICE_HEADER: function(action, store) {
-		store.slices = Object.assign([], store.slices);
-		store.slices[action.to].header = store.slices[action.from].header;
-		store.slices[action.from].header = '';
+	MoveSliceHeader({from, to}, store) {
+		store.s[to].h = store.s[from].h;
+		store.s[from].h = '';
+
 		return store;
 	},
-	DELETE_SLICE: function(action, store) {
-		store.slices = Object.assign([], store.slices);
-		action.slice = store.slices.splice(action.atIndex, 1);
+	DeleteSlice({atIndex}, store) {
+		store.s = Object.assign([], store.s);
+		store.s.splice(atIndex, 1);
+
 		return store;
 	},
-	MODIFY_SLICE_HEADER: function(action, store) {
-		store.slices = Object.assign([], store.slices);
-		store.slices[action.atIndex].header = action.header;
+	ModifySliceHeader({atIndex, header}, store) {
+		store.s[atIndex].h = header;
 		return store;
 	},
 
-// NOTE ACTIONS
-	NEW_NOTE: function(action, store) {
-		store.slices = Object.assign([], store.slices);
-		store.slices[action.sliceIndex].scenes.splice(action.sceneIndex, 1, {
-			thread: 0,
-			head: '',
-			body: '',
-			wc: 0
+// SCENE ACTIONS
+	NewScene(action, store) {
+		store.s = Object.assign([], store.s);
+		store.s[action.sliceIndex].s.splice(action.sceneIndex, 1, {
+			h: '',
+			b: '',
+			w: 0,
+			l: ''
 		});
 		return store;
 	},
-	DELETE_NOTE: function(action, store) {
-		store.slices = Object.assign([], store.slices);
-		store.slices[action.sliceIndex].scenes[action.sceneIndex] = null;
+	DeleteScene(action, store) {
+		store.s = Object.assign([], store.s);
+		store.s[action.sliceIndex].s[action.sceneIndex] = null;
 		return store;
 	},
-	MODIFY_NOTE_HEAD: function(action, store) {
-		store.slices = Object.assign([], store.slices);
-		store.slices[action.sliceIndex].scenes[action.sceneIndex].head = action.newHead;
+	ModifySceneHead(action, store) {
+		store.s = Object.assign([], store.s);
+		store.s[action.sliceIndex].s[action.sceneIndex].h = action.newHead;
 		return store;
 	},
-	MODIFY_NOTE_BODY: function(action, store) {
-		store.slices = Object.assign([], store.slices);
-		var scene = store.slices[action.sliceIndex].scenes[action.sceneIndex];
-		scene.body = action.newBody;
-		scene.wc = action.wc;
+	ModifySceneBody(action, store) {
+		store.s = Object.assign([], store.s);
+		var scene = store.s[action.sliceIndex].s[action.sceneIndex];
+		scene.b = action.newBody;
+		scene.w = action.wc;
 		return store;
 	},
-	MODIFY_NOTE_LOCATION: function(action, store) {
-		var scene;
-		store.slices = Object.assign([], store.slices);
-		scene = store.slices[action.sliceIndex].scenes[action.sceneIndex];
-		scene.location = action.newLocation;
+	ModifySceneLocation(action, store) {
+		store.s = Object.assign([], store.s);
+		scene = store.s[action.sliceIndex].s[action.sceneIndex].l = action.newLocation;
 		return store;
 	},
-	MOVE_NOTE: function(action, store) {
-		store.slices = Object.assign([], store.slices);
-		store.slices[action.to.sliceIndex].scenes[action.to.sceneIndex] = store.slices[action.from.sliceIndex].scenes[action.from.sceneIndex];
-		store.slices[action.from.sliceIndex].scenes[action.from.sceneIndex] = null;
+	MoveScene(action, store) {
+		store.s = Object.assign([], store.s);
+		store.s[action.to.sliceIndex].s[action.to.sceneIndex] = store.s[action.from.sliceIndex].s[action.from.sceneIndex];
+		store.s[action.from.sliceIndex].s[action.from.sceneIndex] = null;
 		return store;
 	},
 
 // THREAD ACTIONS
-	NEW_THREAD: function(action, store) {
-		var i = store.slices.length;
-		store.threads = Object.assign([], store.threads);
-		store.slices = Object.assign([], store.slices);
-		store.threads.push({
-			color: action.color,
-			name: ''
+	NewThread(action, store) {
+		var i = store.s.length;
+		store.t = Object.assign([], store.t);
+		store.s = Object.assign([], store.s);
+		store.t.push({
+			c: action.color,
+			n: ''
 		});
-		while (i--) store.slices[i].scenes.push(null);
+		while (i--) store.s[i].s.push(null);
 		return store;
 	},
-	DELETE_THREAD: function(action, store) {
-		var i = store.slices.length;
-		store.threads = Object.assign([], store.threads);
-		store.slices = Object.assign([], store.slices);
-		action.thread = store.threads.splice(action.atIndex, 1);
-		while (i--) store.slices[i].scenes.splice(action.atIndex, 1);
+	DeleteThread(action, store) {
+		var i = store.s.length;
+		store.t = Object.assign([], store.t);
+		store.s = Object.assign([], store.s);
+		store.t.splice(action.atIndex, 1);
+		while (i--) store.s[i].s.splice(action.atIndex, 1);
 		return store;
 	},
-	MOVE_THREAD: function(action, store) {
-		var i = store.slices.length, scenes;
-		store.threads = Object.assign([], store.threads);
-		store.slices = Object.assign([], store.slices);
-		store.threads.splice(action.toIndex, 0, store.threads.splice(action.fromIndex, 1)[0]);
+	MoveThread(action, store) {
+		var i = store.s.length, scenes;
+		store.t = Object.assign([], store.t);
+		store.s = Object.assign([], store.s);
+		store.t.splice(action.toIndex, 0, store.t.splice(action.fromIndex, 1)[0]);
 		while (i--) {
-			scenes = store.slices[i].scenes;
+			scenes = store.s[i].s;
 			scenes.splice(action.toIndex, 0, scenes.splice(action.fromIndex, 1)[0]);
 		}
 		return store;
 	},
-	MODIFY_THREAD_NAME: function(action, store) {
-		store.threads = Object.assign([], store.threads);
-		store.threads[action.atIndex].name = action.newName;
+	ModifyThreadName(action, store) {
+		store.t = Object.assign([], store.t);
+		store.t[action.atIndex].n = action.newName;
 		return store;
 	},
-	MODIFY_THREAD_COLOR: function(action, store) {
-		store.threads = Object.assign([], store.threads);
-		store.threads[action.atIndex].color = action.color;
+	ModifyThreadColor(action, store) {
+		store.t = Object.assign([], store.t);
+		store.t[action.atIndex].c = action.color;
 		return store;
-	},
-/*,
-
-// LOCATION ACTIONS
-	NEW_LOCATION: function(action, store) {
-		store.threads = Object.assign([], store.threads);
-		store.threads.push('');
-		return store;
-	},
-	DELETE_LOCATION: function(action, store) {
-		store.threads = Object.assign([], store.threads);
-		store.splice(action.atIndex, 1);
-		return store;
-	},
-	MODIFY_LOCATION: function(action, store) {
-		store.threads = Object.assign([], store.threads);
-		store.threads[action.atIndex] = action.newName;
-		return store;
-	}*/
+	}
 };

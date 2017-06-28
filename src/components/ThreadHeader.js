@@ -49,7 +49,7 @@ class ThreadHeader extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			value: props.thread.name,
+			value: props.thread.n,
 			selected: false
 		};
 
@@ -57,7 +57,7 @@ class ThreadHeader extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
-		this.setState({value: props.thread.name, selected: this.state.selected });
+		this.setState({value: props.thread.n, selected: this.state.selected });
 	}
 
 	render(props, state) {
@@ -66,19 +66,17 @@ class ThreadHeader extends React.Component {
 				style={Style.box}
 				type="thread"
 				effect="move"
-				onDrop={(payload) => props.onDrop(payload, props.id)}
+				onDrop={(from) => {
+					if (from > props.id) props.onDrop(from, props.id);
+					if (from < props.id - 1) props.onDrop(from, props.id - 1)
+				}}
 			>
 				<Draggable
-					style={Object.assign({}, Style.draggable, {backgroundColor: props.thread.color})}
+					style={Object.assign({}, Style.draggable, {backgroundColor: props.thread.c})}
 					type="thread"
 					effect="move"
 					payload={props.id}
 					onDrag={props.onDrag}
-					onMouseDown={() => (this.timer = setTimeout(this.colorToggle, 2000))}
-					onMouseUp={() => {
-						clearTimeout(this.timer);
-						this.timer = undefined;
-					}}
 				>
 					<ExpandingTextarea
 						ref={(c) => this.input = c}
@@ -87,12 +85,12 @@ class ThreadHeader extends React.Component {
 						maxLength="24"
 						baseHeight="0.9rem"
 						value={state.value}
-						placeholder="Name"
-						focus={this.onFocus}
-						blur={this.onBlur}
-						input={(event) => {
+						placeholder="name"
+						onFocus={this.onFocus}
+						onBlur={this.onBlur}
+						onInput={(event) => {
 							this.setState({value: event.target.value});
-							this.context.do('MODIFY_THREAD_NAME', {
+							this.context.do('ModifyThreadName', {
 								atIndex: this.props.id,
 								newName: event.target.value
 							});
@@ -105,7 +103,7 @@ class ThreadHeader extends React.Component {
 						style={Style.deleteButton}
 						onHold={() => {
 							this.setState({selected: false});
-							this.context.do('DELETE_THREAD', { atIndex: props.id });
+							this.context.do('DeleteThread', { atIndex: props.id });
 						}}
 					/>
 				:
@@ -124,9 +122,9 @@ class ThreadHeader extends React.Component {
 	}
 
 	colorToggle() {
-		this.context.do('MODIFY_THREAD_COLOR', {
+		this.context.do('ModifyThreadColor', {
 			atIndex: this.props.id,
-			color: Colors.random(this.props.thread.color)
+			color: Colors.random(this.props.thread.c)
 		})
 		this.timer = undefined;
 		this.input.base.blur();

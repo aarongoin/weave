@@ -60,7 +60,7 @@ class WeaveBackground extends React.Component {
 					{props.threads.map((thread, i) => (
 						<div
 							style={Object.assign({}, Style.thread, {
-								backgroundColor: thread.color
+								backgroundColor: thread.c
 							})}
 						>&nbsp;</div>
 					))}
