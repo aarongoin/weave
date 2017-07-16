@@ -11,8 +11,9 @@ const
 			height: '100vh',
 			backgroundColor: 'rgba(0,0,0,0.6)',
 			display: 'flex',
+			flexDirection: 'column',
 			justifyContent: 'center',
-			alignItems: 'flex-start',
+			alignItems: 'center',
 			overflow: 'scroll'
 		},
 		inner: {
@@ -21,8 +22,10 @@ const
 			flexDirection: 'column',
 			justifyContent: 'flex-start',
 			alignItems: 'center',
+			maxHeight: '100vh',
 			padding: '1.5rem',
-			marginTop: '1rem'
+			marginTop: '1rem',
+			overflow: 'scroll'
 			//border: 'solid thick #999'
 		}
 	};
