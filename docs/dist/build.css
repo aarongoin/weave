@@ -6,6 +6,10 @@
 	font-family: "Raleway", "Arial", sans-serif;
 }
 
+html {
+	font-size: 0.8em;
+}
+
 body {
 	font-size: 1.1em;
 	background-color: #333;
