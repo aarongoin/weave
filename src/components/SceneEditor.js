@@ -115,6 +115,21 @@ class SceneEditor extends React.Component {
 							style={Style.button}
 						>{props.scene.w > 0 ? 'edit' : 'write'}</button>
 				</span>
+				{props.selected ?
+					<DeleteButton
+						ref={(c) => this.delBtn = c}
+						style={(Style.deleteButton)}
+						onHold={() => {
+							this.setState({selected: false});
+							this.context.do('DeleteScene', {
+								sliceIndex: props.sliceIndex,
+								sceneIndex: props.sceneIndex
+							});
+						}}
+					/>
+				:
+					''
+				}
 			</div>
 		)
 	}
