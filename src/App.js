@@ -19,10 +19,10 @@ const
 	Actions = require('./actions.js'),
 	Style = {
 		app: {
-			minWidth: '100vw'
+			minWidth: '100vw',
+			position: 'relative'
 		},
 		titleSpace: {
-			zIndex: 22,
 			position: 'absolute',
 			left: 0,
 			top: 0,
@@ -35,7 +35,7 @@ const
 			
 			minHeight: '2.5rem',
 			padding: '0.5rem 0.75rem',
-			width: '7rem',
+			width: '8rem',
 			
 			outline: 'none',
 			backgroundColor: '#fff',

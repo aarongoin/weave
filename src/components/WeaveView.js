@@ -10,10 +10,12 @@ const
 
 	Style = {
 		weave: {
-			marginLeft: '7rem',
-			display: 'inline-flex'
+			marginLeft: '8rem',
+			display: 'inline-flex',
 		},
 		scenes: {
+			zIndex: 5,
+			position: 'relative',
 			display: 'flex',
 			justifyContent: 'flex-start',
 			alignItems: 'flex-start'
@@ -34,11 +36,6 @@ class WeaveView extends React.Component {
 				style={Style.weave}
 				onclick={props.onDeselect}
 			>
-				<WeaveHeaders
-					slices={props.project.s}
-					threads={props.project.t}
-					windowWidth={props.windowWidth}
-				/>
 				<WeaveBackground
 					slices={props.project.s.length}
 					threads={props.project.t}
@@ -68,6 +65,11 @@ class WeaveView extends React.Component {
 						/>
 					]))}
 				</div>
+				<WeaveHeaders
+					slices={props.project.s}
+					threads={props.project.t}
+					windowWidth={props.windowWidth}
+				/>
 			</div>
 		)
 	}

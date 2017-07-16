@@ -11,12 +11,13 @@ const
 			position: 'absolute',
 			left: 0,
 			minWidth: '100vw',
-			minHeight: '100vh'
+			minHeight: '100vh',
+			pointerEvents: 'none'
 		},
 		threads: {
 			position: 'absolute',
 			top: '0.25rem',
-			width: '7rem',
+			width: '8rem',
 			minHeight: '100vh'
 		},
 		thread: {
@@ -27,12 +28,11 @@ const
 			height: '13.75rem',
 		},
 		scenes: {
-			zIndex: '11',
 			position: 'absolute',
 			backgroundColor: "#111",
 			left: 0,
 			height: '2rem',
-			paddingLeft: '7rem',
+			paddingLeft: '8rem',
 			minWidth: '100vw'
 		},
 		sliceButton: {
@@ -74,7 +74,6 @@ const
 			width: '100%'
 		},
 		header: {
-			zIndex: 0,
 			display: 'flex',
 			justifyContent: 'center',
 			alignItems: 'center',
@@ -119,8 +118,7 @@ class WeaveHeaders extends React.Component {
 					style={Object.assign({}, Style.threads, {
 						left: state.x,
 						height: (((props.threads.length+1)*14 + 16) + 'rem'),
-						backgroundColor: 'rgba(0,0,0,0)',
-						zIndex: 8
+						backgroundColor: 'rgba(0,0,0,0)'
 					})}
 				>
 					{([

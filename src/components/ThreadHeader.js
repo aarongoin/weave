@@ -12,21 +12,21 @@ const
 
 	Style = {
 		threadHeader: {
-			zIndex: '5',
 			position: 'relative',
-			width: '7rem',
+			width: '8rem',
 			color: '#fff',
 			outline: 'none',
-			fontSize: '0.9rem',
+			fontSize: '0.85rem',
 			border: 'none',
 			textAlign: 'center'
 		},
 		draggable: {
+			zIndex: 10,
+			padding: '0.5rem 0',
 			display: 'flex',
 			flexDirection: 'column',
 			justifyContent: 'center',
-			padding: '0.5rem 0 0.5rem 0',
-			width: '7rem'
+			width: '8rem'
 		},
 		box: {
 			position: 'relative',
@@ -36,11 +36,10 @@ const
 			height: '14rem',
 		},
 		deleteButton: {
-			zIndex: 25,
 			fontSize: '0.9rem',
 			position: 'absolute',
 			bottom: 0,
-			right: '-2.5rem',
+			right: '-3rem',
 			cursor: 'pointer'
 		}
 	};

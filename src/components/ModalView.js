@@ -3,7 +3,7 @@ const
 
 	Style = {
 		outer: {
-			zIndex: 30,
+			zIndex: 15,
 			position: 'fixed',
 			top: 0,
 			left: 0,

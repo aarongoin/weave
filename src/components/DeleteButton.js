@@ -4,7 +4,6 @@ const
 	Style = {
 		btn: {
 			position: 'relative',
-			zIndex: 25,
 			width: '2rem',
 			height: '2rem',
 			borderRadius: '1rem',

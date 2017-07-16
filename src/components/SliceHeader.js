@@ -7,7 +7,6 @@ const
 
 	Style = {
 		sliceHeader: {
-			zIndex: '11',
 			height: '1.5rem',
 			color: '#fff',
 			maxWidth: '14rem',
@@ -28,7 +27,6 @@ const
 			height: '100%'
 		},
 		deleteButton: {
-			zIndex: 25,
 			fontSize: '0.9rem',
 			position: 'absolute',
 			bottom: '-2.5rem',

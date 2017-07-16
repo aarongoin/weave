@@ -31,7 +31,6 @@ const
 			textAlign: 'center'
 		},
 		deleteButton: {
-			zIndex: 25,
 			fontSize: '0.9rem',
 			position: 'absolute',
 			bottom: '-2.5rem',

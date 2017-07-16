@@ -31,7 +31,6 @@ const
 			width: '100%'
 		},
 		input: {
-			zIndex: '11',
 			color: '#000',
 			maxWidth: '14rem',
 			outline: 'none',

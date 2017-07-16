@@ -2,15 +2,14 @@ const
 	React = require('preact'),
 	Style = {
 		space: {
-			zIndex: 10,
 			height: '5.25rem',
-			width: '7rem',
+			width: '5rem',
 			display: 'flex',
 			justifyContent: 'center',
 			alignItems: 'flex-end'
 		},
 		button: {
-			margin: '0 3rem',
+			margin: '0 2rem',
 			padding: '0.2rem 0.6rem',
 			marginBottom: '0.1rem',
 			fontSize: '1.2rem',

@@ -10,7 +10,6 @@ const
 
 	Style = {
 		box: {
-			zIndex: '0',
 
 			maxWidth: '50rem',
 

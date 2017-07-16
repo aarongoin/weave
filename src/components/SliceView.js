@@ -26,7 +26,6 @@ const
 		},
 
 		button: {
-			zIndex: 7,
 			padding: '0.2rem 0.6rem',
 			fontSize: '1.2rem',
 			color: '#fff',
@@ -60,7 +59,7 @@ class SliceView extends React.Component {
 					{[
 						( props.slice.h.length ?
 							<Draggable
-								style={Object.assign({}, Style.space, {height: '5.25rem', zIndex: 9})}
+								style={Object.assign({}, Style.space, {height: '5.25rem'})}
 								type="header"
 								effect="move"
 								payload={props.id}
@@ -72,7 +71,7 @@ class SliceView extends React.Component {
 							</Draggable>
 						:
 							<DropZone
-								style={Object.assign({}, Style.space, {height: '5.25rem', zIndex: 9})}
+								style={Object.assign({}, Style.space, {height: '5.25rem'})}
 								type="header"
 								effect="move"
 								onDrop={(payload) => props.onHeaderDrop(payload, props.id)}
@@ -86,7 +85,7 @@ class SliceView extends React.Component {
 					].concat(props.slice.s.map((scene, i) => {
 						if (scene) return (
 							<Draggable
-								style={Object.assign({}, Style.space, {zIndex: 9})}
+								style={Style.space}
 								type="scene"
 								effect="move"
 								payload={{sliceIndex: props.id, sceneIndex: i}}

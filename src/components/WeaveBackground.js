@@ -24,7 +24,7 @@ const
 		},
 		slice: {
 			display: 'inline-block',
-			margin: '0 10.4375rem',
+			margin: '0 9.4375rem',
 			width: '0.125rem',
 			height: '100%',
 			backgroundColor: '#444444'
@@ -47,7 +47,7 @@ class WeaveBackground extends React.Component {
 					height: ((props.threads.length + 1) * 14 + 16) + 'rem'
 				})}
 			>
-				<div style={Object.assign({}, Style.inner, {left: '7rem', width: 'auto'})}>
+				<div style={Object.assign({}, Style.inner, {left: '9rem', width: 'auto'})}>
 					{Array(props.slices).fill(0).map((v, i) => <div style={Style.slice}>&nbsp;</div>)}
 				</div>
 				<div style={Style.inner}>

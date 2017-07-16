@@ -10,7 +10,6 @@ const
 
 	Style = {
 		box: {
-			zIndex: 9,
 			maxWidth: '50rem',
 			backgroundColor: '#fff',
 			color: '#222',
@@ -61,7 +60,6 @@ const
 			cursor: 'pointer'
 		},
 		deleteButton: {
-			zIndex: 25,
 			fontSize: '0.9rem',
 			position: 'absolute',
 			bottom: '-1.4rem',
