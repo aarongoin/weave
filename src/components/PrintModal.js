@@ -230,7 +230,7 @@ class PrintModal extends React.Component {
 		text = printList.reduce((body, item) => {
 			if (item.body) return body + '\n\n' + item.body + '\n';
 			else return body + '\n\n\n' + item.values[0] + '\n';
-		}, this.props.project.t + '\n');
+		}, this.props.project.p + '\n');
 
 		FileSaver.saveAs(new Blob([text], {type: "text/plain;charset=utf-8"}), this.props.project.p + '_' + (new Date().toString()) + '.txt')
 	
