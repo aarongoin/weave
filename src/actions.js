@@ -26,6 +26,7 @@ module.exports = {
 	NewSlice({atIndex}, store) {
 		store.s = Object.assign([], store.s);
 		store.s.splice(atIndex, 0, {
+			i: (new Date().toString()), // unique ID
 			h: '', // header
 			s: store.t.map(()=>null) // scenes
 		});

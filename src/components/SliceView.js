@@ -94,7 +94,7 @@ class SliceView extends React.Component {
 									sliceIndex={props.id}
 									selected={(props.selection && props.selection.sceneIndex === i)}
 									sceneIndex={i}
-									
+									key={scene.i}
 									scene={scene}
 									thread={props.threads[i]}
 									

@@ -95,19 +95,19 @@ class ThreadHeader extends React.Component {
 							});
 						}}
 					/>
+					{state.selected ?
+						<DeleteButton
+							ref={(c) => this.delBtn = c}
+							style={Style.deleteButton}
+							onHold={() => {
+								this.setState({selected: false});
+								this.context.do('DeleteThread', { atIndex: props.id });
+							}}
+						/>
+					:
+						''
+					}
 				</Draggable>
-				{state.selected ?
-					<DeleteButton
-						ref={(c) => this.delBtn = c}
-						style={Style.deleteButton}
-						onHold={() => {
-							this.setState({selected: false});
-							this.context.do('DeleteThread', { atIndex: props.id });
-						}}
-					/>
-				:
-					''
-				}
 			</DropZone>
 		)
 	}

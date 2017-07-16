@@ -18,6 +18,7 @@ const
 			position: 'absolute',
 			top: '0.25rem',
 			width: '8rem',
+			pointerEvents: 'auto',
 			minHeight: '100vh'
 		},
 		thread: {

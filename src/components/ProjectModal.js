@@ -196,7 +196,7 @@ class ProjectModal extends React.Component {
 	}
 
 	exportProject() {
-		FileSaver.saveAs(new Blob([JSON.stringify(this.props.project)], {type: "text/plain;charset=utf-8"}), this.props.project.t + '.weave');
+		FileSaver.saveAs(new Blob([JSON.stringify(this.props.project)], {type: "text/plain;charset=utf-8"}), this.props.project.p + '.weave');
 	}
 }
 
