@@ -16,7 +16,7 @@ const
 		},
 		title: {
 			height: '2rem',
-			maxWidth: '95vw',
+			width: '15rem',
 			padding: '0 0.75rem',
 			border: 'none',
 			borderBottom: 'thin solid #fff',
@@ -27,7 +27,7 @@ const
 		},
 		author: {
 			height: '2rem',
-			maxWidth: '95vw',
+			width: '15rem',
 			padding: '0 0.75rem',
 			border: 'none',
 			borderBottom: 'thin solid #fff',
