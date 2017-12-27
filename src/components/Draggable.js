@@ -10,9 +10,10 @@ class Draggable extends React.Component {
 		Bind(this);
 	}
 
-	render(props, state) {
+	render(props, state, context) {
 		return (
 			<div
+				class={props.class}
 				style={props.style}
 				draggable
 				onDrag={this.onDrag}
@@ -21,6 +22,8 @@ class Draggable extends React.Component {
 				onDragExit={this.onDragExit}
 				onMouseDown={this.onMouseDown}
 				onMouseUp={this.onMouseUp}
+				onMouseEnter={this.onMouseEnter}
+				onMouseLeave={this.onMouseLeave}
 			>
 				{props.children}
 			</div>
@@ -32,7 +35,7 @@ class Draggable extends React.Component {
 	}
 
 	onDragStart(event) {
-		var payload = JSON.stringify(this.props.payload || 'payload');
+		var payload = JSON.stringify(this.props.payload !== undefined ? this.props.payload : 'payload');
 
 		event.dataTransfer.effectAllowed = this.props.effect;
 		event.dataTransfer.setData(this.props.type, payload);
@@ -54,6 +57,14 @@ class Draggable extends React.Component {
 
 	onMouseUp(event) {
 		if (this.props.onMouseUp) this.props.onMouseUp(event);
+	}
+
+	onMouseEnter(event) {
+		if (this.props.onMouseEnter) this.props.onMouseEnter(event);
+	}
+
+	onMouseLeave(event) {
+		if (this.props.onMouseLeave) this.props.onMouseLeave(event);
 	}
 }
 

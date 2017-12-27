@@ -18,20 +18,35 @@ class DropZone extends React.Component {
 				onDragOver={this.onDragOver}
 				onDragLeave={this.onDragLeave}
 				onDrop={this.onDrop}
+				onMouseEnter={props.onMouseEnter}
+				onMouseLeave={props.onMouseLeave}
 			>
 				{props.children}
 			</div>
 		);
 	}
 
-	onDrop(event) {
-		var payload = JSON.parse(event.dataTransfer.getData(this.props.type));
-		if (this.props.onDrop) this.props.onDrop(payload, event);
+	onDrop(e) {
+		var payload = JSON.parse(e.dataTransfer.getData(this.typeIndex !== undefined ? this.props.type[this.typeIndex] : this.props.type));
+		if (this.props.onDrop) this.props.onDrop(payload, e);
 	}
 
 	onDragEnter(event) {
-		if (event.dataTransfer.types[0] === this.props.type) {
+		var valid = false;
+		this.typeIndex = undefined;
+		if (Array.isArray(this.props.type)) {
+			for (var i in this.props.type) {
+				if (event.dataTransfer.types.includes(this.props.type[i].toLowerCase())) {
+					this.typeIndex = i;
+					valid = true;
+					break;
+				}
+			}
+		} else if (event.dataTransfer.types[0] === this.props.type.toLowerCase()) {
+			valid = true;
+		}
 
+		if (valid) {
 			event.dataTransfer.dropEffect = this.props.effect;
 			event.preventDefault();
 
@@ -40,7 +55,21 @@ class DropZone extends React.Component {
 	}
 
 	onDragOver(event) {
-		if (event.dataTransfer.types[0] === this.props.type) {
+		var valid = false;
+		this.typeIndex = undefined;
+		if (Array.isArray(this.props.type)) {
+			for (var i in this.props.type) {
+				if (event.dataTransfer.types.includes(this.props.type[i].toLowerCase())) {
+					this.typeIndex = i;
+					valid = true;
+					break;
+				}
+			}
+		} else if (event.dataTransfer.types[0] === this.props.type.toLowerCase()) {
+			valid = true;
+		}
+
+		if (valid) {
 
 			event.dataTransfer.dropEffect = this.props.effect;
 			event.preventDefault();

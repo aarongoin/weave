@@ -2,6 +2,7 @@ const
 	React = require('preact'),
 
 	Bind = require('../bind.js'),
+	BufferedText = require('./BufferedText.js'),
 
 	Style = {
 		editBox: {
@@ -17,33 +18,35 @@ class ExpandingTextarea extends React.Component {
 		super(props, context);
 		this.state = {
 			value: props.value,
-			style: Object.assign({}, Style.editBox, { height: props.baseHeight })
 		};
 
 		Bind(this);
 	}
 
 	render(props, state) {
-		var style = Object.assign({}, props.style, state.style);
 		return (
+			<BufferedText onInput={props.onInput}>
 			<textarea
-				style={style}
+				draggable
+				style={Object.assign({}, Style.editBox, props.style)}
+				ref={(el) => this.el = el}
 				maxlength={props.maxlength}
 				placeholder={props.placeholder}
 				onInput={this.onInput}
 				onChange={props.onChange}
 				onFocus={props.onFocus}
 				onBlur={props.onBlur}
+				onDragStart={props.onDragStart}
 				value={state.value}
 			/>
+			</BufferedText>
 		)
 	}
 
 	componentWillReceiveProps(props) {
 		if (props.value !== this.state.value) this.setState({
 			value: props.value,
-			style: Object.assign({}, Style.editBox, { height: props.baseHeight })
-		}, this.resize);
+		}, this.doResize);
 	}
 
 	componentDidMount() {
@@ -57,19 +60,12 @@ class ExpandingTextarea extends React.Component {
 
 	onInput(event) {
 		this.state.value = event.target.value;
-		if (this.props.onInput) this.props.onInput(event);
 		this.doResize();
 	}
 
 	doResize() {
-		this.state.style.height = this.props.baseHeight;
-		this.forceUpdate(this.resize);
-	}
-
-	resize() {
-		this.state.style.height = this.base.scrollHeight + 'px';
-		this.forceUpdate();
-
+		this.el.style.height = this.props.baseHeight;
+		this.el.style.height = this.el.scrollHeight + 'px';
 	}
 }
 

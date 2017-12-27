@@ -104,7 +104,7 @@ class ProjectModal extends React.Component {
 			>
 				<FileOpener
 					ref={(el) => (this.FileOpener = el ? el.base : undefined)}
-					onChange={(data) => context.do('ImportProject', {project: JSON.parse(data)})}
+					onChange={(data) => context.Do('ImportProject', {project: JSON.parse(data)})}
 				/>
 				<div style={Style.rowLeft}>
 					<label style={Style.label}>Title</label>
@@ -114,7 +114,7 @@ class ProjectModal extends React.Component {
 						placeholder="Project Title"
 						maxLength="40"
 						size="23"
-						onInput={(e) => context.do('ModifyProjectTitle', {title: e.target.value})}
+						onInput={(e) => context.Do('ModifyProjectTitle', {title: e.target.value})}
 						value={props.project.p}
 					/>
 					
@@ -127,7 +127,7 @@ class ProjectModal extends React.Component {
 						placeholder="Author"
 						maxLength="40"
 						size="29"
-						onInput={(e) => context.do('ModifyProjectAuthor', {author: e.target.value})}
+						onInput={(e) => context.Do('ModifyProjectAuthor', {author: e.target.value})}
 						value={props.project.a}
 					/>
 				</div>
@@ -173,7 +173,7 @@ class ProjectModal extends React.Component {
 						}}
 						onMouseDown={(e) => {
 							e.target.style.color = "#777";
-							this.timer = setTimeout(context.do, 1000, 'NewProject');
+							this.timer = setTimeout(context.Do, 1000, 'NewProject');
 						}}
 					>delete</button>
 				</div>

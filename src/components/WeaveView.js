@@ -3,15 +3,19 @@ const
 
 	Bind = require('../bind.js'),
 
-	SliceView = require('./SliceView.js'),
-	WeaveHeaders = require('./WeaveHeaders.js'),
-	WeaveBackground = require('./WeaveBackground.js'),
-	NewSliceButton = require('./NewSliceButton.js'),
+	ThreadPaths = require('./ThreadPaths.js'),
+	Location = require('./Location.js'),
+	DropZone = require('./DropZone.js'),
+	SceneEditor = require('./SceneEditor.js'),
+	Button = require('../buttons.js'),
+	SceneWriter = require('./SceneWriter.js'),
 
 	Style = {
 		weave: {
-			marginLeft: '8rem',
-			display: 'inline-flex',
+			//position: 'relative',
+			display: 'flex',
+			overflow: 'scroll',
+			flexGrow: 1
 		},
 		scenes: {
 			zIndex: 5,
@@ -19,79 +23,115 @@ const
 			display: 'flex',
 			justifyContent: 'flex-start',
 			alignItems: 'flex-start'
+		},
+		location: {
+			position: 'relative',
+			display: 'flex',
+			flexGrow: '0',
+			flexShrink: '0',
+			flexDirection: 'column',
+			alignItems: 'center',
+			height: 'auto',
+			width: '20rem',
+			//borderRight: '1px solid #000'
+			marginRight: '0.5rem'
+		},
+		header: {
+			zIndex: 20,
+			color: '#fff',
+			fontWeight: '400',
+			display: 'flex',
+			justifyContent: 'space-between',
+			alignItems: 'center',
+			position: 'absolute',
+			backgroundColor: 'inherit',
+			width: '18rem',
+			height: '1rem',
+			padding: '0.5rem 1rem',
+			borderBottom: '1px solid #000'
 		}
+
 	};
- 
+
+var X_OFFSET = window.scrollX,
+	Y_OFFSET = window.scrollY;
+
 class WeaveView extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
+		this.state = {
+			offsetX: X_OFFSET,
+			offsetY: Y_OFFSET,
+			focusedScene: null
+		};
 		Bind(this);
 	}
 
-	render(props, state) {
-		return (
+	componentDidMount() {
+		window.addEventListener('scroll', this.onScroll);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.onScroll);
+	}
+
+	render(props, state, context) {
+		var locations = Object.keys(props.map.scenes);
+		return (state.focusedScene ? 
+			<SceneWriter
+				scene={context.Get(state.focusedScene)}
+				dismiss={this.onDismissModal}
+			/>
+		:
 			<div
 				data-is="WeaveView"
-				style={Style.weave}
+				style={Object.assign(Style.weave, {justifyContent: 'flex-start'})}
 				onclick={props.onDeselect}
 			>
-				<WeaveBackground
-					slices={props.project.s.length}
-					threads={props.project.t}
-				/>
-				<div data-is="Weave" style={Style.scenes}>
-					{[
-						<NewSliceButton
-							halfWidth={true}
-							onClick={() => this.context.do('NewSlice', {atIndex: 0})}
+				<div style={{display: 'flex', position: 'relative', margin: 'auto'}}>
+					{locations.map((loc, i) => (
+						<Location
+							style={{marginRight: (locations.length - 1) === i ? '0' : '0.5rem'}}
+							location={context.Get(loc)}
+							scenes={props.map.scenes[loc]}
+							times={props.map.times}
+							height={props.map.offset}
+							onDrop={(id) => context.Do('ModifyScene', {id:id, location: loc})}
+							index={i}
+							context={context}
+							offset={state.offsetY}
+							onWriteModal={this.onWriteModal}
 						/>
-					].concat(props.project.s.map((slice, i) => [
-						<SliceView
-							id={i}
-							selection={(props.focusedScene && props.focusedScene.sliceIndex === i) ? props.focusedScene : null}
-							slice={slice}
-							threads={props.project.t}
-							onSelect={props.onSelect}
-							onDeselect={props.onDeselect}
-							onEditScene={props.onEditScene}
-							onSceneDrag={this.onSceneDrag}
-							onSceneDrop={this.onSceneDrop}
-							onHeaderDrop={this.onHeaderDrop}
-						/>,
-						<NewSliceButton
-							halfWidth={false}
-							onClick={() => this.context.do('NewSlice', {atIndex: i+1})}
-						/>
-					]))}
+					))}
+					<ThreadPaths
+						thread={props.thread}
+						threads={props.map.threads}
+						times={props.map.times}
+						width={Object.keys(props.map.scenes).length * 20.5}
+						height={props.map.offset}
+					/>
 				</div>
-				<WeaveHeaders
-					slices={props.project.s}
-					threads={props.project.t}
-					windowWidth={props.windowWidth}
-				/>
 			</div>
 		)
 	}
 
-	onHeaderDrop(from, to) {
-		this.context.do('MoveSliceHeader', {
-			from: from,
-			to: to
-		});
+	onDismissModal() {
+		this.setState({focusedScene: null}, () => window.scrollTo(X_OFFSET, Y_OFFSET));
+		window.addEventListener('scroll', this.onScroll);
+
 	}
 
-	onSceneDrag(coords) {
-		this.setState({selection: null});
+	onWriteModal(id) {
+		window.removeEventListener('scroll', this.onScroll);
+		this.setState({focusedScene: id});
 	}
 
-	onSceneDrop(from, to) {
-		this.context.do('MoveScene', {
-			from: from,
-			to: to
-		});
+	onScroll(event) {
+		X_OFFSET = window.scrollX;
+		Y_OFFSET = window.scrollY;
+		this.setState({offsetX: X_OFFSET, offsetY: Y_OFFSET});
 	}
-
 }
 
 module.exports = WeaveView;

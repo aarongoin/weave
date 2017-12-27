@@ -1,0 +1,28 @@
+App
+	Main
+		WeaveView
+			Locations
+				Scenes
+					TopBar
+						Time
+						(new note)
+						(edit)
+						(delete)
+					Summary
+			Threads
+
+			? WriterModalView
+		Sidebar (collapsable)
+			Project (on search => App)
+			Threads/Locations (on filter => App)
+				hide/show
+				Name
+				(new note)
+				(color changer)
+				(delete)
+			Notes
+				Tags
+				Body
+				(delete)
+	? ModalView
+

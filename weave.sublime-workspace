@@ -1,0 +1,1833 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"cu",
+				"currentTarget"
+			],
+			[
+				"M",
+				"M_LN2"
+			],
+			[
+				"co",
+				"color"
+			],
+			[
+				"onm",
+				"onmouseleave"
+			],
+			[
+				"flex",
+				"flexDirection"
+			],
+			[
+				"rend",
+				"renderSection"
+			],
+			[
+				"ba",
+				"backgroundColor"
+			],
+			[
+				"on",
+				"ondragstart"
+			],
+			[
+				"cente",
+				"centerWeave"
+			],
+			[
+				"cent",
+				"centerWeave"
+			],
+			[
+				"margin",
+				"marginRight"
+			],
+			[
+				"re",
+				"relative"
+			],
+			[
+				"border",
+				"borderRadius"
+			],
+			[
+				"Modi",
+				"ModifyThread"
+			],
+			[
+				"Mod",
+				"ModifyScene"
+			],
+			[
+				"p",
+				"props"
+			],
+			[
+				"off",
+				"offset"
+			],
+			[
+				"loca",
+				"locations"
+			],
+			[
+				"thre",
+				"threadFunc"
+			],
+			[
+				"note",
+				"notesSB"
+			],
+			[
+				"ma",
+				"mainSB"
+			],
+			[
+				"tr",
+				"transitionend"
+			],
+			[
+				"st",
+				"style"
+			],
+			[
+				"Anim",
+				"AnimateUnount"
+			],
+			[
+				"bor",
+				"border"
+			],
+			[
+				"th",
+				"layoutThreads"
+			],
+			[
+				"modify",
+				"ModifyThread"
+			],
+			[
+				"scro",
+				"scrollTo"
+			],
+			[
+				"sta",
+				"statFree"
+			],
+			[
+				"stick",
+				"stickyStats"
+			],
+			[
+				"s",
+				"style"
+			],
+			[
+				"B",
+				"BufferedText"
+			],
+			[
+				"of",
+				"offsetY"
+			],
+			[
+				"Dele",
+				"DeleteLocation"
+			],
+			[
+				"Delet",
+				"DeleteThread"
+			],
+			[
+				"De",
+				"DeleteThread"
+			],
+			[
+				"typ",
+				"typeIndex"
+			],
+			[
+				"d",
+				"dataTransfer"
+			],
+			[
+				"ov",
+				"overflow-wrap"
+			],
+			[
+				"wra",
+				"word-wrap"
+			],
+			[
+				"inl",
+				"inline-block"
+			],
+			[
+				"for",
+				"folder"
+			],
+			[
+				"move",
+				"moveFolder"
+			],
+			[
+				"fo",
+				"folders"
+			],
+			[
+				"Dra",
+				"DragList"
+			],
+			[
+				"pro",
+				"project"
+			],
+			[
+				"k",
+				"key"
+			],
+			[
+				"thread",
+				"threadFolders"
+			],
+			[
+				"loc",
+				"locationList"
+			],
+			[
+				"Mo",
+				"ModifyThreadList"
+			],
+			[
+				"create",
+				"CreateLocationFolder"
+			],
+			[
+				"no",
+				"now"
+			],
+			[
+				"in",
+				"inset"
+			],
+			[
+				"sc",
+				"scrollX"
+			],
+			[
+				"pr",
+				"project"
+			],
+			[
+				"render",
+				"renderFolder"
+			],
+			[
+				"marg",
+				"marginRight"
+			],
+			[
+				"fle",
+				"flexGrow"
+			],
+			[
+				"Scene",
+				"SceneWriter"
+			],
+			[
+				"pre",
+				"preventDefault"
+			],
+			[
+				"key",
+				"keyCode"
+			],
+			[
+				"all",
+				"allThreads"
+			],
+			[
+				"bord",
+				"borderRadius"
+			],
+			[
+				"vi",
+				"visibility"
+			],
+			[
+				"A",
+				"Actions"
+			],
+			[
+				"lo",
+				"locationButton"
+			],
+			[
+				"ke",
+				"keys"
+			],
+			[
+				"bt",
+				"btnColor"
+			],
+			[
+				"set",
+				"setState"
+			],
+			[
+				"thr",
+				"threadTab"
+			],
+			[
+				"location",
+				"locationList"
+			],
+			[
+				"Cre",
+				"CreateThread"
+			],
+			[
+				"new",
+				"newGroups"
+			],
+			[
+				"max",
+				"maxHeight"
+			],
+			[
+				"map",
+				"mapTimes"
+			],
+			[
+				"n",
+				"newestTime"
+			],
+			[
+				"old",
+				"oldestTime"
+			],
+			[
+				"nu",
+				"nullable"
+			],
+			[
+				"is",
+				"isNumber"
+			],
+			[
+				"con",
+				"contract"
+			],
+			[
+				"a",
+				"app"
+			],
+			[
+				"eq",
+				"equalTo"
+			],
+			[
+				"or",
+				"original"
+			],
+			[
+				"mod",
+				"modified"
+			],
+			[
+				"e",
+				"expect"
+			],
+			[
+				"at",
+				"atIndex"
+			],
+			[
+				"Con",
+				"ConfirmationError"
+			],
+			[
+				"C",
+				"Confirm"
+			],
+			[
+				"Ex",
+				"ExpectationError"
+			],
+			[
+				"expe",
+				"Expect"
+			],
+			[
+				"E",
+				"ExpectationError"
+			],
+			[
+				"remo",
+				"removeTests"
+			],
+			[
+				"filt",
+				"toggleFilter"
+			],
+			[
+				"W",
+				"WelcomeModal"
+			],
+			[
+				"pa",
+				"pageCount"
+			],
+			[
+				"spa",
+				"space-around"
+			],
+			[
+				"bas",
+				"baseHeight"
+			],
+			[
+				"slice",
+				"sliceIndex"
+			],
+			[
+				"string",
+				"stringify"
+			],
+			[
+				"onDr",
+				"onDragEnd"
+			],
+			[
+				"trn",
+				"transform"
+			],
+			[
+				"se",
+				"selected"
+			],
+			[
+				"onSlice",
+				"onSliceDrag"
+			],
+			[
+				"Slic",
+				"NewSliceButton"
+			],
+			[
+				"j",
+				"justifyContent"
+			],
+			[
+				"col",
+				"column"
+			],
+			[
+				"he",
+				"height"
+			],
+			[
+				"onDrag",
+				"onDragStart"
+			],
+			[
+				"sce",
+				"scene"
+			],
+			[
+				"fil",
+				"filtered"
+			],
+			[
+				"colo",
+				"color"
+			],
+			[
+				"i",
+				"id"
+			],
+			[
+				"from",
+				"fromIndex"
+			],
+			[
+				"po",
+				"position"
+			],
+			[
+				"onNote",
+				"onNoteDrag"
+			],
+			[
+				"cna",
+				"cancel"
+			],
+			[
+				"fe",
+				"flex-start"
+			],
+			[
+				"Pro",
+				"ProjectPrinter"
+			],
+			[
+				"fun",
+				"functions"
+			],
+			[
+				"Project",
+				"ProjectModal"
+			],
+			[
+				"ex",
+				"exportProject"
+			],
+			[
+				"impor",
+				"importProject"
+			],
+			[
+				"project",
+				"projectButton"
+			],
+			[
+				"done",
+				"doneButton"
+			],
+			[
+				"scene",
+				"sceneIndex"
+			],
+			[
+				"print",
+				"printList"
+			],
+			[
+				"ne",
+				"nextColor"
+			],
+			[
+				"Asser",
+				"AssertionError"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/actions.js",
+			"settings":
+			{
+				"buffer_size": 15806,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/Location.js",
+			"settings":
+			{
+				"buffer_size": 2461,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/DragList.js",
+			"settings":
+			{
+				"buffer_size": 1295,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/DragListWithFolders.js",
+			"settings":
+			{
+				"buffer_size": 8586,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/NoteSidebar.js",
+			"settings":
+			{
+				"buffer_size": 5234,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/SceneEditor.js",
+			"settings":
+			{
+				"buffer_size": 5390,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/buttons.js",
+			"settings":
+			{
+				"buffer_size": 13805,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/Draggable.js",
+			"settings":
+			{
+				"buffer_size": 1521,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"dis",
+				"Package Control: Discover Packages"
+			],
+			[
+				"p",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"packin",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/Aaron/Dev/weave",
+		"/Users/Aaron/Dev/weave/dist",
+		"/Users/Aaron/Dev/weave/src",
+		"/Users/Aaron/Dev/weave/src/components"
+	],
+	"file_history":
+	[
+		"/Users/Aaron/Dev/weave/src/colors.js",
+		"/Users/Aaron/Dev/weave/src/components/SceneEditor.js",
+		"/Users/Aaron/Dev/weave/src/components/GroupedDragList.js",
+		"/Users/Aaron/Dev/weave/src/components/Draggable.js",
+		"/Users/Aaron/Dev/weave/src/components/DropZone.js",
+		"/Users/Aaron/Dev/weave/src/components/DragList.js",
+		"/Users/Aaron/Documents/School/WSUV/FALL17/Numeric/p1/rerr.c",
+		"/Users/Aaron/Documents/School/WSUV/FALL17/Numeric/p1/README",
+		"/Users/Aaron/Documents/School/WSUV/FALL17/Numeric/p1/myexp.c",
+		"/Users/Aaron/Documents/School/WSUV/FALL17/Numeric/p1/Makefile",
+		"/Users/Aaron/Documents/School/WSUV/FALL17/Numeric/p1/test.pl",
+		"/Users/Aaron/Dev/weave/src/actions.js",
+		"/Users/Aaron/Dev/weave/src/components/SidebarItem.js",
+		"/Users/Aaron/Dev/weave/src/components/ThreadPaths.js",
+		"/Users/Aaron/Dev/weave/src/buttons.js",
+		"/Users/Aaron/Dev/weave/dist/build.css",
+		"/Users/Aaron/Dev/weave/index.html",
+		"/Users/Aaron/Dev/weave/src/App.js",
+		"/Users/Aaron/Dev/weave/src/components/WeaveView.js",
+		"/Users/Aaron/Dev/weave/src/components/ProjectSidebar.js",
+		"/Users/Aaron/Dev/weave/src/components/DragListWithFolders.js",
+		"/Users/Aaron/Dev/weave/src/components/BufferedText.js",
+		"/Users/Aaron/Dev/weave/src/components/ExpandingTextarea.js",
+		"/Users/Aaron/Dev/weave/src/components/Location.js",
+		"/Users/Aaron/Dev/weave/src/MapModel.js",
+		"/Users/Aaron/Dev/weave/src/components/SceneWriter.js",
+		"/Users/Aaron/Dev/weave/src/components/NoteSidebar.js",
+		"/Users/Aaron/Documents/School/WSUV/DNN Research/cifar10/cifar10_train.py",
+		"/Users/Aaron/Dev/weave/node_modules/preact/dist/preact.dev.js",
+		"/Users/Aaron/Dev/weave/src/AnimatedComponent.js",
+		"/Users/Aaron/Dev/weave/package.json",
+		"/Users/Aaron/Dev/weave/src/components/ThreadOrLocationSidebar.js",
+		"/Users/Aaron/Dev/weave/monte_cristo.txt",
+		"/Users/Aaron/Dev/weave/src/components/ScrollingView.js",
+		"/Users/Aaron/Dev/weave/src/components/NotesToolbar.js",
+		"/Users/Aaron/Dev/weave/src/components/ModalView.js",
+		"/Users/Aaron/Dev/weave/src/components/PrintModal.js",
+		"/Users/Aaron/Dev/weave/src/components/WeaveHeaders.js",
+		"/Users/Aaron/Dev/weave/src/components/SliceView.js",
+		"/Users/Aaron/Dev/weave/src/components/ProjectModal.js",
+		"/Users/Aaron/Dev/weave/src/components/ThreadHeader.js",
+		"/Users/Aaron/Dev/weave/src/components/NewSliceButton.js",
+		"/Users/Aaron/Dev/weave/src/components/WeaveBackground.js",
+		"/Users/Aaron/Dev/weave/src/components/SliceHeader.js",
+		"/Users/Aaron/Dev/weave/src/components/HeaderEditor.js",
+		"/Users/Aaron/Dev/weave/src/components/DeleteButton.js",
+		"/Users/Aaron/Dev/weave/src/components/AppMenu.js",
+		"/Users/Aaron/Dev/weave/src/components/ThreadLabel.js",
+		"/Users/Aaron/Dev/weave/src/components/LocationLabel.js",
+		"/Users/Aaron/Dev/weave/src/components/WelcomeModal.js",
+		"/Users/Aaron/Dev/weave/assert.js",
+		"/Users/Aaron/Dev/weave/src/components/Draggable",
+		"/Users/Aaron/Dev/weave/dist/build.js",
+		"/Users/Aaron/Dev/weave/src/assert.js",
+		"/Users/Aaron/Dev/weave/dist/build.js.js",
+		"/Users/Aaron/Dev/weave/src/App-refactor.js",
+		"/Users/Aaron/Dev/weave/src/components/WeaveView-refactor.js",
+		"/Users/Aaron/Dev/weave/src/components/FileOpener.js",
+		"/Users/Aaron/Dev/weave/src/components/ThreadView.js",
+		"/Users/Aaron/Dev/weave/src/bind.js",
+		"/Users/Aaron/Dev/weave/node_modules/preact/dist/preact.js",
+		"/Users/Aaron/Dev/weave/node_modules/preact/dist/preact.min.js",
+		"/Users/Aaron/Dev/weave/weave.sublime-project",
+		"/Users/Aaron/Dev/preact/src/component.js",
+		"/Users/Aaron/Dev/preact/package.json",
+		"/Users/Aaron/Dev/weave/src/polyfills.js",
+		"/Users/Aaron/Dev/weave/src/components/NoteView.js",
+		"/Users/Aaron/Dev/weave/src/components/NoteEditor.js",
+		"/Users/Aaron/Dev/weave/src/components/LocationHeader.js",
+		"/Users/Aaron/Dev/ogremage/src/lib/core/console.js",
+		"/Users/Aaron/Dev/ogremage/src/lib/util/color.js",
+		"/Users/Aaron/Dev/weave/node_modules/file-saver/FileSaver.js",
+		"/Users/Aaron/Dev/weave/docs/app.html",
+		"/Users/Aaron/Dev/OST_Sonar/package.json",
+		"/Users/Aaron/Dev/weave/src/FileOpener.js",
+		"/Users/Aaron/Dev/weave/src/lz-string.js",
+		"/Users/Aaron/Dev/weave/src/preactMOD.js",
+		"/Users/Aaron/Dev/weave/README.md",
+		"/Users/Aaron/Dev/weave/src/store.js",
+		"/Users/Aaron/Dev/weave/src/components/ThreadLabels.js",
+		"/Users/Aaron/Dev/weave/src/components/SliceDivider.js",
+		"/Users/Aaron/Dev/weave/src/components/DateTime.vue",
+		"/Users/Aaron/Dev/weave/src/input.js",
+		"/Users/Aaron/Documents/Game Ideas/Submarine Wargame/code/mapCreator/src/hex.js",
+		"/Users/Aaron/Dev/weave/src/components/WeaveView.vue",
+		"/Users/Aaron/Dev/weave/src/components/ThreadView.vue",
+		"/Users/Aaron/Dev/weave/src/components/TextEditor.vue",
+		"/Users/Aaron/Dev/weave/src/components/ThreadLabels.vue",
+		"/Users/Aaron/Dev/weave/src/components/SliceView.vue",
+		"/Users/Aaron/Dev/weave/src/components/SliceDivider.vue",
+		"/Users/Aaron/Dev/weave/src/components/NoteView.vue",
+		"/Users/Aaron/Dev/weave/src/main.js",
+		"/Users/Aaron/Dev/weave/src/components/NoteEditor.vue",
+		"/Users/Aaron/Dev/weave/src/components/ExpandingTextarea.vue",
+		"/Users/Aaron/Dev/weave/src/components/AppMenu.vue",
+		"/Users/Aaron/Dev/weave/src/App.vue",
+		"/Users/Aaron/Dev/weave/index.js",
+		"/Users/Aaron/Dev/weave/src/Sourcery.js",
+		"/Users/Aaron/.Trash/style.vue",
+		"/Users/Aaron/Dev/weave/src/history.js",
+		"/Users/Aaron/Dev/weave/src/index.js",
+		"/Users/Aaron/Dev/weave/src/MOCK.js",
+		"/Users/Aaron/Dev/weave/src/style.vue",
+		"/Users/Aaron/Dev/weave/src/App.jsx",
+		"/Users/Aaron/Dev/weave/src/components/DateTime.js",
+		"/Users/Aaron/Library/Application Support/Sublime Text 3/Packages/User/Foggy-Morning.tmTheme",
+		"/Users/Aaron/Dev/weave/Makefile",
+		"/Users/Aaron/Dev/weave/build/App.js",
+		"/Users/Aaron/Dev/stocks/history.py",
+		"/Users/Aaron/Library/Application Support/Sublime Text 3/Packages/Boa/Boa.tmTheme",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/search.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/app_base.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/auction_item.html",
+		"/Users/Aaron/Dev/webcrawlGroup/templates/description.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/timetable.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/select_time.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/sqlitedb.py",
+		"/Users/Aaron/Dev/cs351_project/create.sql",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/add_user.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/static/styles/styles.css",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/place_bid.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/search_results.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/auctionbase.py",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/user_login.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/templates/current_time.html",
+		"/Users/Aaron/Dev/cs351_project/web.py/static/scripts/main.js",
+		"/Users/Aaron/Dev/webcrawlGroup/templates/index.html",
+		"/Users/Aaron/Dev/weave/vanilla.js"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Users/Aaron/Dev/weave/src/",
+			"/Users/Aaron/Dev/weave/",
+			"/Users/Aaron/Dev/ogremage/",
+			"/Users/Aaron/Dev/ogremage/*",
+			"/Users/Aaron/Dev/ogremage/js",
+			"<open folders>",
+			"/core"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"threadLi",
+			"^",
+			"scenes",
+			"q",
+			"tag",
+			"statSticky",
+			"OFFSET",
+			"modif",
+			"AppMenu",
+			"border",
+			"state",
+			"this.context",
+			"props.me",
+			"props, state)",
+			"head",
+			"index",
+			"visible[",
+			"this",
+			"btnColo",
+			"overflow",
+			"overlay",
+			"overflow",
+			"tag",
+			"  ",
+			"fillOpacity",
+			"Button",
+			"Raleway",
+			"Style.item",
+			"hidden",
+			"    ",
+			"key",
+			"ref",
+			"7rem",
+			"zIndex",
+			"const confirm = contract(\"DeleteThread\", store, {\n\t\t\tpre(expect) {\n\n\t\t\t},\n\t\t\tpost(expect, old) {\n\n\t\t\t}\n\t\t});",
+			"confirm(store)",
+			"el.base",
+			"this + '",
+			"{this}",
+			"`Contract",
+			"'Contract",
+			"(input, message)",
+			"Test",
+			"5:[",
+			"'fs",
+			"threads",
+			"slices",
+			"project.slices",
+			"project.threads",
+			"props.project.sceneCount",
+			"props.project.wordCount",
+			"props.project.author",
+			"props.project.title",
+			"props.thread.color",
+			"props.thread.name",
+			"props.",
+			"StoreComponent",
+			"shouldComponentUpdate",
+			"props.cancel",
+			"props.done",
+			"ExpandingTextarea",
+			"ExpandingTextArea",
+			"Note",
+			"do('MODIFY_SCENE_HEAD'",
+			"do('MODIFY_SCENE_HEADER'",
+			"do('MODIFY_SLICE_HEADER'",
+			"do(",
+			"createElement",
+			"nodeName",
+			"renderComponent",
+			"renderCompo",
+			"renderComponent",
+			"extend",
+			"h(",
+			"shouldComponentUpdate",
+			".render(",
+			"extend(",
+			"module.exports = function",
+			"diff(",
+			"diff",
+			"render(",
+			"FileOpener",
+			"h(",
+			"svg",
+			"mount",
+			"normalize",
+			"setAcc",
+			"_componentConstructor",
+			"prototype",
+			"parent",
+			"unmountComponent",
+			"unmountComponenent",
+			"Update",
+			"update",
+			"setAccessor",
+			"Component(",
+			"Compo",
+			"attributes",
+			"createNode",
+			"diff",
+			"render(",
+			"render",
+			"createNode",
+			"createElement",
+			"isNamedNode",
+			"nodeName",
+			"normalizedNodeName",
+			"createElement",
+			"isArray",
+			"IS_NON",
+			"lastSimple",
+			"simple",
+			"cloneE",
+			" h(",
+			"h(",
+			".children",
+			"VNode",
+			"render(",
+			"context",
+			"shouldComponentUpdate",
+			"ExpandingTextarea",
+			"expandingTextarea",
+			"children",
+			"SliceHeader",
+			"transition",
+			"transitions",
+			"transition",
+			"scroll"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"X_OFFSET",
+			"",
+			"store",
+			"{contract}",
+			"`${this} Contract",
+			"'${this} Contract",
+			"(message, input)",
+			"project.s",
+			"project.t",
+			"props.project.c",
+			"props.project.w",
+			"props.project.a",
+			"props.project.t",
+			"props.thread.c",
+			"props.thread.n",
+			"props.onCancel",
+			"props.onDone",
+			"Scene",
+			"do('ModifySceneHead'",
+			"do('ModifySceneHeader'",
+			"do('ModifySliceHeader'",
+			"onHeaderDrop",
+			"onHeaderDrag",
+			"onHeaderDrop",
+			"onHeaderDrag",
+			"props.project.threads",
+			"thread",
+			"project",
+			"ProjectModal",
+			"props.slices",
+			"scene",
+			"SceneWriter",
+			"SceneEditor",
+			"scenes",
+			"componentWillUnmount",
+			"wordCount",
+			"countProject",
+			"noteCoords",
+			"this.props.canSelectMany",
+			"this.selection",
+			"item",
+			"props.menuGroups",
+			"menuGroups",
+			"menuItems",
+			"Store",
+			"$tore.",
+			".$tore",
+			".$store",
+			"",
+			"outBuff",
+			"inBuff",
+			"inputBuffer",
+			"outputBuffer",
+			"∑",
+			"«",
+			"requestDescription",
+			"boxDetails",
+			"->connection.",
+			":",
+			"\",",
+			"",
+			":",
+			"{",
+			"",
+			"threads",
+			"notes",
+			"/",
+			"|",
+			"this",
+			"out",
+			"time",
+			"\\n{",
+			"",
+			"\" +",
+			"Life",
+			"21",
+			"12",
+			"10",
+			"1",
+			"`",
+			"console.log(",
+			"VibrancyView",
+			"",
+			"this.state.vessels",
+			"false",
+			"true",
+			"'Detect",
+			"'Stealth",
+			"orange",
+			"333333",
+			"000000",
+			"333366",
+			"ff0033",
+			"ff3333",
+			"996699",
+			"333366",
+			"336666",
+			"003333",
+			"663333",
+			"336633",
+			"cc6633",
+			"996633",
+			"ff6600",
+			"ff9933",
+			"993333",
+			"990000",
+			"cc3333",
+			"ff6600",
+			"6633ff",
+			"6633cc",
+			"cc33cc",
+			"ff0066",
+			"ff3333",
+			"006633",
+			"336666",
+			"006633",
+			"ff6600",
+			"ff9900",
+			"993366",
+			"3366cc",
+			"339999",
+			"339966",
+			"33cc66",
+			"cc3333",
+			"cc0000",
+			"cc3366",
+			"99cc33",
+			"00ff99"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/actions.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15806,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3598,
+								3603
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 7737.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/components/Location.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2461,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1138,
+								1138
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 704.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/components/DragList.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1295,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								782,
+								782
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 289.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/components/DragListWithFolders.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8586,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4524,
+								4524
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 112.0,
+						"translation.y": 3169.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/components/NoteSidebar.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5234,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4789,
+								4792
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 1.0,
+						"translation.y": 2972.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/components/SceneEditor.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5390,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4416,
+								4399
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 164.0,
+						"translation.y": 2865.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/buttons.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13805,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								666,
+								666
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 9.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/components/Draggable.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1521,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1389,
+								1389
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 413.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 118.0
+	},
+	"pinned_build_system": "",
+	"project": "weave.sublime-project",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"colo",
+				"src/colors.js"
+			],
+			[
+				"loca",
+				"src/components/Location.js"
+			],
+			[
+				"drop",
+				"src/components/DropZone.js"
+			],
+			[
+				"drops",
+				"src/components/DropZone.js"
+			],
+			[
+				"notes",
+				"src/components/NoteSidebar.js"
+			],
+			[
+				"not",
+				"src/components/NoteSidebar.js"
+			],
+			[
+				"proj",
+				"src/components/ProjectSidebar.js"
+			],
+			[
+				"projec",
+				"src/components/ProjectSidebar.js"
+			],
+			[
+				"map",
+				"src/MapModel.js"
+			],
+			[
+				"note",
+				"src/components/NoteSidebar.js"
+			],
+			[
+				"side",
+				"src/components/NoteSidebar.js"
+			],
+			[
+				"loc",
+				"src/components/Location.js"
+			],
+			[
+				"scene",
+				"src/components/SceneEditor.js"
+			],
+			[
+				"weave",
+				"src/components/WeaveView.js"
+			],
+			[
+				"app",
+				"src/App.js"
+			],
+			[
+				"action",
+				"src/actions.js"
+			],
+			[
+				"build",
+				"dist/build.css"
+			],
+			[
+				"inde",
+				"index.html"
+			],
+			[
+				"dragg",
+				"src/components/Draggable.js"
+			],
+			[
+				"scen",
+				"src/components/SceneEditor.js"
+			],
+			[
+				"color",
+				"src/colors.js"
+			],
+			[
+				"bui",
+				"dist/build.css"
+			],
+			[
+				"actions",
+				"src/actions.js"
+			],
+			[
+				"button",
+				"src/buttons.js"
+			],
+			[
+				"preact",
+				"node_modules/preact/dist/preact.dev.js"
+			],
+			[
+				"packa",
+				"package.json"
+			],
+			[
+				"mapm",
+				"src/MapModel.js"
+			],
+			[
+				"expa",
+				"src/components/ExpandingTextarea.js"
+			],
+			[
+				"buil",
+				"dist/build.css"
+			],
+			[
+				"scenee",
+				"src/components/SceneEditor.js"
+			],
+			[
+				"expandin",
+				"src/components/ExpandingTextarea.js"
+			],
+			[
+				".css",
+				"dist/build.css"
+			],
+			[
+				"drag",
+				"src/components/DragList.js"
+			],
+			[
+				"expan",
+				"src/components/ExpandingTextarea.js"
+			],
+			[
+				"actio",
+				"src/actions.js"
+			],
+			[
+				"scroll",
+				"src/components/ScrollingView.js"
+			],
+			[
+				"butt",
+				"src/buttons.js"
+			],
+			[
+				"wea",
+				"src/components/WeaveView.js"
+			],
+			[
+				"sce",
+				"src/components/SceneEditor.js"
+			],
+			[
+				"thre",
+				"src/components/ThreadOrLocationSidebar.js"
+			],
+			[
+				"buttons",
+				"src/buttons.js"
+			],
+			[
+				"expand",
+				"src/components/ExpandingTextarea.js"
+			],
+			[
+				"mam",
+				"src/MapModel.js"
+			],
+			[
+				"bu",
+				"dist/build.css"
+			],
+			[
+				"index",
+				"index.html"
+			],
+			[
+				"dragga",
+				"src/components/Draggable.js"
+			],
+			[
+				"threads",
+				"src/components/ThreadToolbar.js"
+			],
+			[
+				"pack",
+				"package.json"
+			],
+			[
+				"pro",
+				"src/components/ProjectModal.js"
+			],
+			[
+				"dra",
+				"src/components/Draggable.js"
+			],
+			[
+				"header",
+				"src/components/HeaderEditor.js"
+			],
+			[
+				"modal",
+				"src/components/ModalView.js"
+			],
+			[
+				"act",
+				"src/actions.js"
+			],
+			[
+				"",
+				"src/assert.js"
+			],
+			[
+				"p",
+				"package.json"
+			],
+			[
+				"ass",
+				"src/assert.js"
+			],
+			[
+				"welc",
+				"src/components/WelcomeModal.js"
+			],
+			[
+				"thread",
+				"src/components/ThreadHeader.js"
+			],
+			[
+				"prin",
+				"src/components/PrintModal.js"
+			],
+			[
+				"weaveh",
+				"src/components/WeaveHeaders.js"
+			],
+			[
+				"slice",
+				"src/components/SliceView.js"
+			],
+			[
+				"threa",
+				"src/components/ThreadHeader.js"
+			],
+			[
+				"mod",
+				"src/components/ModalView.js"
+			],
+			[
+				"print",
+				"src/components/PrintModal.js"
+			],
+			[
+				"file",
+				"src/components/FileOpener.js"
+			],
+			[
+				"project",
+				"src/components/ProjectModal.js"
+			],
+			[
+				"preac",
+				"node_modules/preact/dist/preact.dev.js"
+			],
+			[
+				"prea",
+				"node_modules/preact/dist/preact.dev.js"
+			],
+			[
+				"bind",
+				"src/bind.js"
+			],
+			[
+				"preactdev",
+				"node_modules/preact/dist/preact.dev.js"
+			],
+			[
+				"pre",
+				"node_modules/preact/dist/preact.js"
+			],
+			[
+				"delete",
+				"src/components/DeleteButton.js"
+			],
+			[
+				"textex",
+				"src/components/ExpandingTextarea.js"
+			],
+			[
+				"weav",
+				"src/components/WeaveView.js"
+			],
+			[
+				"ex",
+				"src/components/ExpandingTextarea.js"
+			],
+			[
+				"acion",
+				"src/actions.js"
+			],
+			[
+				"moda",
+				"src/components/ModalView.js"
+			],
+			[
+				"weavevi",
+				"src/components/WeaveView.js"
+			],
+			[
+				"thredhe",
+				"src/components/ThreadHeader.js"
+			],
+			[
+				"slicevi",
+				"src/components/SliceView.js"
+			],
+			[
+				"slic",
+				"src/components/SliceView.js"
+			],
+			[
+				"preactmin",
+				"node_modules/preact/dist/preact.min.js"
+			],
+			[
+				"poly",
+				"src/polyfills.js"
+			],
+			[
+				"sm",
+				"js/core/util/sma.js"
+			],
+			[
+				"con",
+				"js/core/console.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 183.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 1
+	}
+}

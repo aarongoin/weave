@@ -2,34 +2,33 @@ const
 	React = require('preact'),
 
 	ExpandingTextarea = require('./ExpandingTextarea.js'),
-	AppMenu = require('./AppMenu.js'),
-	LocationLabel = require('./LocationLabel.js'),
-	ThreadLabel = require('./ThreadLabel.js'),
 
 	Bind = require('../bind.js'),
 
 	Style = {
 		box: {
-
-			maxWidth: '50rem',
+			position: 'relative',
+			width: '50rem',
+			minHeight: '55rem',
 
 			backgroundColor: '#fff',
 			color: '#222',
 
-			marginTop: '1rem',
-			marginLeft: 'auto',
-			marginRight: 'auto',
+			margin: '3rem auto 3rem auto',
+
 
 			display: 'flex',
 			flexDirection: 'column',
-			justifyContent: 'space-around',
-			alignItems: 'stretch'
+			alignItems: 'stretch',
+			boxShadow: '0 0.5rem 0.5rem #222'
+			//border: '1px solid #fff'
 		},
 		top: {
 			padding: '0.5rem',
 
 			display: 'flex',
-			justifyContent: 'space-around'
+			justifyContent: 'space-around',
+			color: '#fff'
 		},
 		thread: {
 			color: '#fff',
@@ -43,41 +42,39 @@ const
 			padding: '0.25rem 0.5rem 0.2rem 0.5rem'
 		},
 		sceneHead: {
-			color: '#222',
-			fontSize: '1.3rem',
+			color: 'inherit',
+			fontSize: '1.5rem',
 
-			margin: '0.5rem 1.5rem'
+			margin: '3rem 2rem 1rem 2rem',
+			backgroundColor: 'inherit'
 		},
 		sceneBody: {
-			color: '#222',
-			fontSize: '1.1rem',
-			margin: '0.5rem 1.5rem'
+			color: 'inherit',
+			fontSize: '1.3rem',
+			margin: '1rem 2rem 3rem 2rem',
+			lineHeight: '130%',
+			backgroundColor: 'inherit'
 		},
 		stats: {
-			backgroundColor: '#fff',
-			color: '#555',
-			fontSize: '1rem',
+			color: '#fff',
+			fontSize: '1.1rem',
 
-			margin: '0',
+			width: '47rem',
+			margin: '0 auto',
 			padding: '0.75rem 1.5rem 0.75rem 1.5rem',
 
 			display: 'flex',
 			flexDirection: 'row',
-			justifyContent: 'space-around'
+			justifyContent: 'space-around',
+
+			top: '0',
+			position: 'fixed'
 		},
 		wc: {
 			textAlign: 'right',
 
 			display: 'inline-block',
 			float: 'right'
-		},
-		statSticky: {
-			bottom: '0',
-			position: 'sticky'
-		},
-		statFree: {
-			bottom: 'auto',
-			position: 'inherit'
 		},
 		doneButton: {
 			fontSize: '1rem',
@@ -86,7 +83,29 @@ const
 			outline: 'none',
 			backgroundColor: 'rgba(0,0,0,0)',
 			cursor: 'pointer'
-		}
+		},
+		modal: {
+			zIndex: 30,
+			width: '100%',
+			minHeight: '100vh'
+		},
+		threads: {
+			position: 'fixed',
+			transform: 'translate(-0.5rem, 0.6rem)',
+			flexShrink: 0,
+			display: 'flex',
+			flexDirection: 'column'
+		},
+		tooltip: {
+			position: 'relative',
+			left: '0.7rem',
+			top: '-0.25rem',
+			padding: '0.3rem 0.5rem',
+			color: '#fff',
+			borderRadius: '1rem',
+			whiteSpace: 'nowrap',
+			fontSize: '0.8rem'
+		},
 	},
 
 	testWords = /[\w'’]+(?!\w*>)/igm; // capture words and ignore html tags or special chars
@@ -104,72 +123,85 @@ class SceneWriter extends React.Component {
 		super(props, context);
 
 		this.state = {
-			threadStyle: Object.assign({}, Style.thread, { backgroundColor: props.thread.c }),
-			head: props.scene.h,
-			body: props.scene.b,
-			wc: props.scene.w,
 			pages: Math.round(props.scene.wc / 275) || 1,
 			pageOf: 1,
-			statStyle: Style.statSticky
+			statStyle: Style.statFree
 		}
 
 		Bind(this);
 	}
 
-	render(props, state) {
+	render(props, state, context) {
+		var location = context.Get(props.scene.location);
 		return (
+			<div
+				style={Object.assign({backgroundColor: location.color}, Style.modal)}
+				onclick={(e) => {
+					if (e.target === e.currentTarget)
+						props.dismiss();
+				}}
+			>
 			<div
 				ref={this.mounted}
 				style={Style.box}
+				onclick={(e) => e.target === e.currentTarget ? this.body.focus() : undefined}
 			>
-				<span style={Object.assign({}, Style.top, { backgroundColor: props.thread.c })}>
-					<ThreadLabel
-						value={props.thread.n}
-						onChange={(e) => this.context.do('ModifyThreadName', {
-							atIndex: props.sceneIndex,
-							newName: e.target.value
-						})}
-					/>
-					<LocationLabel
-						value={props.scene.l}
-						onInput={(value) => this.context.do('ModifySceneLocation', {
-							sliceIndex: props.sliceIndex,
-							sceneIndex: props.sceneIndex,
-							newLocation: value
-						})}
-					/>
-				</span>
 				<ExpandingTextarea
 					style={Style.sceneHead}
 					maxLength="250"
-					onInput={(e) => this.setState({head: e.target.value})}
-					onChange={() => this.context.do('ModifySceneHead', 
-						Object.assign({newHead: this.state.head}, props.coords)
-					)}
-					value={state.head}
+					onInput={(e) => this.context.Do('ModifyScene', {id: props.scene.id, summary: e.target.value})}
+					value={props.scene.summary}
 					baseHeight="1.7em"
-					placeholder="Title/Summary"
+					placeholder="Summary"
+					onDragStart={(e) => e.preventDefault()}
 				/>
 				<ExpandingTextarea
 					ref={(el) => (this.body = el ? el.base : undefined)}
 					style={Style.sceneBody}
 					onInput={this.onBody}
-					value={state.body}
+					value={props.scene.body}
 					baseHeight="1.1em"
 					placeholder="Body"
+					onDragStart={(e) => e.preventDefault()}
 				/>
-				<span style={Object.assign({}, Style.stats, state.statStyle)}>
+				<span style={Object.assign({backgroundColor: location.color}, Style.stats)}>
 					<span style={Style.wc}>
-						{state.wc + ' words'}
+						{props.scene.wc + ' words'}
 					</span>
 					<span>
 						{state.pageOf + '/' + state.pages}
 					</span>
-					<button
-						style={Style.doneButton}
-						onClick={props.onDone}
-					>done</button>
+					<span>
+						{location.name}
+					</span>
 				</span>
+				<div style={Style.threads}>
+					{Object.keys(props.scene.thread).map((id, index) => {
+						var thread = context.Get(id);
+						return (
+							<div
+								style={{
+									borderRadius: '0.5rem',
+									width: '1rem',
+									height: '1rem',
+									backgroundColor: thread.color,
+									overflow: 'visible',
+									margin: '0.25rem 0'
+								}}
+								class="tooltip"
+							>
+								&nbsp;
+								<span
+									class="tooltipText"
+									style={Object.assign({backgroundColor: thread.color}, Style.tooltip)}
+								>
+									{thread.name}
+								</span>
+							</div>
+						);
+					})}
+				</div>
+			</div>
 			</div>
 		)
 	}
@@ -186,19 +218,15 @@ class SceneWriter extends React.Component {
 		window.removeEventListener('resize', this.onResize);
 	}
 
-	onBody(event) {
-		this.setState({
-			body: event.target.value,
-			wc: count(event.target.value),
-			pages: Math.round(this.state.wc / 275) || 1
-		});
+	onBody(e) {
+		var wc = count(e.target.value);
+		this.state.pages = Math.round(wc / 275) || 1;
 		this.onScroll();
-		this.context.do('ModifySceneBody', Object.assign({newBody: this.state.body, wc: this.state.wc}, this.props.coords));
+		this.context.Do('ModifyScene', {id: this.props.scene.id, body: e.target.value, wc: wc})
 	}
 
-	onScroll(event) {
+	onScroll() {
 		this.pageCount();
-		this.stickyStats();
 	}
 
 	pageCount() {
@@ -210,14 +238,6 @@ class SceneWriter extends React.Component {
 			if (t > this.state.pages) t = this.state.pages;
 		} else t = 1;
 		this.setState({ pageOf: t });
-	}
-
-	stickyStats() {
-		if (this.base.clientHeight > (window.innerHeight - 40)) {
-			this.setState({ statStyle: Style.statSticky })
-		} else {
-			this.setState({ statStyle: Style.statFree })
-		}
 	}
 }
 
