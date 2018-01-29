@@ -1,0 +1,160 @@
+Lambda:
+
+	Requests:
+		
+		up to 1 million / mo: free
+		after 1 million / mo: $0.0000002 per request. ($0.20 per 1 million)
+
+	Compute: ( GB-Seconds = TIME-TO-EXEC * NUM-OF-TIMES * MEM-USED-IN-GB
+	
+		400000 GB-Seconds / mo: free
+		after 400000 GB-Seconds / mo: $0.00001667 per GB-Second
+
+
+S3:
+
+	Requests:
+
+		Put,Copy,Post, or List Requests: $0.005 per 1000 requests
+		Get and all Other Requests: $0.004 per 10000 requests
+		Delete: free
+
+	Data Transfers OUT:
+		
+		First 1 GB / mo: free
+		Up to 10 TB / mo: $0.090 per GB
+							$0.00008789 per MB
+
+
+
+User produces 10000 words a day in new content = 60000 characters
+
+Roughly 2x Characters for storing meta data etc.
+
+120000 characters per day = 240000 bytes per day
+
+At 20% compression: 48000 bytes ~ 47 kb
+
+Every month: 1.37 mb of new content
+Every year: 16.48 mb
+
+Back up every minute?
+
+
+----
+
+User registration:
+
+Email
+Password
+
+User registers.
+Server creates user account.
+User sends server modified project.
+Server saves single project only.
+
+User pays for app.
+Server records their purchase history, gives user access to app download.
+
+User pays for cloud storage.
+Server records their purchase history, creates user's storage.
+
+
+
+
+Host app as static site in S3 bucket with caching publicly max-age=604800 (7 days)
+app.html
+app.css
+app.js
+
+
+That gives openings for weekly deployments. If using max age instead of Expires header, then all users will receive the newest deployment within 1 week as their old cached version ages out. Could use Expires to set explicit deadlines.
+
+Use AWS Lambda for App purchasing, User authentication, and Project Cloud-sync
+
+weave.com
+
+	PUBLIC ROUTES:
+
+		/ 			-> (marketing/onboarding and call-to-action)
+		/buy 		-> (signup for account, enter payment info)
+		/try		-> (free version of app)
+		/login 		-> Login page
+		/support 	-> (FAQ, Tutorial, Contact Us)
+
+	FREE ROUTES: (Requires Authorized User)
+
+		/account 	-> (user account, cloud renew/cancel, cloud storage, app download)
+		/bugs		-> (submit bug report, or feedback)
+		/buy		-> (signup/renew cloud account, buy downloadable app)
+		
+
+	APP ROUTES: (Requires Authorized User + App Status)
+
+		/download	-> (Windows, Mac OS X, Linux, etc)
+	
+	CLOUD ROUTES: (requires Authorized User + App Status + Cloud Status)
+
+		/app		-> (cloud version of App)
+		
+		
+
+Standalone App : $12.99
+Cloud Support : $6.99 / yr, 
+
+
+
+User Profiles:
+User is a writer that writes on their laptop or desktop computer. Even if they own multiple devices, they probably prefer to use a single device for writing. If they were to use the cloud, it would be primarily for backing up their work, or viewing/working on it if they happen to be away from their primary device.
+
+
+
+Scenario:
+User has device with App installed.
+User has device but no App
+
+
+
+
+
+Buy cloud support? $6.99 for a whole year
+Work on your projects from anywhere!
+Never lose your work!
+	- Sign me up!
+		Awesome! You won't regret it.
+		[Check box for auto-renewal (defaults to unchecked)]
+			- Confirm payment.
+			- Cancel
+	- Hide this panel.
+		Okay. Hopefully you're already backing up your projects. Losing your work can be very painful.
+			- I don't care.
+			- Wait! I've changed my mind!
+
+
+
+I already back up my data.
+I'm not interested in cloud features.
+I don't want to pay that much.
+I just don't care.
+
+----
+
+
+Keep list of projects.
+
+project has URL if cloud or local based
+
+
+App version
+
+projectID: { name, modified, wc, url }
+
+
+Book Name
+Last modified
+Word Count
+Scene Count
+Note Count
+
+File location
+Cloud location

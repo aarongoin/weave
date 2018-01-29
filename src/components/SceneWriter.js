@@ -149,7 +149,7 @@ class SceneWriter extends React.Component {
 				<div style={Style.column}>
 					<div
 						style={Style.box}
-						//onclick={(e) => e.target === e.currentTarget ? this.body.focus() : undefined}
+						onclick={(e) => e.target === e.currentTarget ? this.body.focus() : undefined}
 					>
 						<ExpandingTextarea
 							buffer={500}

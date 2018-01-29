@@ -117,12 +117,8 @@ class SceneEditor extends React.Component {
 					effect="move"
 					payload={props.scene.id}
 					style={Object.assign({zIndex: state.focus ? 100 : 5, maxHeight: state.focus ? '14rem' : '4.5rem', backgroundColor: state.focus ? '#fff' : '#eee'}, Style.box)}
-					onMouseEnter={(e) => {
-						this.setState({hover: true})
-					}}
-					onMouseLeave={(e) => {
-						this.setState({hover: false})
-					}}
+					onMouseEnter={(e) => this.setState({hover: true})}
+					onMouseLeave={(e) => this.setState({hover: false})}
 				>
 					<div style={Style.threads}>
 						{Object.keys(props.scene.thread).map((id, index) => {
@@ -185,6 +181,7 @@ class SceneEditor extends React.Component {
 									if (e && props.scene.id === context.focus) {
 										e.base.focus();
 										context.eatFocus();
+										context.focus = undefined;
 									}
 								}}
 								style={Style.textarea}
@@ -193,8 +190,12 @@ class SceneEditor extends React.Component {
 								baseHeight="1.3rem"
 								placeholder="Summary"
 								value={props.scene.summary}
-								onfocus={() => this.setState({focus: true})}
-								onblur={() => this.setState({focus: false})}
+								onfocus={() => {
+									this.setState({focus: true});
+								}}
+								onblur={() => {
+									this.setState({focus: false});
+								}}
 								ondragstart={this.preventDrag}
 							/>
 						</div>

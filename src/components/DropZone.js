@@ -42,7 +42,7 @@ class DropZone extends React.Component {
 					break;
 				}
 			}
-		} else if (event.dataTransfer.types[0] === this.props.type.toLowerCase()) {
+		} else if (event.dataTransfer.types.includes(this.props.type.toLowerCase())) {
 			valid = true;
 		}
 
@@ -65,7 +65,7 @@ class DropZone extends React.Component {
 					break;
 				}
 			}
-		} else if (event.dataTransfer.types[0] === this.props.type.toLowerCase()) {
+		} else if (event.dataTransfer.types.includes(this.props.type.toLowerCase())) {
 			valid = true;
 		}
 

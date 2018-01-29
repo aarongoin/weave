@@ -83,6 +83,12 @@ const
 			borderRadius: "0.5rem",
 			backgroundColor: "#ccc",
 			cursor: "pointer"
+		},
+		textLink: {
+			color: "#000",
+			textDecoration: "none",
+			cursor: 'pointer',
+			fontWeight: "bold"
 		}
 	};
 
@@ -260,7 +266,10 @@ class HelpView extends React.Component {
 						<span style={Style.header}>Report A Bug</span>
 					}
 				>
-					<div style={Style.box}>How to report a bug...</div>
+					<div style={Style.box}>
+						<p>If you discover something you think is wrong, or would like to share your ideas for improvement: please open an issue <a href="http://bitbucket.org/ickelbawd/weave" target="_blank" style={Style.textLink}>here</a>.</p>
+						<p style={{marginTop: "0.5rem"}}>If you can determine the steps you took to produce the error: please include them clearly in your issue description.</p>
+					</div>
 				</SidebarItem>
 				{state.modal ?
 					<ModalView

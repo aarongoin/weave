@@ -99,7 +99,9 @@ class WeaveView extends React.Component {
 							scenes={props.map.scenes[loc]}
 							times={props.map.times}
 							height={props.map.offset}
-							onDrop={(id) => context.Do('ModifyScene', {id:id, location: loc})}
+							onDrop={(id) => {
+								context.Do('ModifyScene', {id:id, location: loc});
+							}}
 							index={i}
 							context={context}
 							offset={state.offsetY}

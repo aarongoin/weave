@@ -25,19 +25,18 @@ class ExpandingTextarea extends React.Component {
 	render(props, state) {
 		return (
 			<textarea
-				draggable
 				style={Object.assign({}, Style.editBox, props.style)}
-				ref={(el) => this.el = el}
 				maxlength={props.maxlength}
 				placeholder={props.placeholder}
 				onmouseover={props.onmouseover}
+				onclick={this.onClick}
 				oninput={this.onInput}
 				onchange={props.onchange}
-				onfocus={props.onfocus}
-				onblur={props.onblur}
+				onfocus={this.onFocus}
+				onblur={this.onBlur}
 				ondragstart={props.ondragstart}
 				onkeyup={props.onkeyup}
-				value={props.value}
+				value={state.value}
 			/>
 		)
 	}
@@ -61,6 +60,19 @@ class ExpandingTextarea extends React.Component {
 		window.removeEventListener('resize', this.doResize);
 	}
 
+	onClick(event) {
+		this.base.focus();
+		if (this.props.onclick) this.props.onclick(event);
+	}
+
+	onFocus(event) {
+		if (this.props.onfocus) this.props.onfocus(event);
+	}
+
+	onBlur(event) {
+		if (this.props.onblur) this.props.onblur(event);
+	}
+
 	onInput(event) {
 		if (this.timer) clearTimeout(this.timer);
 		this.timer = setTimeout(this.onTimer, this.props.buffer || 0, event);
@@ -77,8 +89,8 @@ class ExpandingTextarea extends React.Component {
 	doResize() {
 		var y = window.document.body.scrollTop,
 			x = window.document.body.scrollLeft;
-		this.el.style.height = this.props.baseHeight;
-		this.el.style.height = this.el.scrollHeight + 'px';
+		this.base.style.height = this.props.baseHeight;
+		this.base.style.height = this.base.scrollHeight + 'px';
 		window.document.body.scrollTo(x, y);
 	}
 }
