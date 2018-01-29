@@ -15,7 +15,7 @@ class BufferedText extends React.Component {
 		// capture onInput and buffer changes
 		var input = props.children[0];
 
-		this.afterInput = input.attributes.onInput;
+		this.afterInput = input.attributes.oninput;
 		input.attributes.onInput = this.onInput;
 
 		return input;

@@ -1,35 +1,55 @@
 const
 	Colors = require('./colors.js'),
-	ParseTime = require('./time.js');
+	ParseTime = require('./time.js'),
+	LZW = require('lz-string'),
+	chars = "abcdefghijklmnopqrstuvwxyz0123456789",
+	uuid = function() {
+		var i = 15,
+			id = "";
+		while (i--) id += chars.charAt((Math.random() * 36) >> 0);
 
-function adjustIndex(to, from) {
-	return (to > from) ? to - 1 : to
-}
+		return id;
+	};
 
+// function adjustIndex(to, from) { // LEGACY? OR DEAD CODE?
+// 	return (to > from) ? to - 1 : to
+// }
+
+/*
+	deep copy values of all properties of pattern from src to pattern--given a JS Object as a pattern, and a JS Object as a src
+*/
 function extract(pattern, src) {
 	for (var key in pattern) {
-		if (typeof pattern[key] === 'object' && typeof src[key] === 'object') {
-			extract(pattern[key], src[key]);
+		if (typeof pattern[key] === 'object' && typeof src[key] === 'object' && src[key] !== null) {
+			if (pattern[key] === null)
+				pattern[key] = copy(src[key]);
+			else extract(pattern[key], src[key]);
 		} else pattern[key] = src[key];
 	}
 	return pattern;
 }
 
-function merge(dest, src) {
+/*
+	deep copy values of all properties of src from src to dest--given two JS Objects or Arrays as a dest and src
+*/
+function merge(dest, src, deleteNull=true) {
 	for (var key in src) {
-		if (typeof src[key] === 'object') {
-			if (dest[key] === undefined)
-				dest[key] = (Array.isArray(src[key])) ? [] : {};
-			merge(dest[key], src[key]);
-		} else if (src[key] === undefined) {
+		if (src[key] === null && deleteNull) {
 			if (Array.isArray(dest)) dest.splice(key, 1);
 			else delete dest[key];
+		} else if (typeof src[key] === 'object' && src[key] !== null) {
+			if (dest[key] === undefined)
+				dest[key] = (Array.isArray(src[key])) ? [] : {};
+			merge(dest[key], src[key], deleteNull);
 		} else dest[key] = src[key];
 	}
 	return dest;
 }
 
-const copy = (obj) => Array.isArray(obj) ? merge([], obj) : merge({}, obj);
+/*
+	convenience function to make a deep copy of an object
+*/
+const copy = (obj) => Array.isArray(obj) ? merge([], obj, false) : merge({}, obj, false);
 
 const base = {
 	scene: () => ({
@@ -43,22 +63,25 @@ const base = {
 		thread: {}
 	}),
 	meta: () => ({
+		id: uuid(),
 		title: '',
 		author: '',
 		email: '',
+		modified: (new Date()).toISOString(),
 		wc: 0,
-		sc: 0
+		sc: 0,
+		nc: 0
 	}),
-	location: () => ({
+	location: (color) => ({
 		id: 'l' + Date.now(),
 		name: '',
-		color: Colors.locationColor(),
+		color: color || Colors.locationColor(),
 		folder: ''
 	}),
-	thread: () => ({
+	thread: (color) => ({
 		id: 't' + Date.now(),
 		name: '',
-		color: Colors.threadColor(),
+		color: color || Colors.threadColor(),
 		folder: '',
 		time: {}
 	}),
@@ -93,7 +116,7 @@ const base = {
 			threads: false,
 			location: false
 		},
-		chapters: [], // [ ...(title, ...sceneID),]
+		chapters: [], // [ ...{ title, scenes: [...sceneID] },]
 		past: [],
 		future: [],
 		visible: {},
@@ -104,72 +127,88 @@ const base = {
 
 
 const
-MAX_HISTORY = 20,
+MAX_HISTORY = 40,
 Actions = {
 
-	NewThread({index, folder}, store, patch={}) {
-		var t = base.thread(),
+	NewThread({index, folder, color}, store, patch={}) {
+		var t = base.thread(color),
 			l = copy(store.threadList);
 
 		if (folder !== undefined) {
 			t.folder = folder;
-			Actions.CreateThread(t, store, patch);
+			patch = Actions.CreateThread(t, store, patch);
 
 			folder = store.threadFolders[folder];
 			l = copy(store.folder[folder].items);
 			l.splice(index, 0, t.id);
-			Actions.ModifyFolder({id: folder, items: l}, store, patch);
+			patch = Actions.ModifyFolder({id: folder, items: l}, store, patch);
 		} else {
-			Actions.CreateThread(t, store, patch);
+			patch = Actions.CreateThread(t, store, patch);
 
 			l = copy(store.threadList);
 			l.splice(index, 0, t.id);
-			Actions.ModifyThreadList(l, store, patch);
+			patch = Actions.ModifyThreadList(l, store, patch);
 		}
 		l = {};
 		l[t.id] = t.id;
-		Actions.ModifyVisible(l, store, patch);
+		patch = Actions.ModifyVisible(l, store, patch);
+
+		return patch;
 	},
-	NewLocation({index, folder}, store, patch={}) {
-		var t = base.location(),
+	NewLocation({index, folder, color}, store, patch={}) {
+		var t = base.location(color),
 			l;
 
 		if (folder !== undefined) {
 			t.folder = folder;
-			Actions.CreateLocation(t, store, patch);
+			patch = Actions.CreateLocation(t, store, patch);
 
 			folder = store.locationFolders[folder];
 			l = copy(store.folder[folder].items);
 			l.splice(index, 0, t.id);
-			Actions.ModifyFolder({id: folder, items: l}, store, patch);
+			patch = Actions.ModifyFolder({id: folder, items: l}, store, patch);
 		} else {
-			Actions.CreateLocation(t, store, patch);
+			patch = Actions.CreateLocation(t, store, patch);
 
 			l = copy(store.locationList);
 			l.splice(index, 0, t.id);
-			Actions.ModifyLocationList(l, store, patch);
+			patch = Actions.ModifyLocationList(l, store, patch);
 		}
 		l = {};
 		l[t.id] = t.id;
-		Actions.ModifyVisible(l, store, patch);
+		patch = Actions.ModifyVisible(l, store, patch);
+
+		return patch;
 	},
 	NewLocationFolder(init, store, patch={}) {
 		var f = base.folder('location'),
-			l = copy(store.locationFolders);
+			l = copy(store.locationFolders),
+			v = {};
 
-		Actions.CreateLocationFolder(f, store, patch);
+		patch = Actions.CreateLocationFolder(f, store, patch);
 
 		l.splice(0, 0, f.id);
-		Actions.ModifyLocationFolders(l, store, patch);
+		patch = Actions.ModifyLocationFolders(l, store, patch);
+
+		v[f.id] = true;
+		patch = Actions.ModifyVisible(v, store, patch);
+
+		return patch;
 	},
 	NewThreadFolder(init, store, patch={}) {
 		var f = base.folder('thread'),
-			l = copy(store.threadFolders);
+			l = copy(store.threadFolders),
+			v = {};
 
-		Actions.CreateThreadFolder(f, store, patch);
+		patch = Actions.CreateThreadFolder(f, store, patch);
 
 		l.splice(0, 0, f.id);
-		Actions.ModifyThreadFolders(l, store, patch);
+		patch = Actions.ModifyThreadFolders(l, store, patch);
+
+		v[f.id] = true;
+		patch = Actions.ModifyVisible(v, store, patch);
+
+		return patch;
 	},
 	RemoveThread({id, folder, index}, store, patch={}) {
 		var temp;
@@ -179,10 +218,12 @@ Actions = {
 		} else {
 			temp = copy(store.folder[folder]);
 			temp.items.splice(index, 1);
-			temp.items[temp.items.length] = undefined;
-			Actions.ModifyFolder(temp, store, patch);
+			temp.items[temp.items.length] = null;
+			patch = Actions.ModifyFolder(temp, store, patch);
 		}
-		Actions.DeleteThread(id, store, patch);
+		patch = Actions.DeleteThread(id, store, patch);
+
+		return patch;
 	},
 	RemoveLocation({id, folder, index}, store, patch={}) {
 		var temp;
@@ -192,10 +233,12 @@ Actions = {
 		} else {
 			temp = copy(store.folder[folder]);
 			temp.items.splice(index, 1);
-			temp.items[temp.items.length] = undefined;
-			Actions.ModifyFolder(temp, store, patch);
+			temp.items[temp.items.length] = null;
+			patch = Actions.ModifyFolder(temp, store, patch);
 		}
-		Actions.DeleteLocation(id, store, patch);
+		patch = Actions.DeleteLocation(id, store, patch);
+
+		return patch;
 	},
 	RemoveFolder({id, index, type}, store, patch={}) {
 		// delete any items contained in folder
@@ -211,8 +254,10 @@ Actions = {
 		}
 		// delete folder itself
 		patch.folder = patch.folder || {};
-			patch.folder[id] = store.folder[id];
-			delete store.folder[id];
+		patch.folder[id] = store.folder[id];
+		delete store.folder[id];
+
+		return patch;
 	},
 
 
@@ -224,9 +269,13 @@ Actions = {
 	CreateNote(init, store, patch={}) {
 		init = merge(base.note(), init);
 		patch.note = patch.note || {};
-		patch.note[init.id] = undefined;
+		patch.note[init.id] = null;
+		patch.meta = patch.meta || {};
+		patch.meta.nc = store.meta.nc;
 
 		store.note[init.id] = init;
+		store.meta.nc++;
+		patch.focus = init.id;
 		return patch;
 	},
 	CreateScene(init, store, patch = {}) {
@@ -235,48 +284,50 @@ Actions = {
 		patch.meta = patch.meta || {};
 		patch.meta.sc = store.meta.sc;
 		patch.scene = patch.scene || {};
-		patch.scene[init.id] = undefined;
+		patch.scene[init.id] = null;
 		store.scene[init.id] = init;
 		store.meta.sc++;
+		patch.focus = init.id;
 		return patch;
 	},
 	CreateThread(init, store, patch={}) {
 		init = merge(base.thread(), init);
 		patch.thread = patch.thread || {};
-		patch.thread[init.id] = undefined;
+		patch.thread[init.id] = null;
 
-		init.name = init.name || "Thread " + (Object.keys(store.thread).length + 1)
+		init.name = init.name || "";
 
 		store.thread[init.id] = init;
+		patch.focus = init.id;
 		return patch;
 	},
 	CreateLocation(init, store, patch={}) {
 		init = merge(base.location(), init);
 		patch.location = patch.location || {};
-		patch.location[init.id] = undefined;
+		patch.location[init.id] = null;
 
-		init.name = init.name || "Place " + (Object.keys(store.location).length + 1)
+		init.name = init.name || "";
 
 		store.location[init.id] = init;
-
+		patch.focus = init.id;
 		return patch;
 	},
 	CreateLocationFolder(init, store, patch={}) {
 		init = merge(base.folder('location'), init);
 		patch.folder = patch.folder || {};
-		patch.folder[init.id] = undefined;
+		patch.folder[init.id] = null;
 
 		store.folder[init.id] = init;
-
+		patch.focus = init.id;
 		return patch;
 	},
 	CreateThreadFolder(init, store, patch={}) {
 		init = merge(base.folder('thread'), init);
 		patch.folder = patch.folder || {};
-		patch.folder[init.id] = undefined;
+		patch.folder[init.id] = null;
 
 		store.folder[init.id] = init;
-
+		patch.focus = init.id;
 		return patch;
 	},
 
@@ -297,7 +348,7 @@ Actions = {
 			init.utctime = ParseTime(init.time).ISOString;
 			for (var t in scene.thread) {
 				o = {id: t, time: copy(store.thread[t].time)};
-				o.time[scene.utctime] = undefined;
+				o.time[scene.utctime] = null;
 				o.time[init.utctime] = true;
 				Actions.ModifyThread(o, store, patch);
 			}
@@ -351,6 +402,12 @@ Actions = {
 		merge(store.folder[init.id], init);
 		return patch;
 	},
+	ModifyChapters(init, store, patch={}) {
+		patch.chapters = copy(store.chapters);
+
+		merge(store.chapters, init);
+		return patch;
+	},
 	ModifyNote(init, store, patch={}) {
 		init.modified = Date.now();
 		patch.note = patch.note || {};
@@ -377,6 +434,12 @@ Actions = {
 		store.search = init;
 		return patch;
 	},
+	ModifyPrintSettings(init, store, patch={}) {
+		patch.printSettings = extract(copy(init), store.meta);
+
+		merge(store.printSettings, init);
+		return patch;
+	},
 
 
 
@@ -397,12 +460,12 @@ Actions = {
 				f = store.threadFolders[from.folder];
 				list = copy(store.folder[f].items);
 				item = list.splice(from.index, 1)[0];
-				list[list.length] = undefined;
+				list[list.length] = null;
 				Actions.ModifyFolder({id: store.folder[f].id, items: list}, store, patch);
 			} else {
 				list = copy(store.threadList);
 				item = list.splice(from.index, 1)[0];
-				list[list.length] = undefined;
+				list[list.length] = null;
 				Actions.ModifyThreadList(list, store, patch);
 			}
 
@@ -411,14 +474,14 @@ Actions = {
 				Actions.ModifyThread({id: item, folder: f}, store, patch);
 				list = copy(store.folder[f].items);
 				list.splice(to.index, 0, item);
-				list[list.length] = undefined;
+				list[list.length] = null;
 				Actions.ModifyFolder({id: store.folder[f].id, items: list}, store, patch);
 			} else {
 				if (from.folder !== undefined) 
 					Actions.ModifyThread({id: item, folder: ''}, store, patch);
 				list = copy(store.threadList);
 				list.splice(to.index, 0, item);
-				list[list.length] = undefined;
+				list[list.length] = null;
 				Actions.ModifyThreadList(list, store, patch);
 			}
 		}
@@ -442,12 +505,12 @@ Actions = {
 				f = store.locationFolders[from.folder];
 				list = copy(store.folder[f].items);
 				item = list.splice(from.index, 1)[0];
-				list[list.length] = undefined;
+				list[list.length] = null;
 				Actions.ModifyFolder({id: store.folder[f].id, items: list}, store, patch);
 			} else {
 				list = copy(store.locationList);
 				item = list.splice(from.index, 1)[0];
-				list[list.length] = undefined;
+				list[list.length] = null;
 				Actions.ModifyLocationList(list, store, patch);
 			}
 
@@ -456,14 +519,14 @@ Actions = {
 				Actions.ModifyLocation({id: item, folder: f}, store, patch);
 				list = copy(store.folder[f].items);
 				list.splice(to.index, 0, item);
-				list[list.length] = undefined;
+				list[list.length] = null;
 				Actions.ModifyFolder({id: store.folder[f].id, items: list}, store, patch);
 			} else {
 				if (from.folder !== undefined) 
 					Actions.ModifyLocation({id: item, folder: ''}, store, patch);
 				list = copy(store.locationList);
 				item = list.splice(to.index, 0, item);
-				list[list.length] = undefined;
+				list[list.length] = null;
 				Actions.ModifyLocationList(list, store, patch);
 			}
 		}
@@ -493,7 +556,7 @@ Actions = {
 		for (var key in store.scene) {
 			if (store.scene[key].thread[id]) {
 				let m = {id: key, thread: {}};
-				m.thread[id] = undefined;
+				m.thread[id] = null;
 				Actions.ModifyScene(m, store, patch);
 			}
 		}
@@ -503,13 +566,13 @@ Actions = {
 			if (store.note[key].tag[id]) {
 				if (Object.keys(store.note[key].tag).length > 1) {
 					let m = {id: key, tag: {}};
-					m.tag[id] = undefined;
+					m.tag[id] = null;
 					Actions.ModifyNote(m, store, patch);
 				} else Actions.DeleteNote(key, store, patch);
 			}
 		}
 		temp = {};
-		temp[id] = undefined;
+		temp[id] = null;
 		Actions.ModifyVisible(temp, store, patch);
 
 		delete store.thread[id];
@@ -534,13 +597,13 @@ Actions = {
 			if (store.note[key].tag[id]) {
 				if (Object.keys(store.note[key].tag).length > 1) {
 					let m = {id: key, tag: {}};
-					m.tag[id] = undefined;
+					m.tag[id] = null;
 					Actions.ModifyNote(m, store, patch);
 				} else Actions.DeleteNote(key, store, patch);
 			}
 		}
 		temp = {};
-		temp[id] = undefined;
+		temp[id] = null;
 		Actions.ModifyVisible(temp, store, patch);
 
 		delete store.location[id];
@@ -549,8 +612,11 @@ Actions = {
 	DeleteNote(id, store, patch={}) {
 		patch.note = patch.note || {};
 		patch.note[id] = store.note[id];
+		patch.meta = patch.meta || {};
+		patch.meta.nc = store.meta.nc;
 
 		delete store.note[id];
+		store.meta.nc--;
 		return patch;
 	},
 
@@ -569,11 +635,11 @@ Actions = {
 	UnthreadScene({scene, thread}, store, patch={}) {
 
 		var o = {id: scene, thread: {}};
-		o.thread[thread] = undefined;
+		o.thread[thread] = null;
 		Actions.ModifyScene(o, store, patch);
 
 		o = {id: thread, time: copy(store.thread[thread].time)}
-		o.time[store.scene[scene].utctime] = undefined;
+		o.time[store.scene[scene].utctime] = null;
 		Actions.ModifyThread(o, store, patch);
 
 		return patch;
@@ -581,27 +647,59 @@ Actions = {
 
 
 	Do(action, obj, store) {
+		var patch, focus = null;
 		if (action !== 'ModifySearch' && action !== 'ModifyVisible') {
-			store.past.push(Actions[action](obj, store));
+			patch = Actions[action](obj, store);
+			focus = patch.focus;
+
+			store.past.push(
+				LZW.compressToUTF16(
+					JSON.stringify( patch )
+				)
+			);
 			if (store.past.length > MAX_HISTORY) store.past.shift();
 			if (store.future.length) store.future = [];
 		} else Actions[action](obj, store);
+		store.meta.modified = (new Date()).toISOString();
+		return focus;
 	},
 	Undo(store) {
 		var item;
 		if (store.past.length) {
-			item = store.past.pop();
-			store.future.push(extract(copy(item), store));
+			item = JSON.parse(
+				LZW.decompressFromUTF16(
+					store.past.pop()
+				)
+			);
+			store.future.push(
+				LZW.compressToUTF16(
+					JSON.stringify(
+						extract(copy(item), store)
+					)
+				)
+			);
 			merge(store, item);
 		}
+		store.meta.modified = (new Date()).toISOString();
 	},
 	Redo(store) {
 		var item;
 		if (store.future.length) {
-			item = store.future.pop();
-			store.past.push(extract(copy(item), store));
+			item = JSON.parse(
+				LZW.decompressFromUTF16(
+					store.future.pop()
+				)
+			);
+			store.past.push(
+				LZW.compressToUTF16(
+					JSON.stringify(
+						extract(copy(item), store)
+					)
+				)
+			);
 			merge(store, item);
 		}
+		store.meta.modified = (new Date()).toISOString();
 	}
 };
 

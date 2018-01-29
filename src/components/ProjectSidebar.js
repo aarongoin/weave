@@ -9,27 +9,44 @@ const
 
 	Button = require('../buttons.js'),
 
+	PrintView = require('./PrintView.js'),
+	HelpView = require('./HelpView.js'),
+
+	ImmutableInput = require('./ImmutableInput.js'),
+
 	Style = {
 		sidebar: {
 			zIndex: 50,
 			position: 'fixed',
-			width: '18rem',
 			top: 0,
 			bottom: 0,
 			display: 'flex',
 			flexDirection: 'column',
 			justifyContent: 'stretch',
-			borderRight: '1px solid #000',
-			backgroundColor: "#444",
-			transition: 'left 0.3s ease-in-out'
+			//paddingRight: "0.25rem",
+			//borderRight: '1px solid #000',
+			backgroundColor: "#999",
+			transition: 'left 0.3s ease-in-out, width 0.3s ease-in-out'
+		},
+		text: {
+			padding: '0.3rem 0.5rem',
+			border: 'none',
+			outline: 'none',
+			color: '#000',
+			//textShadow: '0 0 0.25rem #111'
+
+			margin: '0.5rem',
+			borderRadius: '0.15rem',
+			fontSize: '1rem',
+			fontWeight: "bold"
 		},
 		toolbar: {
-			flexGrow: 0,
+			flexShrink: "0",
 			display: 'flex',
 			flexDirection: 'column',
 			justifyContent: 'flex-start',
 			alignItems: 'stretch',
-			padding: '0 0.25rem'
+			padding: '0.25rem 0.5rem 0 0.5rem'
 		},
 		scene: {
 			display: 'flex',
@@ -62,22 +79,23 @@ const
 			alignItems: 'center',
 			margin: '0 0 0.25rem 0',
 			fontSize: '0.8rem',
-			color: '#fff'
+			color: '#000'
 		},
 		searchBar: {
 			height: '1.75rem',
 			display: 'flex',
 			alignItems: 'center',
-			backgroundColor: '#fff',
-			marginBottom: '0.5rem'
+			padding: '0.15rem 0.4rem 0.4rem 0.4rem',
+			//borderBottom: "1px solid #000"
 		},
 		search: {
 			flexGrow: 1,
-			//maxWidth: '24.4rem',
-			padding: '0 0.75rem',
+			padding: '0.25rem 0.5rem',
 			border: 'none',
 			outline: 'none',
-			textAlign: "center"
+			textAlign: "center",
+			fontSize: "1rem",
+			borderRadius: "0.25rem"
 		},
 		button: {
 			width: '5rem',
@@ -102,10 +120,9 @@ class ProjectSidebar extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
-		props.register(() => this.setState({toggled: !this.state.toggled}));
-
 		this.state = {
-			toggled: true
+			width: "20rem",
+			hidden: "-20.5rem"
 		};
 
 		Bind(this);
@@ -113,35 +130,78 @@ class ProjectSidebar extends React.Component {
 
 	render(props, state, context) {
 		return (
-			<div><div style={Object.assign({width: state.toggled ? '18rem' : 0}, Style.spacer)}>&nbsp;</div>
-				<div style={Object.assign({left: state.toggled ? 0 : '-18.5rem'}, Style.sidebar)}>
+			<div>
+				<div style={Object.assign({width: props.toggled ? state.width : 0}, Style.spacer)}>&nbsp;</div>
+				<div style={Object.assign({left: props.toggled ? 0 : state.hidden}, Style.sidebar, {width: state.width})}>
 					<TabbedSidebar
 						style={{borderTop: 'none'}}
-						default={3}
-						buttons={["help", "books", "print", "eye"]}
+						tab={props.tab}
+						buttons={["help", "print", "craft"]}
+						text={["Help", "Book", "Plot"]}
+						onTab={this.onTab}
 						tabs={[
-							null,
-							null,
-							null,
+						// HELP
+							<HelpView/>,
+						// PRINT
+							<div style={{flexShrink: "0", flexGrow: 1, height: "96vh", display: "flex", flexDirection: "column"}}>
+									<ImmutableInput placeholder="Book Title" maxLength="64" value={props.project.meta.title}
+										class="noselect" type="text" style={Style.text}
+										onmouseover={(e) => (e.target.readOnly = true)}
+										onclick={(e) => {
+											e.target.focus();
+										}}
+										onfocus={(e) => {
+											e.target.readOnly = false;
+											e.target.class = "";
+										}}
+										onchange={(e) => context.Do('ModifyMeta', { title: e.target.value })}
+										onblur={(e) => {
+											e.target.readOnly = true;
+											e.target.class = "noselect";
+										}}
+									/>
+									<ImmutableInput placeholder="Author" maxLength="30" value={props.project.meta.author}
+										class="noselect" type="text" style={Style.text}
+										onmouseover={(e) => (e.target.readOnly = true)}
+										onclick={(e) => {
+											e.target.focus();
+										}}
+										onfocus={(e) => {
+											e.target.readOnly = false;
+											e.target.class = "";
+										}}
+										onchange={(e) => context.Do('ModifyMeta', { author: e.target.value })}
+										onblur={(e) => {
+											e.target.readOnly = true;
+											e.target.class = "noselect";
+										}}
+									/>
+								<PrintView
+									chapters={props.project.chapters}
+									settings={props.project.printSettings}
+									print={props.print}
+								/>
+							</div>,
+						// EYE
 							[<div style={Style.toolbar}>
 								<div style={Style.searchBar}>
-									<input
+									<ImmutableInput
+										id="searchBar"
 										style={Style.search}
-										type="text"
-										placeholder="Filter"
+										placeholder="Search"
 										maxLength="80"
 										size="24"
-										onInput={(e) => context.Do('ModifySearch', e.target.value)}
+										oninput={(e) => context.Do('ModifySearch', e.target.value)}
 										value={props.project.search}
-										onkeyup={(e) => e.keyCode === 13 ? e.currentTarget.blur() : undefined}
 									/>
 								</div>
 								<div style={Style.issues}>
-									<span class="noselect">{props.project.meta.wc + ' words'}</span>
-									<span class="noselect">{props.project.meta.sc + ' scenes'}</span>
+									<span class="noselect">{props.scenes + ' scenes'}</span>
+									<span class="noselect">{props.notes + ' notes'}</span>
 								</div>
 							</div>,
 							<DragListWithFolders
+								key="threads"
 								type="Thread"
 								btnColor="#fff"
 								visible={props.project.visible}
@@ -149,6 +209,7 @@ class ProjectSidebar extends React.Component {
 								folders={props.project.threadFolders}
 							/>,
 							<DragListWithFolders
+								key="locations"
 								type="Location"
 								btnColor="#fff"
 								visible={props.project.visible}
@@ -160,6 +221,19 @@ class ProjectSidebar extends React.Component {
 				</div>
 			</div>
 		);
+	}
+
+	onTab(i) {
+		var w = 20;
+		this.props.onTab(i);
+		switch (i) {
+			case 0: w = 20; break;
+			case 1: w = 20; break;
+		}
+		this.setState({
+			width: w + "rem",
+			hidden: "-" + (w + 0.5) + "rem"
+		});
 	}
 }
 

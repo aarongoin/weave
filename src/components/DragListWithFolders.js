@@ -11,25 +11,28 @@ const
 	Draggable = require('./Draggable.js'),
 	DropZone = require('./DropZone.js'),
 
+	ImmutableInput = require('./ImmutableInput.js'),
+
 	Style = {
 		text: {
-			flexGrow: 1,
+			//flexGrow: 1,
 			width: '10rem',
 			padding: '0.3rem 0.5rem 0.3rem 0',
 			border: 'none',
 			outline: 'none',
 			backgroundColor: 'rgba(0,0,0,0)',
-			fontSize: '0.8rem',
+			fontSize: '0.9rem',
 			color: '#fff',
-			textShadow: '0 0 0.25rem #111'
+			//textShadow: '0 0 0.25rem #111'
 		},
 		thread: {
 			display: 'flex',
-			justifyContent: 'flex-start',
+			justifyContent: 'space-between',
 			alignItems: 'center',
 			fontSize: '0.9rem',
 			padding: "0 0 0 0.5rem",
-			margin: '1px 0'
+			margin: '1px 0',
+			borderRadius: "0.15rem"
 		},
 		hide: {
 			cursor: 'pointer',
@@ -48,7 +51,7 @@ const
 			padding: '0 0.25rem'
 		},
 		item: {
-			margin: '0 0.8rem',
+			margin: '0 0.25rem',
 			width: '1rem',
 			height: '1rem',
 			border: 'none',
@@ -74,6 +77,7 @@ class DragListWithFolders extends React.Component {
 
 		this.state = {
 			hover: -1,
+			colorPicker: false
 		}
 
 		Bind(this);
@@ -82,42 +86,18 @@ class DragListWithFolders extends React.Component {
 	render(props, state, context) {
 		return (
 			<SidebarItem
-				style={{flexGrow: 1, minHeight: "40vh"}}
+				style={{flexGrow: 1, minHeight: "40vh", borderTop: "1px solid #000"}}
 				buttons={[
 					<Button
 						img={props.type}
-						color="#fff"
-					/>/*,
-					<DropZone
-						//style={}
-						type={[props.type, "Folder"]}
-						effect="move"
-						onDrop={(from) => {
-							if (from.id.charAt(0) !== 'f') {
-								if (from.folder !== undefined) {
-									from.folder = props.folders[from.folder];
-									from.id = context.Get(from.folder).items[from.index];
-								} else from.id = props.free[from.index];
-
-								context.Do('Remove' + props.type, from);
-							} else {
-								from.type = props.type;
-								context.Do('RemoveFolder', from);
-							}
-						}}
-					>
-						<Button
-							img="delete"
-							color="#fff"
-							style={Style.item}
-							onclick={(e) => {
-								console.log('Trash Can!');
-							}}
-						/>
-					</DropZone>*/,
+						color="#000"
+						text={props.type === "Thread" ? "Threads" : "Places"}
+						noOpacity
+					/>,
 					<Button
 						img="group"
-						color="#fff"
+						color="#444"
+						hoverColor="#000"
 						style={Style.item}
 						onclick={(e) => {
 							context.Do('New' + props.type + 'Folder');
@@ -125,14 +105,32 @@ class DragListWithFolders extends React.Component {
 					/>,
 					<Button
 						img="add"
-						color="#fff"
+						color="#444"
+						hoverColor="#000"
 						style={Style.item}
 						onclick={(e) => {
-							context.Do('New' + props.type, {index: 0});
+							this.setState({colorPicker: true})
 						}}
 					/>
 				]}
 			>
+				{state.colorPicker ?
+					<div style={Object.assign({}, Style.thread, {position: "relative", height: "1.8rem", margin: "1px 0.25rem", padding: "0", borderRadius: "0.25rem", overflow: "hidden"})}>
+						{Colors[props.type].map((color, index) => (
+							<span
+								class="noselect"
+								style={{flexGrow: "1", height: "100%", backgroundColor: color, cursor: 'pointer'}}
+								onclick={(e)=>{
+									this.state.colorPicker = false;
+									context.Do('New' + props.type, {index: 0, color: color});
+								}}
+							>&nbsp;</span>
+						))}
+						<div style={{position: "absolute", width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", pointerEvents: "none"}}>
+							<span class="noselect">Pick a color.</span>
+						</div>
+					</div>
+				: ""}
 				<ScrollingView
 					style={{
 						flexGrow: 1,
@@ -147,6 +145,7 @@ class DragListWithFolders extends React.Component {
 						onMove={this.onMove}
 						item={(item, index) => (
 							<this.renderItem
+								key={item}
 								item={context.Get(item)}
 								index={index}
 								inset="0"
@@ -160,6 +159,7 @@ class DragListWithFolders extends React.Component {
 						onMove={this.moveFolder}
 						item={(folder, index) => (
 							<this.renderFolder
+								key={folder}
 								folder={context.Get(folder)}
 								index={index}
 							/>
@@ -174,44 +174,35 @@ class DragListWithFolders extends React.Component {
 		return (
 			<div style={Object.assign({}, Style.thread, {
 					backgroundColor: props.item.color,
-					opacity: this.props.visible[props.item.id] ? 1 : 0.4,
+					opacity: this.props.visible[props.item.id] ? 1 : 0.75,
 					marginLeft: props.inset
 				})}
 				onmouseover={(e) => this.onHover(props.item.id)}
 				onmouseleave={(e) => this.onHover(-1)}
 			>
-				<input placeholder="Name" maxLength="40" value={props.item.name}
-					class="noselect" type="text" style={Object.assign({}, Style.text, props.style)}	
+				<ImmutableInput placeholder="Name" maxLength="40" value={props.item.name}
+					ref={(e) => {
+						if (e && props.item.id === context.focus) {
+							e.base.focus();
+							context.eatFocus();
+						}
+					}}
+					type="text" style={Object.assign({}, Style.text, props.style)}	
 					onmouseover={(e) => (e.target.readOnly = true)}
 					onclick={(e) => {
-						e.target.readOnly = false;
-						e.target.class = ""
 						e.target.focus();
 					}}
-					onInput={(e) => {
+					onchange={(e) => {
 						context.Do('Modify' + this.props.type, {
 							id: props.item.id,
 							name: e.target.value
 						});
 					}}
-					onblur={(e) => {
-						e.target.readOnly = true;
-						e.target.class = "noselect";
-					}}
-					onkeyup={(e) => e.keyCode === 13 ? e.currentTarget.blur() : undefined}
 				/>
-				{(this.state.hover === props.item.id || !this.props.visible[props.item.id]) ?
-					<Button img="eye" color={this.props.btnColor} style={Style.hide}
-						onclick={(e) => {
-							var o = {};
-							e.stopPropagation();
-							o[props.item.id] = this.props.visible[props.item.id] ? false : true;
-							context.Do('ModifyVisible', o);
-						}}
-					/>
-				: ""}
+				<div style={{width: "3rem", display: "flex", justifyContent: "flex-end", alignItems: "center"}}>
 				{(this.state.hover === props.item.id) ?
 					<Button
+						noOpacity
 						img="delete"
 						color="#000"
 						hoverColor="#f00"
@@ -227,6 +218,19 @@ class DragListWithFolders extends React.Component {
 						}}
 					/>
 				: ""}
+				&nbsp;
+				{(this.state.hover === props.item.id || !this.props.visible[props.item.id]) ?
+					<Button img="eye" color={this.props.btnColor} style={Style.hide}
+						noOpacity
+						onclick={(e) => {
+							var o = {};
+							e.stopPropagation();
+							o[props.item.id] = this.props.visible[props.item.id] ? false : true;
+							context.Do('ModifyVisible', o);
+						}}
+					/>
+				: ""}
+				</div>
 			</div>
 		);
 	}
@@ -242,29 +246,50 @@ class DragListWithFolders extends React.Component {
 					onMouseLeave={(e) => this.setState({hover: -1})}
 					onDrop={(from) => this.onMove(from, Object.assign({folder: props.index, index: 0}, props.payload || {}))}
 				>
+					<div>
 					<button
 						style={Style.item}
 						onclick={() => context.Do('ModifyFolder', {id: props.folder.id, open: !props.folder.open})}
 					>
 						{props.folder.open ? "-" : "+"}
 					</button>
-					<input placeholder="Group" maxLength="40" value={props.folder.name}
+					<ImmutableInput placeholder="Group" maxLength="40" value={props.folder.name}
 						class="noselect" type="text" style={Style.text}	
 						onmouseover={(e) => (e.target.readOnly = true)}
 						onclick={(e) => {
-							e.target.readOnly = false;
-							e.target.class = ""
 							e.target.focus();
 						}}
-						onInput={(e) => {
+						onfocus={(e) => {
+							e.target.readOnly = false;
+							e.target.class = "";
+						}}
+						onchange={(e) => {
 							context.Do('ModifyFolder', {id: props.folder.id, name: e.target.value});
 						}}
 						onblur={(e) => {
 							e.target.readOnly = true;
 							e.target.class = "noselect";
 						}}
-						onkeyup={(e) => e.keyCode === 13 ? e.currentTarget.blur() : undefined}
 					/>
+					</div>
+					<div style={{display: "flex", alignItems: "center"}}>
+					{(this.state.hover === props.folder.id) ?
+						<Button
+							img="delete"
+							color="#000"
+							hoverColor="#f00"
+							style={Style.delete}
+							onclick={(e) => {
+								if (this.timer) {
+									clearTimeout(this.timer);
+									this.timer = undefined;
+								}
+							}}
+							onmousedown={(e) => {
+								this.timer = setTimeout(context.Do, 1000, 'RemoveFolder', {id: props.folder.id, index: props.index, type: this.props.type});
+							}}
+						/>
+					: ""}
 					{(this.state.hover === props.folder.id || !this.props.visible[props.folder.id]) ?
 						<Button img="eye" color={this.props.btnColor} style={Object.assign({}, Style.hide, {marginRight: '0.75rem'})}
 							onclick={(e) => {
@@ -285,23 +310,7 @@ class DragListWithFolders extends React.Component {
 							}}
 						/>
 					: ''}
-					{(this.state.hover === props.folder.id) ?
-						<Button
-							img="delete"
-							color="#000"
-							hoverColor="#f00"
-							style={Style.delete}
-							onclick={(e) => {
-								if (this.timer) {
-									clearTimeout(this.timer);
-									this.timer = undefined;
-								}
-							}}
-							onmousedown={(e) => {
-								this.timer = setTimeout(context.Do, 1000, 'RemoveFolder', {id: props.folder.id, index: props.index, type: this.props.type});
-							}}
-						/>
-					: ""}
+					</div>
 				</DropZone>
 				{props.folder.open ?
 					<DragList

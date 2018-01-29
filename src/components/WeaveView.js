@@ -69,22 +69,24 @@ class WeaveView extends React.Component {
 	}
 
 	componentDidMount() {
-		window.addEventListener('scroll', this.onScroll);
+		window.document.body.addEventListener('scroll', this.onScroll);
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('scroll', this.onScroll);
+		window.document.body.removeEventListener('scroll', this.onScroll);
 	}
 
 	render(props, state, context) {
 		var locations = Object.keys(props.map.scenes);
 		return (state.focusedScene ? 
 			<SceneWriter
+				key="scene-writer"
 				scene={context.Get(state.focusedScene)}
 				dismiss={this.onDismissModal}
 			/>
 		:
 			<div
+				key="weave-view"
 				data-is="WeaveView"
 				style={Object.assign(Style.weave, {justifyContent: 'flex-start'})}
 				onclick={props.onDeselect}
@@ -117,19 +119,19 @@ class WeaveView extends React.Component {
 	}
 
 	onDismissModal() {
-		this.setState({focusedScene: null}, () => window.scrollTo(X_OFFSET, Y_OFFSET));
-		window.addEventListener('scroll', this.onScroll);
+		this.setState({focusedScene: null}, () => window.document.body.scrollTo(X_OFFSET, Y_OFFSET));
+		window.document.body.addEventListener('scroll', this.onScroll);
 
 	}
 
 	onWriteModal(id) {
-		window.removeEventListener('scroll', this.onScroll);
+		window.document.body.removeEventListener('scroll', this.onScroll);
 		this.setState({focusedScene: id});
 	}
 
 	onScroll(event) {
-		X_OFFSET = window.scrollX;
-		Y_OFFSET = window.scrollY;
+		X_OFFSET = event.target.scrollLeft;
+		Y_OFFSET = event.target.scrollTop;
 		this.setState({offsetX: X_OFFSET, offsetY: Y_OFFSET});
 	}
 }

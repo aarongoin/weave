@@ -3,16 +3,15 @@ const day = "(?:\\W*(\\d\\d?)\\s?(?:st|nd|rd|th)?)";
 const season = "(?:\\W*(Spring)|(Summer)|(Fall)|(Winter))";
 const month = "(?:\\W*((?:Jan\\w*)|i)|((?:Feb\\w*)|ii)|((?:Mar\\w*)|iii)|((?:Apr\\w*)|iv)|((?:May\\w*)|v)|((?:Jun\\w*)|vi)|((?:Jul\\w*)|vii)|((?:Aug\\w*)|viii)|((?:Sep\\w*)|ix)|((?:Oct\\w*)|x)|((?:Nov\\w*)|xi)|((?:Dec\\w*)|xii)[.,]?)";
 const year = "(?:\\W*\\b(\\d{1,4})\\s*?(?:(AD|A\\.D\\.|CE|C\\.E\\.)|(BCE?|B\\.C\\.(?:E\\.)?))?)";
-const time = "(?:[ ./-T](\\d\\d?)(?:\\W?[:./h-]\\W?(\\d\\d))?\\W?(pm|Pm|PM|pM)?)?"
-const YMD = "(\\d{4})[./-](\\d\\d?)(?:[./-](\\d\\d?))?";
-const DMY = "(?:(\\d\\d?)[./-])?(\\d\\d?)[./-](\\d{2,4})";
+const time = "(?:[ ./\\-T](\\d\\d?)(?:\\W?[:./h\\-]\\W?(\\d\\d))?\\W?(pm|Pm|PM|pM)?)?"
+const YMD = "(\\d{4})[./\\-](\\d\\d?)(?:[./\\-](\\d\\d?))?";
+const DMY = "(?:(\\d\\d?)[./\\-])?(\\d\\d?)[./\\-](\\d{2,4})";
 
 // checkList contains array of regexp and handler function pairs
 const checkList = [
 
 /* YEAR MONTH DAY */
-	/* YYYY.MM(.DD) (HH(.MM)) */
-	[new RegExp(YMD + time, "i"), function(match) {
+	["YYYY.MM(.DD) (HH(.MM))", new RegExp(YMD + time, "i"), function(match) {
 		var result = "";
 
 		result += match[1]; // year
@@ -29,8 +28,7 @@ const checkList = [
 		return result;
 	}],
 /* DAY MONTH YEAR */
-	/* (DD.)MM.(YY)YY (HH(.MM)) */
-	[new RegExp(DMY + time, "i"), function(match) {
+	["(DD.)MM.(YY)YY (HH(.MM))", new RegExp(DMY + time, "i"), function(match) {
 		var result = "";
 
 		result += match[3].length === 2 ? "20"+ match[3] : match[3]; // year
@@ -47,8 +45,7 @@ const checkList = [
 		return result;
 	}],
 /* SEASONAL or MONTH DAY YEAR */
-	/* (SS)|(MMM.(DD)).YYYY (HH(.MM)) */
-	[new RegExp("(?:" + season + "|(?:" + month + day + "?[,.]?))?" + year + time, "i"), function(match) {
+	["(SS)|(MMM.(DD)).YYYY (HH(.MM))", new RegExp("(?:" + season + "|(?:" + month + day + "?[,.]?))?" + year + time, "i"), function(match) {
 		var result = "";
 
 		// parse year
@@ -92,21 +89,23 @@ module.exports = function ParseTime(timeString) {
 	// ex. "May 1st, 2011" => "2011-05-01T00:00:00Z"
 	// ex. "Spring 1476" => "1476-04-01T00:00:00Z"
 	var result = {
+			type: "",
 			isValid: false,
 			ISOString: (new Date()).toISOString()
 		},
 		match;
 
 	for(var i = 0; i < checkList.length; i++) {
-		match = checkList[i][0].exec(timeString);
+		match = checkList[i][1].exec(timeString);
 		if (Array.isArray(match)) {
-			result.ISOString = checkList[i][1](match);
-			if (i !== 0) {
-				// move this date format to top of list
-				// this is a naive optimization that assumes user will stick to a single/handful style(s) for writing dates
-				// and allows for more explicit and easily debuggable regular expression
-				checkList.unshift(checkList.splice(i, 1)[0]);
-			}
+			result.type = checkList[i][0];
+			result.ISOString = checkList[i][2](match);
+			// if (i !== 0) {
+			// 	// move this date format to top of list
+			// 	// this is a naive optimization that assumes user will stick to a single/handful style(s) for writing dates
+			// 	// and allows for more explicit and easily debuggable regular expression
+			// 	checkList.unshift(checkList.splice(i, 1)[0]);
+			// }
 			if (!isNaN(Date.parse(result.ISOString)))
 				result.isValid = true;
 

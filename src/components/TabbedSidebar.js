@@ -13,38 +13,39 @@ Style = {
 		alignItems: 'stretch',
 		//borderRadius: '0.25rem',
 		borderTop: '1px solid #555',
-		backgroundColor: '#444',
-		padding: '0.15rem 0',
+		backgroundColor: '#999',
+		padding: '0.25rem 0',
 	},
 	button: {
-		margin: '0 0.8rem 0 0.8rem',
+		//margin: '0 0.8rem 0 0.8rem',
 		border: 'none',
 		outline: 'none',
 		backgroundColor: 'inherit',
 		color: '#fff',
-		width: '1rem',
-		height: '1rem',
+		width: '1.25rem',
+		height: '1.25rem',
 		cursor: 'pointer'
 	},
 	row: {
-		marginBottom: '0.25rem',
 		padding: '0 0.55rem',
 		display: 'flex',
-		justifyContent: 'space-between',
+		justifyContent: 'space-around',
 		alignItems: 'center',
-		height: '1.75rem',
+		height: '2rem',
 		flexShrink: '0',
 		borderBottom: '1px solid #333'
+	},
+	buttonText: {
+		color: "#000",
+		fontSize: "0.9rem",
+		marginLeft: "0.5rem",
+		fontWeight: "bold"
 	}
 };
 
 class TabbedSidebar extends React.Component {
 	constructor(props, context) {
 		super(props, context);
-
-		this.state = {
-			view: props.default
-		}
 
 		Bind(this);
 	}
@@ -57,13 +58,16 @@ class TabbedSidebar extends React.Component {
 					{props.buttons.map((icon, i) => (
 						<Button
 							img={icon}
-							color="#fff"
+							color={(props.tab === i) ? "#000" : "#444"}
+							hoverColor="#000"
 							style={Style.button}
-							onclick={() => this.setState({view: i})}
+							noOpacity={(props.tab === i)}
+							text={props.text[i]}
+							onclick={() => props.onTab(i)}
 						/>
 					))}
 				</div>
-				{props.tabs[state.view]}
+				{props.tabs[props.tab]}
 			</div>
 		);
 	}

@@ -28,7 +28,8 @@ while (i < 360) {
 }
 
 module.exports = {
-	palette: colors,
+	Location: locationColors,
+	Thread: threadColors,
 	threadColor: function(color) {
 		return threadColors[(Math.random() * threadColors.length) >> 0];
 	},

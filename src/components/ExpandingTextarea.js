@@ -2,7 +2,6 @@ const
 	React = require('preact'),
 
 	Bind = require('../bind.js'),
-	BufferedText = require('./BufferedText.js'),
 
 	Style = {
 		editBox: {
@@ -25,22 +24,26 @@ class ExpandingTextarea extends React.Component {
 
 	render(props, state) {
 		return (
-			<BufferedText onInput={props.onInput}>
 			<textarea
 				draggable
 				style={Object.assign({}, Style.editBox, props.style)}
 				ref={(el) => this.el = el}
 				maxlength={props.maxlength}
 				placeholder={props.placeholder}
-				onInput={this.onInput}
-				onChange={props.onChange}
-				onFocus={props.onFocus}
-				onBlur={props.onBlur}
-				onDragStart={props.onDragStart}
-				value={state.value}
+				onmouseover={props.onmouseover}
+				oninput={this.onInput}
+				onchange={props.onchange}
+				onfocus={props.onfocus}
+				onblur={props.onblur}
+				ondragstart={props.ondragstart}
+				onkeyup={props.onkeyup}
+				value={props.value}
 			/>
-			</BufferedText>
 		)
+	}
+
+	shouldComponentUpdate(props, state, context) {
+		return this.timer ? false : true;
 	}
 
 	componentWillReceiveProps(props) {
@@ -59,13 +62,24 @@ class ExpandingTextarea extends React.Component {
 	}
 
 	onInput(event) {
+		if (this.timer) clearTimeout(this.timer);
+		this.timer = setTimeout(this.onTimer, this.props.buffer || 0, event);
+	}
+
+	onTimer(event) {
+		this.timer = undefined;
+
 		this.state.value = event.target.value;
 		this.doResize();
+		this.props.oninput(event);
 	}
 
 	doResize() {
+		var y = window.document.body.scrollTop,
+			x = window.document.body.scrollLeft;
 		this.el.style.height = this.props.baseHeight;
 		this.el.style.height = this.el.scrollHeight + 'px';
+		window.document.body.scrollTo(x, y);
 	}
 }
 

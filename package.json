@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A project for writers",
   "author": "Aaron Goin <aaron.goin@wsu.edu>",
+  "main": "index.html",
   "scripts": {
     "serve": "http-server -c 1 -a localhost",
     "dev": "watchify -d -v -t [ babelify --presets [ env react ] ] -e src/App.js -o dist/build.js",

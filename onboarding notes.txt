@@ -9,3 +9,23 @@ Create notes
 Show how to get help
 
 
+Keep list of projects.
+
+project has URL if cloud or local based
+
+
+App version
+
+projectID: { name, modified, wc, url }
+
+
+Book Name
+Last modified
+Word Count
+Scene Count
+Note Count
+
+File location
+Cloud location
+
+

@@ -10,10 +10,9 @@ Style = {
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'stretch',
-		//borderRadius: '0.25rem',
-		borderTop: '1px solid #555',
-		backgroundColor: '#444',
-		padding: '0.15rem 0',
+		backgroundColor: '#999',
+		padding: '0.25rem',
+		//marginTop: "0.25rem"
 	},
 	row: {
 		marginBottom: '0.25rem',
@@ -23,7 +22,7 @@ Style = {
 		alignItems: 'center',
 		height: '1.75rem',
 		flexShrink: '0',
-		borderBottom: '1px solid #333'
+		//borderBottom: '1px solid #000'
 	}
 };
 

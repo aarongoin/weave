@@ -4,16 +4,128 @@
 		"selected_items":
 		[
 			[
+				"fle",
+				"flexDirection"
+			],
+			[
+				"st",
+				"state"
+			],
+			[
+				"cur",
+				"currentTarget"
+			],
+			[
+				"margin",
+				"marginLeft"
+			],
+			[
+				"col",
+				"column"
+			],
+			[
+				"S",
+				"Style"
+			],
+			[
+				"co",
+				"colorPicker"
+			],
+			[
+				"thre",
+				"threadColors"
+			],
+			[
+				"fo",
+				"fontSize"
+			],
+			[
+				"g",
+				"Get"
+			],
+			[
+				"sce",
+				"scene"
+			],
+			[
+				"scene",
+				"sceneCount"
+			],
+			[
+				"note",
+				"noteMap"
+			],
+			[
+				"scen",
+				"sceneMap"
+			],
+			[
+				"spa",
+				"space-between"
+			],
+			[
+				"bor",
+				"border-radius"
+			],
+			[
+				"b",
+				"borderRadius"
+			],
+			[
+				"a",
+				"absolute"
+			],
+			[
+				"re",
+				"relative"
+			],
+			[
+				"marg",
+				"marginLeft"
+			],
+			[
+				"da",
+				"day"
+			],
+			[
+				"is",
+				"isValid"
+			],
+			[
+				"p",
+				"parsed"
+			],
+			[
+				"tim",
+				"timeString"
+			],
+			[
+				"ex",
+				"exec"
+			],
+			[
+				"ch",
+				"checkList"
+			],
+			[
+				"simpl",
+				"simpleDayMonthYear"
+			],
+			[
+				"sim",
+				"simpleYearMonthDay"
+			],
+			[
+				"val",
+				"validYear"
+			],
+			[
 				"cu",
 				"currentTarget"
 			],
 			[
 				"M",
 				"M_LN2"
-			],
-			[
-				"co",
-				"color"
 			],
 			[
 				"onm",
@@ -44,14 +156,6 @@
 				"centerWeave"
 			],
 			[
-				"margin",
-				"marginRight"
-			],
-			[
-				"re",
-				"relative"
-			],
-			[
 				"border",
 				"borderRadius"
 			],
@@ -64,24 +168,12 @@
 				"ModifyScene"
 			],
 			[
-				"p",
-				"props"
-			],
-			[
 				"off",
 				"offset"
 			],
 			[
 				"loca",
 				"locations"
-			],
-			[
-				"thre",
-				"threadFunc"
-			],
-			[
-				"note",
-				"notesSB"
 			],
 			[
 				"ma",
@@ -92,16 +184,8 @@
 				"transitionend"
 			],
 			[
-				"st",
-				"style"
-			],
-			[
 				"Anim",
 				"AnimateUnount"
-			],
-			[
-				"bor",
-				"border"
 			],
 			[
 				"th",
@@ -176,10 +260,6 @@
 				"moveFolder"
 			],
 			[
-				"fo",
-				"folders"
-			],
-			[
 				"Dra",
 				"DragList"
 			],
@@ -226,14 +306,6 @@
 			[
 				"render",
 				"renderFolder"
-			],
-			[
-				"marg",
-				"marginRight"
-			],
-			[
-				"fle",
-				"flexGrow"
 			],
 			[
 				"Scene",
@@ -316,16 +388,8 @@
 				"nullable"
 			],
 			[
-				"is",
-				"isNumber"
-			],
-			[
 				"con",
 				"contract"
-			],
-			[
-				"a",
-				"app"
 			],
 			[
 				"eq",
@@ -384,10 +448,6 @@
 				"pageCount"
 			],
 			[
-				"spa",
-				"space-around"
-			],
-			[
 				"bas",
 				"baseHeight"
 			],
@@ -424,20 +484,12 @@
 				"justifyContent"
 			],
 			[
-				"col",
-				"column"
-			],
-			[
 				"he",
 				"height"
 			],
 			[
 				"onDrag",
 				"onDragStart"
-			],
-			[
-				"sce",
-				"scene"
 			],
 			[
 				"fil",
@@ -462,86 +514,54 @@
 			[
 				"onNote",
 				"onNoteDrag"
-			],
-			[
-				"cna",
-				"cancel"
-			],
-			[
-				"fe",
-				"flex-start"
-			],
-			[
-				"Pro",
-				"ProjectPrinter"
-			],
-			[
-				"fun",
-				"functions"
-			],
-			[
-				"Project",
-				"ProjectModal"
-			],
-			[
-				"ex",
-				"exportProject"
-			],
-			[
-				"impor",
-				"importProject"
-			],
-			[
-				"project",
-				"projectButton"
-			],
-			[
-				"done",
-				"doneButton"
-			],
-			[
-				"scene",
-				"sceneIndex"
-			],
-			[
-				"print",
-				"printList"
-			],
-			[
-				"ne",
-				"nextColor"
-			],
-			[
-				"Asser",
-				"AssertionError"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "src/actions.js",
-			"settings":
-			{
-				"buffer_size": 15806,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "src/components/Location.js",
 			"settings":
 			{
-				"buffer_size": 2461,
+				"buffer_size": 2908,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "src/components/DragList.js",
+			"file": "src/components/WeaveView.js",
 			"settings":
 			{
-				"buffer_size": 1295,
+				"buffer_size": 3277,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 35 files for \"baseHeight\" (case sensitive)\n\n/Users/Aaron/Dev/weave/src/components/ExpandingTextarea.js:\n   65  \n   66  \tdoResize() {\n   67: \t\tthis.el.style.height = this.props.baseHeight;\n   68  \t\tthis.el.style.height = this.el.scrollHeight + 'px';\n   69  \t}\n\n/Users/Aaron/Dev/weave/src/components/NoteSidebar.js:\n  197  \t\t\t\t\t\t\t\t//maxLength={250} \n  198  \t\t\t\t\t\t\t\tonInput={(e) => context.Do('ModifyNote', { id: item.id, body: e.target.value })} \n  199: \t\t\t\t\t\t\t\tbaseHeight=\"1rem\"\n  200  \t\t\t\t\t\t\t\tplaceholder=\"Note\"\n  201  \t\t\t\t\t\t\t\tvalue={item.body}\n\n/Users/Aaron/Dev/weave/src/components/SceneEditor.js:\n  182  \t\t\t\t\t\t\t\tmaxLength={250} \n  183  \t\t\t\t\t\t\t\tonInput={this.onInput} \n  184: \t\t\t\t\t\t\t\tbaseHeight=\"1.3rem\"\n  185  \t\t\t\t\t\t\t\tplaceholder=\"Summary\"\n  186  \t\t\t\t\t\t\t\tvalue={props.scene.summary}\n\n/Users/Aaron/Dev/weave/src/components/SceneWriter.js:\n  154  \t\t\t\t\t\t\tonInput={(e) => this.context.Do('ModifyScene', {id: props.scene.id, summary: e.target.value})}\n  155  \t\t\t\t\t\t\tvalue={props.scene.summary}\n  156: \t\t\t\t\t\t\tbaseHeight=\"1.7em\"\n  157  \t\t\t\t\t\t\tplaceholder=\"Summary\"\n  158  \t\t\t\t\t\t\tonDragStart={(e) => e.preventDefault()}\n  ...\n  163  \t\t\t\t\t\t\tonInput={this.onBody}\n  164  \t\t\t\t\t\t\tvalue={props.scene.body}\n  165: \t\t\t\t\t\t\tbaseHeight=\"1.1em\"\n  166  \t\t\t\t\t\t\tplaceholder=\"Body\"\n  167  \t\t\t\t\t\t\tonDragStart={(e) => e.preventDefault()}\n\n5 matches across 4 files\n",
+			"settings":
+			{
+				"buffer_size": 1352,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "src/components/SceneWriter.js",
+			"settings":
+			{
+				"buffer_size": 6368,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/App.js",
+			"settings":
+			{
+				"buffer_size": 6800,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -549,7 +569,52 @@
 			"file": "src/components/DragListWithFolders.js",
 			"settings":
 			{
-				"buffer_size": 8586,
+				"buffer_size": 10022,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/MapModel.js",
+			"settings":
+			{
+				"buffer_size": 3698,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/Sourcery.js",
+			"settings":
+			{
+				"buffer_size": 830,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/ProjectSidebar.js",
+			"settings":
+			{
+				"buffer_size": 4089,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/TabbedSidebar.js",
+			"settings":
+			{
+				"buffer_size": 1326,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/components/SidebarItem.js",
+			"settings":
+			{
+				"buffer_size": 750,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -558,7 +623,16 @@
 			"file": "src/components/NoteSidebar.js",
 			"settings":
 			{
-				"buffer_size": 5234,
+				"buffer_size": 5386,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "dist/build.css",
+			"settings":
+			{
+				"buffer_size": 1459,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -567,7 +641,7 @@
 			"file": "src/components/SceneEditor.js",
 			"settings":
 			{
-				"buffer_size": 5390,
+				"buffer_size": 5767,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -576,7 +650,7 @@
 			"file": "src/buttons.js",
 			"settings":
 			{
-				"buffer_size": 13805,
+				"buffer_size": 15415,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -672,40 +746,41 @@
 	],
 	"file_history":
 	[
+		"/Users/Aaron/Dev/weave/package.json",
+		"/Users/Aaron/Dev/weave/src/time.js",
 		"/Users/Aaron/Dev/weave/src/colors.js",
+		"/Users/Aaron/Dev/weave/src/actions.js",
+		"/Users/Aaron/Dev/weave/index.html",
+		"/Users/Aaron/Dev/weave/src/components/WeaveView.js",
+		"/Users/Aaron/Dev/weave/src/components/DragList.js",
+		"/Users/Aaron/Dev/weave/src/components/NoteSidebar.js",
+		"/Users/Aaron/Dev/weave/src/components/ScrollingView.js",
+		"/Users/Aaron/Dev/weave/src/components/SidebarItem.js",
+		"/Users/Aaron/Dev/weave/dist/build.css",
+		"/Users/Aaron/Dev/weave/src/components/ExpandingTextarea.js",
 		"/Users/Aaron/Dev/weave/src/components/SceneEditor.js",
 		"/Users/Aaron/Dev/weave/src/components/GroupedDragList.js",
 		"/Users/Aaron/Dev/weave/src/components/Draggable.js",
 		"/Users/Aaron/Dev/weave/src/components/DropZone.js",
-		"/Users/Aaron/Dev/weave/src/components/DragList.js",
 		"/Users/Aaron/Documents/School/WSUV/FALL17/Numeric/p1/rerr.c",
 		"/Users/Aaron/Documents/School/WSUV/FALL17/Numeric/p1/README",
 		"/Users/Aaron/Documents/School/WSUV/FALL17/Numeric/p1/myexp.c",
 		"/Users/Aaron/Documents/School/WSUV/FALL17/Numeric/p1/Makefile",
 		"/Users/Aaron/Documents/School/WSUV/FALL17/Numeric/p1/test.pl",
-		"/Users/Aaron/Dev/weave/src/actions.js",
-		"/Users/Aaron/Dev/weave/src/components/SidebarItem.js",
 		"/Users/Aaron/Dev/weave/src/components/ThreadPaths.js",
 		"/Users/Aaron/Dev/weave/src/buttons.js",
-		"/Users/Aaron/Dev/weave/dist/build.css",
-		"/Users/Aaron/Dev/weave/index.html",
 		"/Users/Aaron/Dev/weave/src/App.js",
-		"/Users/Aaron/Dev/weave/src/components/WeaveView.js",
 		"/Users/Aaron/Dev/weave/src/components/ProjectSidebar.js",
 		"/Users/Aaron/Dev/weave/src/components/DragListWithFolders.js",
 		"/Users/Aaron/Dev/weave/src/components/BufferedText.js",
-		"/Users/Aaron/Dev/weave/src/components/ExpandingTextarea.js",
 		"/Users/Aaron/Dev/weave/src/components/Location.js",
 		"/Users/Aaron/Dev/weave/src/MapModel.js",
 		"/Users/Aaron/Dev/weave/src/components/SceneWriter.js",
-		"/Users/Aaron/Dev/weave/src/components/NoteSidebar.js",
 		"/Users/Aaron/Documents/School/WSUV/DNN Research/cifar10/cifar10_train.py",
 		"/Users/Aaron/Dev/weave/node_modules/preact/dist/preact.dev.js",
 		"/Users/Aaron/Dev/weave/src/AnimatedComponent.js",
-		"/Users/Aaron/Dev/weave/package.json",
 		"/Users/Aaron/Dev/weave/src/components/ThreadOrLocationSidebar.js",
 		"/Users/Aaron/Dev/weave/monte_cristo.txt",
-		"/Users/Aaron/Dev/weave/src/components/ScrollingView.js",
 		"/Users/Aaron/Dev/weave/src/components/NotesToolbar.js",
 		"/Users/Aaron/Dev/weave/src/components/ModalView.js",
 		"/Users/Aaron/Dev/weave/src/components/PrintModal.js",
@@ -798,8 +873,7 @@
 		"/Users/Aaron/Dev/cs351_project/web.py/templates/user_login.html",
 		"/Users/Aaron/Dev/cs351_project/web.py/templates/current_time.html",
 		"/Users/Aaron/Dev/cs351_project/web.py/static/scripts/main.js",
-		"/Users/Aaron/Dev/webcrawlGroup/templates/index.html",
-		"/Users/Aaron/Dev/weave/vanilla.js"
+		"/Users/Aaron/Dev/webcrawlGroup/templates/index.html"
 	],
 	"find":
 	{
@@ -807,7 +881,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 101.0,
 		"where_history":
 		[
 			"/Users/Aaron/Dev/weave/src/",
@@ -824,6 +898,18 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"baseHeight",
+			"mounted",
+			"window",
+			"  ",
+			"Colors",
+			"palette",
+			",\n",
+			"tag",
+			"border",
+			"time",
+			"MapModel.time",
+			"time",
 			"threadLi",
 			"^",
 			"scenes",
@@ -939,24 +1025,12 @@
 			"cloneE",
 			" h(",
 			"h(",
-			".children",
-			"VNode",
-			"render(",
-			"context",
-			"shouldComponentUpdate",
-			"ExpandingTextarea",
-			"expandingTextarea",
-			"children",
-			"SliceHeader",
-			"transition",
-			"transitions",
-			"transition",
-			"scroll"
+			".children"
 		],
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": true,
+		"regex": false,
 		"replace_history":
 		[
 			"X_OFFSET",
@@ -1097,61 +1171,24 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/actions.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 15806,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3598,
-								3603
-							]
-						],
-						"settings":
-						{
-							"WordCount":
-							{
-								"changes": -1,
-								"modified": true,
-								"selection": true,
-								"status": -1,
-								"syntax": "javascript (babel)"
-							},
-							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 7737.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "src/components/Location.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2461,
+						"buffer_size": 2908,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1138,
-								1138
+								333,
+								333
 							]
 						],
 						"settings":
@@ -1168,27 +1205,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 704.0,
+						"translation.y": 74.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "src/components/DragList.js",
+					"buffer": 1,
+					"file": "src/components/WeaveView.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1295,
+						"buffer_size": 3277,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								782,
-								782
+								990,
+								992
 							]
 						],
 						"settings":
@@ -1205,64 +1242,54 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 289.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "src/components/DragListWithFolders.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8586,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4524,
-								4524
-							]
-						],
-						"settings":
-						{
-							"WordCount":
-							{
-								"changes": -1,
-								"modified": true,
-								"selection": true,
-								"status": -1,
-								"syntax": "javascript (babel)"
-							},
-							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 112.0,
-						"translation.y": 3169.0,
+						"translation.y": 80.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "src/components/NoteSidebar.js",
+					"buffer": 2,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5234,
+						"buffer_size": 1352,
 						"regions":
 						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										186,
+										196
+									],
+									[
+										470,
+										480
+									],
+									[
+										696,
+										706
+									],
+									[
+										1016,
+										1026
+									],
+									[
+										1220,
+										1230
+									]
+								],
+								"scope": ""
+							}
 						},
 						"selection":
 						[
 							[
-								4789,
-								4792
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1273,33 +1300,43 @@
 								"modified": true,
 								"selection": true,
 								"status": -1,
-								"syntax": "javascript (babel)"
+								"syntax": "find results"
 							},
-							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ \t].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
 						},
-						"translation.x": 1.0,
-						"translation.y": 2972.0,
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "src/components/SceneEditor.js",
+					"buffer": 3,
+					"file": "src/components/SceneWriter.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5390,
+						"buffer_size": 6368,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4416,
-								4399
+								3571,
+								3571
+							],
+							[
+								3613,
+								3613
 							]
 						],
 						"settings":
@@ -1315,28 +1352,28 @@
 							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 164.0,
-						"translation.y": 2865.0,
+						"translation.x": 0.0,
+						"translation.y": 1759.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "src/buttons.js",
+					"buffer": 4,
+					"file": "src/App.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 13805,
+						"buffer_size": 6800,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								666,
-								666
+								3888,
+								3888
 							]
 						],
 						"settings":
@@ -1352,15 +1389,386 @@
 							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 9.0,
-						"translation.y": 0.0,
+						"translation.x": 0.0,
+						"translation.y": 1717.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
+					"buffer": 5,
+					"file": "src/components/DragListWithFolders.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10022,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7751,
+								7761
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/MapModel.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3698,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								282,
+								282
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 2.0,
+						"translation.y": 13.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
 					"buffer": 7,
+					"file": "src/Sourcery.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 830,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "src/components/ProjectSidebar.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4089,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2822,
+								2800
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 78.0,
+						"translation.y": 2026.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "src/components/TabbedSidebar.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1326,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								885,
+								885
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": 0,
+								"count": 0,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 379.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "src/components/SidebarItem.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 750,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								463,
+								463
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "src/components/NoteSidebar.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5386,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3298,
+								3298
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 88.0,
+						"translation.y": 2603.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "dist/build.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1459,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								180,
+								180
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "css"
+							},
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "src/components/SceneEditor.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5767,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4455,
+								4427
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2737.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "src/buttons.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15415,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13260,
+								13260
+							]
+						],
+						"settings":
+						{
+							"WordCount":
+							{
+								"changes": -1,
+								"modified": true,
+								"selection": true,
+								"status": -1,
+								"syntax": "javascript (babel)"
+							},
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 65.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
 					"file": "src/components/Draggable.js",
 					"semi_transient": false,
 					"settings":
@@ -1393,7 +1801,7 @@
 						"translation.y": 413.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 15,
 					"type": "text"
 				}
 			]
@@ -1456,6 +1864,38 @@
 		"selected_items":
 		[
 			[
+				"sce",
+				"src/components/SceneWriter.js"
+			],
+			[
+				"map",
+				"src/MapModel.js"
+			],
+			[
+				"scene",
+				"src/components/SceneWriter.js"
+			],
+			[
+				"app",
+				"src/App.js"
+			],
+			[
+				"side",
+				"src/components/ProjectSidebar.js"
+			],
+			[
+				"proj",
+				"src/components/ProjectSidebar.js"
+			],
+			[
+				"button",
+				"src/buttons.js"
+			],
+			[
+				"lo",
+				"src/components/Location.js"
+			],
+			[
 				"colo",
 				"src/colors.js"
 			],
@@ -1480,23 +1920,11 @@
 				"src/components/NoteSidebar.js"
 			],
 			[
-				"proj",
-				"src/components/ProjectSidebar.js"
-			],
-			[
 				"projec",
 				"src/components/ProjectSidebar.js"
 			],
 			[
-				"map",
-				"src/MapModel.js"
-			],
-			[
 				"note",
-				"src/components/NoteSidebar.js"
-			],
-			[
-				"side",
 				"src/components/NoteSidebar.js"
 			],
 			[
@@ -1504,16 +1932,8 @@
 				"src/components/Location.js"
 			],
 			[
-				"scene",
-				"src/components/SceneEditor.js"
-			],
-			[
 				"weave",
 				"src/components/WeaveView.js"
-			],
-			[
-				"app",
-				"src/App.js"
 			],
 			[
 				"action",
@@ -1546,10 +1966,6 @@
 			[
 				"actions",
 				"src/actions.js"
-			],
-			[
-				"button",
-				"src/buttons.js"
 			],
 			[
 				"preact",
@@ -1606,10 +2022,6 @@
 			[
 				"wea",
 				"src/components/WeaveView.js"
-			],
-			[
-				"sce",
-				"src/components/SceneEditor.js"
 			],
 			[
 				"thre",

@@ -5,13 +5,13 @@ function mapTimes(time) { // time : { ...timeKey: timeValue} => { times: { ...ti
 		prev = time[times[0]],
 		i = 0;
 
-	result.times[times[0]] = 3;
+	result.times[times[0]] = 5;
 
 	while (++i < times.length) {
 		// get current time value
 		cur = time[times[i]];
 		// calculate offset
-		result.offset += Math.min(Math.max(Math.sqrt(cur - prev) / 64, 0), 120) + 4.5;
+		result.offset += Math.min(Math.max(Math.sqrt(cur - prev) / 64, 0), 120) + 6.5;
 		result.times[times[i]] = result.offset;
 		prev = cur;
 	}
@@ -20,8 +20,8 @@ function mapTimes(time) { // time : { ...timeKey: timeValue} => { times: { ...ti
 }
 
 const MapModel = {
-	Scenes: function(scenes, locations, visible, search, project) {
-		var result = {scenes: {}, times: {}, threads: {}},
+	Scenes: function(scenes, locations, visible, search, project, Get) {
+		var result = {scenes: {}, times: {}, threads: {}, sceneCount: 0},
 			search = search.toLowerCase(),
 			locationList, v, path, direct, temp;
 
@@ -39,7 +39,7 @@ const MapModel = {
 		Object.keys(scenes).map((id) => {
 			var scene = scenes[id],
 				threadIDs = Object.keys(scene.thread),
-				v = false, i = -1, path;
+				v = false, i = -1, path, tag = false;
 
 			if (visible[scene.location]) {
 
@@ -49,14 +49,16 @@ const MapModel = {
 						if (visible[threadIDs[i]]) {
 							path = result.threads[threadIDs[i]] = result.threads[threadIDs[i]] || [];
 							path.push([locationList.indexOf(scene.location), scene.utctime, i * 1.5]);
+							if (search === "" || Get(threadIDs[i]).name.toLowerCase().includes(search)) tag = true;
 							v = true;
-						}
+						} 
 					}
 				} else v = true;
 				// and contains search text
-				if (v && (search === '' || scene.summary.toLowerCase().includes(search) || scene.body.toLowerCase().includes(search))) {
+				if (v && (search === '' || tag || scene.summary.toLowerCase().includes(search) || scene.body.toLowerCase().includes(search) || scene.time.toLowerCase().includes(search))) {
 					result.times[scene.utctime] = result.times[scene.utctime] || (Date.parse(scene.utctime) / 60000);
 					result.scenes[scene.location].push(scene);
+					result.sceneCount++;
 				}
 			}
 		});
@@ -95,15 +97,19 @@ const MapModel = {
 		return Object.assign(result, mapTimes(result.times));
 	},
 
-	Notes: function(notes, visible, search) {
+	Notes: function(notes, visible, search, Get) {
 		var result = [];
 
 		Object.keys(notes).map((id) => {
 			var note = notes[id],
-				i = -1;
-			for (i in note.tag) if (!visible[i]) return;
+				i = -1,
+				tag = false;
+			for (i in note.tag) {
+				if (!visible[i]) return;
+				else if (search === "" || Get(i).name.toLowerCase().includes(search)) tag = true;
+			}
 
-			if (search === '' || note.body.toLowerCase().includes(search)) result.push(note);
+			if (search === '' || tag || note.body.toLowerCase().includes(search)) result.push(note);
 		});
 
 		return result;//.sort((a, b) => ( a.modified < b.modified ));

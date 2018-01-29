@@ -7,6 +7,7 @@ const
 	SceneEditor = require('./SceneEditor.js'),
 	Button = require('../buttons.js'),
 	SceneWriter = require('./SceneWriter.js'),
+	DateTimeInput = require('./DateTimeInput.js'),
 
 	ParseTime = require('../time.js'),
 
@@ -27,23 +28,27 @@ const
 		},
 		header: {
 			zIndex: 20,
-			color: '#fff',
-			fontWeight: '400',
+			color: '#eee',
+			fontWeight: '100',
 			display: 'flex',
+			fontSize: "1.25rem",
 			justifyContent: 'space-between',
 			alignItems: 'center',
 			position: 'absolute',
 			backgroundColor: 'inherit',
 			width: '18rem',
-			height: '1rem',
-			padding: '0.75rem 1rem',
-			borderBottom: '1px solid #ccc'
+			minheight: '1.5rem',
+			padding: '0.5rem 1rem',
+			//borderBottom: '1px solid #ccc'
 		},
 		time: {
 			outline: 'none',
 			border: 'none',
-			color: '#fff',
-			backgroundColor: 'inherit',
+			color: '#000',
+			backgroundColor: '#fff',
+			padding: "0.25rem 0.5rem",
+			borderRadius: "0.25rem",
+			fontSize: "0.9rem"
 			//width: '5rem'
 		},
 
@@ -63,29 +68,31 @@ class Location extends React.Component {
 	render(props, state, context) {
 		return (
 			<DropZone
+				key={props.location.id}
 				type="scene"
 				style={Object.assign({}, Style.location, {backgroundColor: props.location.color, height: Math.max((12.8 * (props.height + 11)), window.innerHeight) + 'px'}, props.style)}
 				onDrop={props.onDrop}
 			>
 				<span
-					style={Object.assign({left: '0px', top: props.offset + 'px'}, Style.header)}
+					style={Object.assign({left: '0px', top: props.offset + 'px', display: "flex", justifyContent: "space-between"}, Style.header)}
 				>	
 					{state.newScene ?
-						<input
-							ref={(ref) => this.input = ref}
+						<DateTimeInput
+							ref={(e) => {
+								if (e && ("loc" + props.location.id) === context.focus) {
+									e.base.children[0].focus();
+									context.eatFocus();
+								}
+							}}
+							location={props.location.id}
 							style={Style.time}
-							type="text"
-							maxLength={24}
-							placeholder="Date & Time"
 							onchange={(e) => {
 								this.setState({newScene: false});
-								if (ParseTime(e.target.value).isValid)
-									context.Do('CreateScene', {location: props.location.id, time: e.target.value});
+								context.Do('CreateScene', {location: props.location.id, time: e.target.value});
 							}}
 							onblur={(e) => {
 								this.setState({newScene: false});
 							}}
-							onkeyup={(e) => e.keyCode === 13 ? e.target.blur() : undefined}
 						/>
 					: [
 						<Button
@@ -94,10 +101,11 @@ class Location extends React.Component {
 							style={Style.button}
 							onclick={() => {
 								//props.context.Do('CreateScene', {location: props.location.id})
+								context.focusOn("loc" + props.location.id);
 								this.setState({newScene: true});
 							}}
 						/>,
-						props.location.name
+						<span style={{maxWidth: "15rem", textAlign: "right"}}>{props.location.name}</span>
 					]}
 				</span>
 				{props.scenes.map((scene, i) => (
@@ -112,10 +120,6 @@ class Location extends React.Component {
 				))}
 			</DropZone>
 		)
-	}
-
-	componentDidUpdate() {
-		if (this.input && this.state.newScene) this.input.focus();
 	}
 }
 

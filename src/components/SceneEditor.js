@@ -7,6 +7,7 @@ const
 	Bind = require('../bind.js'),
 	ExpandingTextarea = require('./ExpandingTextarea.js'),
 	DropZone = require('./DropZone.js'),
+	DateTimeInput = require('./DateTimeInput.js'),
 
 	// used for the DragImage when dragging Pins
 	PIN = document.getElementById('pin'),
@@ -25,7 +26,8 @@ const
 			border: '1px solid rgba(0,0,0,0.5)',
 			borderLeft: 'none',
 			borderRight: 'none',
-			boxShadow: '0 0.25rem 0.25rem #222'
+			boxShadow: '0 0.15rem 0.15rem rgba(0,0,0,0.5)',
+			borderRadius: "0.15rem"
 		},
 
 		sceneHead: {
@@ -74,11 +76,11 @@ const
 		tooltip: {
 			zIndex: 100,
 			position: 'absolute',
-			padding: '0.3rem 0.5rem',
+			padding: "0.25rem 0.5rem",
+			borderRadius: "0.5rem",
 			top: '-0.25rem',
 			left: '1rem',
 			color: '#fff',
-			borderRadius: '1rem',
 			whiteSpace: 'nowrap',
 			fontSize: '0.8rem'
 		},
@@ -100,6 +102,7 @@ class SceneEditor extends React.Component {
 	render(props, state, context) {
 		return (
 			<DropZone
+				key={props.scene.id}
 				style={props.style}
 				type={["Thread", "Pin"]}
 				effect="move"
@@ -159,59 +162,69 @@ class SceneEditor extends React.Component {
 							);
 						})}
 					</div>
-					<span 
-						style={Object.assign({}, Style.stats, {justifyContent: state.hover ? "space-between" : "center"})}
-					>
-						{state.hover ? 								
-						<Button
-							img="document"
-							color="#000"
-							hoverColor="#093"
-							style={Style.btn}
-							onclick={() => props.onWriteModal(props.scene.id)}
-						/>
-						: ''}
-						<input
-							style={Style.time}
-							type="text"
-							maxLength={24}
-							placeholder="Date & Time"
-							value={props.scene.time}
-							onchange={(e) => context.Do('ModifyScene', {id: props.scene.id, time: e.target.value})}
-							onfocus={() => this.setState({focus: true})}
-							onblur={() => this.setState({focus: false})}
-							onkeyup={(e) => e.keyCode === 13 ? e.currentTarget.blur() : undefined}
-						/>
-						{state.hover ?
-						<Button
-							img="delete"
-							color="#000"
-							hoverColor="#c30"
-							style={Style.btn}
-							onclick={(e) => {
-								if (this.timer) {
-									clearTimeout(this.timer);
-									this.timer = undefined;
-								}
-							}}
-							onmousedown={(e) => {
-								this.timer = setTimeout(context.Do, 1000, 'DeleteScene', props.scene.id);
-							}}
-						/>
-						: ''}
-					</span>
-					<ExpandingTextarea
-						style={Style.textarea}
-						maxLength={250} 
-						onInput={this.onInput} 
-						baseHeight="1.3rem"
-						placeholder="Summary"
-						value={props.scene.summary}
-						onFocus={() => this.setState({focus: true})}
-						onBlur={() => this.setState({focus: false})}
-						ref={el => this.el = el}
-						onDragStart={this.preventDrag}
-					/>
+					<div style={{display: "flex"}}>
+						<div style={{flexGrow: "1", overflow: "hidden"}}>
+							<span 
+								style={Object.assign({}, Style.stats, {justifyContent: "center"})}
+							>
+								<DateTimeInput
+									location={props.scene.location}
+									scene={props.scene.id}
+									style={Style.time}
+									type="text"
+									maxLength={24}
+									placeholder="Date & Time"
+									value={props.scene.time}
+									onchange={(e) => context.Do('ModifyScene', {id: props.scene.id, time: e.target.value})}
+									onfocus={() => this.setState({focus: true})}
+									onblur={() => this.setState({focus: false})}
+								/>						
+							</span>
+							<ExpandingTextarea
+								ref={(e) => {
+									if (e && props.scene.id === context.focus) {
+										e.base.focus();
+										context.eatFocus();
+									}
+								}}
+								style={Style.textarea}
+								maxLength={250} 
+								oninput={this.onInput} 
+								baseHeight="1.3rem"
+								placeholder="Summary"
+								value={props.scene.summary}
+								onfocus={() => this.setState({focus: true})}
+								onblur={() => this.setState({focus: false})}
+								ondragstart={this.preventDrag}
+							/>
+						</div>
+						<div style={{ marginTop: "0.25rem", width: "1rem", height: "2.75rem", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+							{state.hover ? [
+								<Button
+									img="delete"
+									color="#000"
+									hoverColor="#c30"
+									style={Style.btn}
+									onclick={(e) => {
+										if (this.timer) {
+											clearTimeout(this.timer);
+											this.timer = undefined;
+										}
+									}}
+									onmousedown={(e) => {
+										this.timer = setTimeout(context.Do, 1000, 'DeleteScene', props.scene.id);
+									}}
+								/>,
+								<Button
+									img="document"
+									color="#000"
+									hoverColor="#093"
+									style={Style.btn}
+									onclick={() => props.onWriteModal(props.scene.id)}
+								/>
+							] : ""}
+						</div>
+					</div>
 				</Draggable>
 			</DropZone>
 		)

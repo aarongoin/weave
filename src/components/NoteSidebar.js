@@ -33,10 +33,11 @@ Style = {
 		justifyContent: 'flex-start',
 		alignItems: 'stretch',
 		fontSize: '1.2rem',
-		margin: '1px 0.25rem',
+		margin: '0.25rem 0.25rem',
 		backgroundColor: '#eee',
-		border: '1px solid #222',
-		boxShadow: '0 0 0.25rem #111'
+		borderRadius: "0.15rem"
+		//border: '1px solid #222',
+		//boxShadow: '0 0 0.25rem #111'
 	},
 	hide: {
 		cursor: 'pointer',
@@ -49,7 +50,7 @@ Style = {
 		padding: '0 0.3rem'
 	},
 	item: {
-		margin: '0 0.8rem 0 0.8rem',
+		margin: '0 0.5rem 0 0.5rem',
 		width: '1rem',
 		height: '1rem',
 		border: 'none',
@@ -79,20 +80,20 @@ Style = {
 	tooltip: {
 		zIndex: 100,
 		position: 'absolute',
-		padding: '0.3rem 0.5rem',
+		padding: "0.25rem 0.5rem",
+		borderRadius: "0.5rem",
 		top: '-0.25rem',
 		left: '1rem',
 		color: '#fff',
-		borderRadius: '1rem',
 		whiteSpace: 'nowrap'
 	},
 	sidebar: {
-		zIndex: 50,
+		zIndex: 49,
 		position: 'fixed',
-		width: '28rem',
+		width: '27.75rem',
 		top: 0,
 		bottom: 0,
-		border: '1px solid #000',
+		//border: '1px solid #000',
 		transition: 'right 0.3s ease-in-out'
 	},
 	spacer: {
@@ -105,10 +106,8 @@ class NoteSidebar extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
-		props.register(() => this.setState({toggled: !this.state.toggled}));
 
 		this.state = {
-			toggled: true,
 			hover: -1
 		}
 
@@ -117,13 +116,14 @@ class NoteSidebar extends React.Component {
 
 	render(props, state, context) {
 		return (
-			<div><div style={Object.assign({width: state.toggled ? '28.1rem' : 0}, Style.spacer)}>&nbsp;</div>
+			<div><div style={Object.assign({width: props.toggled ? '28.1rem' : 0}, Style.spacer)}>&nbsp;</div>
 			<SidebarItem
-				style={Object.assign({right: state.toggled ? 0 : '-28.5rem'}, Style.sidebar)}
+				style={Object.assign({right: props.toggled ? 0 : '-28.5rem'}, Style.sidebar)}
 				buttons={[
 					<Button
 						img="add"
-						color="#fff"
+						color="#444"
+						hoverColor="#000"
 						onclick={(e) => {
 							this.context.Do('CreateNote');
 						}}
@@ -131,9 +131,10 @@ class NoteSidebar extends React.Component {
 					/>,
 					<Button
 						img="note"
-						color="#fff"
+						color="#000"
 						noOpacity={true}
 						style={Style.item}
+						text="Notes"
 					/>
 				]}
 			>
@@ -146,6 +147,7 @@ class NoteSidebar extends React.Component {
 				>
 					{props.notes.map((item, index) => (
 						<DropZone
+							key={item.id}
 							type={["Thread", "Location"]}
 							style={Style.note}
 							onMouseEnter={() => this.setState({ hover: index })}
@@ -159,43 +161,48 @@ class NoteSidebar extends React.Component {
 							<div
 								style={Style.tags}
 							>
-								{Object.keys(item.tag).map((i) => (
-									<div style="position: relative; border-radius: 1rem;" class="tooltip">
-										<Button
-											img="delete"
-											color={context.Get(i).color}
-											style={Object.assign({}, Style.item, {backgroundColor: context.Get(i).color, margin: '0 0.25rem 0 0', borderRadius: '0.5rem'})}
-											onclick={(e) => {
-												if (this.timer) {
-													clearTimeout(this.timer);
-													this.timer = undefined;
-												}
-											}}
-											onmouseenter={(e) => e.currentTarget.style.backgroundColor = 'inherit'}
-											onmouseleave={(e) => e.currentTarget.style.backgroundColor = context.Get(i).color}
-											onclick={() => {
-												var o = {id: item.id, tag: {}};
-												o.tag[i] = undefined;
-												context.Do('ModifyNote', o);
-											}}
-										/>
-										<div
-											class="tooltipText"
-											style={Object.assign({backgroundColor: context.Get(i).color}, Style.tooltip)}
-										>
-											{context.Get(i).name}
+								{Object.keys(item.tag).map((i) => {
+									var tag = context.Get(i),
+										color = tag.color;
+									return (
+										<div style="position: relative; border-radius: 1rem; background-color: rgba(0,0,0,0);" class="tooltip">
+											<Button
+												noOpacity
+												img="delete"
+												color={color}
+												style={Object.assign({}, Style.item, {backgroundColor: color, margin: '0 0.25rem 0 0', borderRadius: '0.5rem'})}
+												onclick={(e) => {
+													if (this.timer) {
+														clearTimeout(this.timer);
+														this.timer = undefined;
+													}
+												}}
+												onmouseenter={(e) => e.target.firstChild.style.backgroundColor = 'rgba(0,0,0,0)'}
+												onmouseleave={(e) => e.target.firstChild.style.backgroundColor = color}
+												onmousedown={() => {
+													var o = {id: item.id, tag: {}};
+													o.tag[i] = undefined;
+													this.timer = setTimeout(context.Do, 1000, 'ModifyNote', o);
+												}}
+											/>
+											<div
+												class="tooltipText"
+												style={Object.assign({backgroundColor: color}, Style.tooltip)}
+											>
+												{tag.name}
+											</div>
 										</div>
-									</div>
-								))}
+									);
+								})}
 							</div>
 							<ExpandingTextarea
 								style={Style.text}
 								//maxLength={250} 
-								onInput={(e) => context.Do('ModifyNote', { id: item.id, body: e.target.value })} 
+								oninput={(e) => context.Do('ModifyNote', { id: item.id, body: e.target.value })} 
 								baseHeight="1rem"
 								placeholder="Note"
 								value={item.body}
-								//onFocus={this.onFocus}
+								//onfocus={this.onFocus}
 								ref={el => this.el = el}
 							/>
 							{(state.hover === index) ?

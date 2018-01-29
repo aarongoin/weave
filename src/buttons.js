@@ -1,41 +1,31 @@
 const
+Bind = require('./bind.js'),
 React = require('preact');
-module.exports = function(props, state, context) {
-	var base = (
-		<svg
-			x="0px"
-			y="0px"
-			style={Object.assign({ width: '1rem', height: '1rem', fillOpacity: props.noOpacity ? '1' : '0.6', cursor: 'pointer' }, props.style)}
-			onclick={(e) => {
-				if (props.onclick) props.onclick(e);
-			}}
-			onmouseenter={(e) => {
-				if (props.hoverColor) e.currentTarget.firstChild.style.fill = props.hoverColor;
-				if (!props.noOpacity) e.currentTarget.style.fillOpacity = 1;
-				if (props.onmouseenter) props.onmouseenter(e);
-			}}
-			onmouseleave={(e) => {
-				if (props.hoverColor) e.currentTarget.firstChild.style.fill = props.color;
-				if (!props.noOpacity) e.currentTarget.style.fillOpacity = 0.6;
-				if (props.onmouseleave) props.onmouseleave(e);
-			}}
-			onmousedown={(e) => {
-				if (!props.noOpacity) e.currentTarget.style.fillOpacity = 0.25;
-				if (props.onmousedown) props.onmousedown(e);
-			}}
-			onmouseup={(e) => {
-				if (!props.noOpacity) e.currentTarget.style.fillOpacity = 1;
-				if (props.onmouseup) props.onmouseup(e);
-			}}
-			onmousemove={(e) => {
-				if (props.onmousemove) props.onmousemove(e);
-			}}
-		>
-			<g style={"fill: " + props.color + ";"} >
-			</g>
-		</svg>
-	);
-	switch(props.img) {
+
+class Button extends React.Component {
+	constructor(props, context) {
+		super(props, context);
+
+		this.state = {
+			color: props.color,
+			hover: false
+		};
+
+		Bind(this);
+	}
+
+	renderSVG(props, state, context) {
+		var base = (
+			<svg
+				x="0px"
+				y="0px"
+				style={Object.assign({ minWidth: '1rem', minHeight: '1rem', height: "1rem"}, props.style || {})}
+			>
+				<g style={"fill: " + props.color + ";"} >
+				</g>
+			</svg>
+		);
+		switch(props.img) {
 		case "eye": {
 			base.attributes.viewBox = "0 0 488.85 488.85";
 			base.children[0].children = [
@@ -44,8 +34,8 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-
-		} case "delete": {
+		}
+		case "delete": {
 			base.attributes.viewBox = "0 0 512 512";
 			base.children[0].children = [
 				<path
@@ -53,8 +43,8 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-
-		} case "print": {
+		}
+		case "print": {
 			base.attributes.viewBox = "0 0 212.925 212.925";
 			base.children[0].children = [
 				<path
@@ -71,8 +61,8 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-
-		} case "help": {
+		}
+		case "help": {
 			base.attributes.viewBox = "0 0 31.521 31.521";
 			base.children[0].children = [
 				<path
@@ -80,8 +70,8 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-
-		} case "Thread": {
+		}
+		case "Thread": {
 			base.attributes.viewBox = "0 0 512.005 512.005";
 			base.children[0].children = [
 				<path
@@ -89,8 +79,8 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-
-		} case "Location": {
+		}
+		case "Location": {
 			base.attributes.viewBox = "0 0 512 512";
 			base.children[0].children = [
 				<path
@@ -98,8 +88,8 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-
-		} case "search": {
+		}
+		case "search": {
 			base.attributes.viewBox = "0 0 30.239 30.239";
 			base.children[0].children = [
 				<path
@@ -107,8 +97,8 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-
-		} case "add": {
+		}
+		case "add": {
 			base.attributes.viewBox = "0 0 27.963 27.963";
 			base.attributes.style.width = "0.8rem"
 			base.children[0].children = [
@@ -117,8 +107,8 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-
-		} case "color": {
+		}
+		case "color": {
 			base.attributes.viewBox = "0 0 48.666 48.666";
 			base.children[0].children = [
 				<path
@@ -126,8 +116,8 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-
-		} case "document": {
+		}
+		case "document": {
 			base.attributes.viewBox = "0 0 26.738 26.738";
 			base.children[0].children = [
 				<path
@@ -135,8 +125,8 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-
-		} case "group": {
+		}
+		case "group": {
 			base.attributes.viewBox = "0 0 593.523 593.523";
 			base.children[0].children = [
 				<path
@@ -144,8 +134,8 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-
-		} case "note": {
+		}
+		case "note": {
 			base.attributes.viewBox = "0 0 330.853 330.853";
 			base.children[0].children = [
 				<path
@@ -153,7 +143,8 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-		} case "filter": {
+		}
+		case "filter": {
 			base.attributes.viewBox = "0 0 402.577 402.577";
 			base.children[0].children = [
 				<path
@@ -161,7 +152,78 @@ module.exports = function(props, state, context) {
 				/>
 			];
 			return base;
-
-		} case "default": return "";
+		}
+		case "gear": {
+			base.attributes.viewBox = "0 0 54 54";
+			base.children[0].children = [
+				<path
+					d="M51.22,21h-5.052c-0.812,0-1.481-0.447-1.792-1.197s-0.153-1.54,0.42-2.114l3.572-3.571 c0.525-0.525,0.814-1.224,0.814-1.966c0-0.743-0.289-1.441-0.814-1.967l-4.553-4.553c-1.05-1.05-2.881-1.052-3.933,0l-3.571,3.571 c-0.475,0.475-0.997,0.574-1.352,0.574c-0.5,0-0.997-0.196-1.364-0.539C33.324,8.984,33,8.534,33,7.832V2.78 C33,1.247,31.753,0,30.22,0H23.78C22.247,0,21,1.247,21,2.78v5.052c0,1.218-0.997,1.945-1.961,1.945c-0.354,0-0.876-0.1-1.351-0.574 l-3.571-3.571c-1.052-1.052-2.883-1.05-3.933,0l-4.553,4.553c-0.525,0.525-0.814,1.224-0.814,1.967c0,0.742,0.289,1.44,0.814,1.966 l3.572,3.571c0.573,0.574,0.73,1.364,0.42,2.114S8.644,21,7.832,21H2.78C1.247,21,0,22.247,0,23.78v6.438C0,31.752,1.247,33,2.78,33 h5.052c0.812,0,1.481,0.447,1.792,1.197s0.153,1.54-0.42,2.114l-3.572,3.571c-0.525,0.525-0.814,1.224-0.814,1.966 c0,0.743,0.289,1.441,0.814,1.967l4.553,4.553c1.051,1.051,2.881,1.053,3.933,0l3.571-3.571c0.475-0.475,0.997-0.574,1.352-0.574 c0.963,0,1.96,0.728,1.96,1.945v5.051C21,52.752,22.247,54,23.78,54h6.439c1.533,0,2.78-1.248,2.78-2.781v-5.051 c0-1.218,0.997-1.945,1.96-1.945c0.354,0,0.877,0.1,1.352,0.574l3.571,3.571c1.052,1.052,2.883,1.05,3.933,0l4.553-4.553 c0.525-0.525,0.814-1.224,0.814-1.967c0-0.742-0.289-1.44-0.814-1.966l-3.572-3.571c-0.573-0.574-0.73-1.364-0.42-2.114 S45.356,33,46.168,33h5.052c1.533,0,2.78-1.248,2.78-2.781V23.78C54,22.247,52.753,21,51.22,21z M34,27c0,3.859-3.141,7-7,7 s-7-3.141-7-7s3.141-7,7-7S34,23.141,34,27z"
+				/>
+			];
+			return base;
+		}
+		case "craft": {
+			base.attributes.viewBox = "0 0 512 512";
+			base.children[0].children = [
+				<path
+					d="M201.275,96.165l-11.919,11.919c-26.292,26.288-69.069,26.291-95.361,0C73.27,87.359,68.273,55.9,81.564,29.807 c4.226-8.296,0.925-18.446-7.371-22.672c-8.294-4.228-18.446-0.926-22.672,7.371c-19.938,39.146-12.449,86.334,18.636,117.419 c39.438,39.438,103.606,39.436,143.039,0l11.919-11.919c12.858-12.856,27.97-22.117,44.074-27.789 c11.784-14.763,22.661-28.319,32.306-40.252C265.03,53.649,229.061,68.381,201.275,96.165z"
+					/>,
+				<path 
+					d="M482.189,430.439c-26.096,13.286-57.55,8.288-78.274-12.435c-12.735-12.735-19.749-29.668-19.749-47.679 s7.014-34.944,19.749-47.68l11.92-11.92c38.118-38.118,51.665-91.639,40.656-140.712c16.229-13.253,27.199-22.501,30.862-26.166 c32.862-32.863,32.862-86.335,0-119.198c-32.863-32.863-86.336-32.863-119.199,0C341.393,51.407,17.343,467.097,3.562,484.779 c-5.23,6.71-4.64,16.267,1.377,22.282c3.27,3.271,7.587,4.938,11.924,4.938c3.64,0,7.296-1.174,10.358-3.561 c13.964-10.882,276.103-215.232,398.944-313.896c2.484,33.111-8.903,67.077-34.169,92.343l-11.92,11.92 c-19.104,19.104-29.624,44.503-29.624,71.52c0,27.016,10.521,52.416,29.625,71.519c19.485,19.486,45.291,29.7,71.484,29.698 c15.59-0.001,31.322-3.621,45.927-11.06c8.297-4.224,11.597-14.375,7.372-22.671C500.635,429.514,490.482,426.215,482.189,430.439 z M415.835,96.165l-0.001-0.001l-23.84,23.84l0.001,0.001c4.047,4.047,7.73,8.321,11.064,12.774l-11.065,11.065 c-3.292,3.292-7.607,4.938-11.919,4.938c-4.314,0-8.629-1.645-11.919-4.938c-6.583-6.582-6.583-17.256,0-23.84l47.68-47.679 c6.583-6.583,17.257-6.583,23.84,0c6.583,6.582,6.583,17.256,0,23.84l-12.587,12.586 C423.608,104.401,419.864,100.194,415.835,96.165z"
+				/>
+			];
+			return base;
+		}
+		case "default": return "";
+		}
 	}
-};
+
+	render(props, state, context) {
+		return (
+			<span
+				style={{
+					display: "flex",
+					alignItems: "center",
+					opacity: props.noOpacity || state.hover ? '1' : '0.6', 
+					cursor: 'pointer'
+				}}
+				onclick={(e) => {
+					if (props.onclick) props.onclick(e);
+				}}
+				onmouseenter={(e) => {
+					if (props.hoverColor) this.setState({color: props.hoverColor, hover: true});
+					if (props.onmouseenter) props.onmouseenter(e);
+				}}
+				onmouseleave={(e) => {
+					if (props.hoverColor) this.setState({color: props.color, hover: false});
+					if (props.onmouseleave) props.onmouseleave(e);
+				}}
+				onmousedown={(e) => {
+					if (props.onmousedown) props.onmousedown(e);
+				}}
+				onmouseup={(e) => {
+					if (props.onmouseup) props.onmouseup(e);
+				}}
+				onmousemove={(e) => {
+					if (props.onmousemove) props.onmousemove(e);
+				}}
+			>
+				<this.renderSVG
+					img={props.img}
+					style={props.style}
+					color={state.color}
+				/>
+				{props.text ? 
+					<span style={{
+						fontSize: "0.9rem",
+						fontWeight: "bold",
+						color: "#000",
+						marginLeft: "0.5rem"
+					}}>{props.text}</span>
+				: ""}
+			</span>
+		);
+	}
+}
+
+module.exports = Button;

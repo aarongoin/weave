@@ -26,7 +26,10 @@ function DragList(props, state, context) {
 					effect="move"
 					payload={Object.assign({id: item, index}, props.payload || {})}
 					onDragStart={(e) => {
+						var d = document.getElementById('defocuser');
 						e.cancelBubble = true;
+						d.focus();
+						d.blur();
 					}}
 				>
 					<DropZone

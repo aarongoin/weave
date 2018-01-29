@@ -17,7 +17,6 @@ const
 			overflow: 'scroll'
 		},
 		inner: {
-			backgroundColor: '#fff',
 			display: 'flex',
 			flexDirection: 'column',
 			justifyContent: 'flex-start',
@@ -42,7 +41,7 @@ class ModalView extends React.Component {
 				onClick={props.dismiss}
 			>
 				<div
-					style={Style.inner}
+					style={Object.assign({}, Style.inner, props.innerStyle || {})}
 					onClick={(e) => e.stopPropagation()}
 				>
 					{props.children}

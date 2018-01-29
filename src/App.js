@@ -4,11 +4,9 @@ const CURRENT_VERSION = 'v0.9.0';
 const
 	React = require('preact'),
 
-	PrintModal = require('./components/PrintModal.js'),
-	WelcomeModal = require('./components/WelcomeModal.js'),
+	FileSaver = require('file-saver'),
 
 	WeaveView = require('./components/WeaveView.js'),
-	SceneWriter = require('./components/SceneWriter.js'),
 
 	ProjectSidebar = require('./components/ProjectSidebar.js'),
 
@@ -18,7 +16,6 @@ const
 	MapModel = require('./MapModel.js'),
 
 	Bind = require('./bind.js'),
-	LZW = require('lz-string'),
 	Source = require('./Sourcery.js'),
 	Actions = require('./actions.js'),
 	Style = {
@@ -36,27 +33,31 @@ class App extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
+		this.focus = "";
 		this.state = {
 			modalView: 0,
 			project: Source.getLocal('weave-project'),
+			sceneMap: {},
+			noteMap: [],
+			fontSize: 13,
+			sidebarTab: 0,
+			sidebarToggled: true,
+			notesToggled: true
 		}
 
-		//if (this.state.project) this.state.project = JSON.parse(LZW.decompressFromUTF16(this.state.project));
+		Object.assign(this.state, JSON.parse(Source.getLocal('weave-appstate') || "{}"));
+
 		if (this.state.project) this.state.project = JSON.parse(this.state.project);
 		else {
 			this.state.project = {};
 			Actions.CreateProject({}, this.state.project);
-			Actions.CreateLocation({id: 'lTest', name:'Hogwarts'}, this.state.project);
-			Actions.ModifyLocationList({0: 'lTest'}, this.state.project);
-			this.state.project.visible['lTest'] = true;
-			Actions.CreateScene({id: 's1000', summary: 'Harry heads back to Hogwarts!', location: 'lTest', time: '1991-01-07'}, this.state.project);
-			Actions.CreateScene({id: 's1001', summary: 'Harry poops on Snape.', location: 'lTest', time: '2001-08-30'}, this.state.project);
-			Actions.CreateNote({tag:{'lTest': true}}, this.state.project);
 		}
 
 		// TODO -> if (!this.state.project.v || this.state.project.v !== CURRENT_VERSION) this.state.modalView = 4;
 
 		Bind(this);
+
+		this.Map();
 	}
 
 	countProject() {
@@ -80,35 +81,14 @@ class App extends React.Component {
 		window.removeEventListener('keydown', this.onKeyDown);
 	}
 
-	renderModal(props, state) {
-		switch (state.modalView) {
-			case 0: return ('');
-			case 1: return (
-				<ProjectModal
-					project={state.project}
-					onPrint={() => this.setState({ modalView: 2 })}
-					onDone={() => this.setState({ modalView: 0 })}
-				/>
-			);
-			case 2: return (
-				<PrintModal
-					project={state.project}
-					onDone={() => this.setState({ modalView: 0 })}
-				/>
-			);
-			case 3: return (
-				<HelpModal
-					project={state.project}
-					onDone={() => this.setState({ modalView: 0 })}
-				/>
-			);
-			case 4: return (
-				<WelcomeModal
-					project={state.project}
-					onDone={() => this.setState({ modalView: 0 })}
-				/>
-			);
-		}
+	componentDidUpdate() {
+		// save app state
+		Source.setLocal('weave-appstate', JSON.stringify({
+			fontSize: this.state.fontSize,
+			sidebarTab: this.state.sidebarTab,
+			sidebarToggled: this.state.sidebarToggled,
+			notesToggled: this.state.notesToggled
+		}));
 	}
 
 	render(props, state, context) {
@@ -118,16 +98,22 @@ class App extends React.Component {
 				style={state.modalView ? Object.assign({overflow: 'hidden'}, Style.app) : Style.app}
 			>
 				<ProjectSidebar
+					toggled={state.sidebarToggled}
 					project={state.project}
-					register={(c) => this.mainSB = c}
+					scenes={state.sceneMap.sceneCount}
+					notes={state.noteMap.length}
+					tab={state.sidebarTab}
+					onTab={(tab) => this.setState({sidebarTab: tab})}
+					print={this.print}
 				/>
 				<WeaveView
 					thread={state.project.thread}
-					map={MapModel.Scenes(state.project.scene, state.project.location, state.project.visible, state.project.search, state.project)}
+					map={state.sceneMap}
+					sceneCount={state.sceneMap.sceneCount}
 				/>
 				<NoteSidebar
-					notes={MapModel.Notes(state.project.note, state.project.visible, state.project.search)}
-					register={(c) => this.notesSB = c}
+					toggled={state.notesToggled}
+					notes={state.noteMap}
 				/>
 			</div>
 		);
@@ -140,8 +126,7 @@ class App extends React.Component {
 	onKeyDown(e) {
 		if (e.metaKey === true || e.ctrlKey === true) {
 			if (e.keyCode === 89) {
-				e.preventDefault();
-				this.Redo();
+				
 			} else if (e.keyCode === 90) {
 				e.preventDefault();
 				//special case (CTRL-SHIFT-Z) does a redo (on a mac for example)
@@ -150,31 +135,59 @@ class App extends React.Component {
 			}
 			if (e.keyCode === 66) {
 				e.preventDefault();
-				this.mainSB();
+				this.setState({sidebarToggled: !this.state.sidebarToggled});
 			}
 			if (e.keyCode === 75) {
 				e.preventDefault();
-				this.notesSB();
+				this.setState({notesToggled: !this.state.notesToggled});
 			}
+			if (e.keyCode === 70) {
+				e.preventDefault();
+				this.setState({sidebarTab: 2, sidebarToggled: true});
+				window.document.getElementById("searchBar").focus();
+			}
+			if (e.keyCode === 187) {
+				e.preventDefault();
+				window.document.firstElementChild.style.fontSize = Number(++this.state.fontSize).toString() + "px";
+				this.cueRender();
+			}
+			if (e.keyCode === 189) {
+				e.preventDefault();
+				window.document.firstElementChild.style.fontSize = Number(--this.state.fontSize).toString() + "px";
+				this.cueRender();
+			}
+			//console.log("Key " + e.keyCode);
 		}
 	}
 
 	Do(action, data) {
-		Actions.Do(action, data, this.state.project);
-		this.cueRender();
+		// new item id to focus on or undefined
+		this.focus = Actions.Do(action, data, this.state.project);
+		this.Map();
 		this.save();
+		if (action === "ModifyChapters") this.cueRender();
+		if (action.startsWith("New") || action.startsWith("Create")) {
+			this.cueRender();
+		}
 	}
 
-	Undo() {
+	Undo() {	
 		Actions.Undo(this.state.project)
-		this.cueRender();
+		this.Map();
 		this.save();
 	}
 
 	Redo() {
 		Actions.Redo(this.state.project)
-		this.cueRender();
+		this.Map();
 		this.save();
+	}
+
+	Map() {
+		this.setState({
+			sceneMap: MapModel.Scenes(this.state.project.scene, this.state.project.location, this.state.project.visible, this.state.project.search, this.state.project, this.Get),
+			noteMap: MapModel.Notes(this.state.project.note, this.state.project.visible, this.state.project.search, this.Get)
+		});
 	}
 
 	Get(id) {
@@ -190,24 +203,87 @@ class App extends React.Component {
 
 	openProject(data) {
 		data = JSON.parse(data);
-		this.setState(data)
+		this.setState(Object.assign(data));
+		this.Map();
 		this.save();
 	}
 
 	save() {
-		var str = JSON.stringify(this.state.project);
-		console.log("Uncompressed: " + str.length);
-		//str = LZW.compressToUTF16(str);
-		//console.log("Compressed: " + str.length)
-		Source.setLocal('weave-project', str);
-		console.log(JSON.stringify(localStorage).length / 2636625);
+		Source.setLocal('weave-project', JSON.stringify(this.state.project));
+	}
+
+	doesTimeConflict(location, utctime, sceneid) {
+		var scene = this.state.project.scene;
+		for (var id in scene) {
+			if (scene[id].location === location && id !== sceneid && scene[id].utctime === utctime) return true;
+		}
+		return false;
+	}
+
+	eatFocus() {
+		this.focus = undefined;
+	}
+
+	focusOn(id) {
+		this.focus = id;
+		this.cueRender();
 	}
 
 	getChildContext() {
 		return {
 			Get: this.Get,
 			Do: this.Do,
+			doesTimeConflict: this.doesTimeConflict,
+			focus: this.focus,
+			focusOn: this.focusOn,
+			eatFocus: this.eatFocus,
+			fontSize: this.state.fontSize
 		};
+	}
+
+	print() {
+		var settings = this.state.project.printSettings,
+			meta = this.state.project.meta,
+			text = "",
+			scene,
+			threads,
+			i = -1;
+
+		text += "\n\n\n" + meta.title + "\n\n";
+		if (meta.author.length > 0) text += "by: " + meta.author;
+		text += "\n\n\n\n";
+
+		// iterate through each scene within each chapter
+		for (var chapter of this.state.project.chapters) {
+
+			text += "Chapter " + (++i) + ". " + chapter.title + "\n\n\n";
+
+			for (var scene_id of chapter.scenes) {
+				scene = this.Get(scene_id);
+
+				if (settings.location) text += this.Get(scene.location).name;
+				if (settings.date) text += " - " + scene.time + "\n\n";
+
+				if (settings.threads) {
+					threads = Object.keys(scene.thread);
+					for (var thread_id of threads) text += this.Get(thread_id).name + "  ";
+					text += scene.thread + "\n\n"
+				}
+
+				if (settings.summary) text += scene.summary + "\n\n";
+
+				if (settings.body) {
+					text += "*\n\n"
+					text += scene.body + "\n\n";
+				}
+
+				text += "* * *\n\n"
+			}
+
+			text += "\n\n\n";
+		}
+
+		FileSaver.saveAs(new Blob([text], {type: "text/plain;charset=utf-8"}), this.state.project.meta.title + '_' + (new Date().toString()) + '.txt');	
 	}
 }
 
