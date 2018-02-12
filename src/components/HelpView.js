@@ -107,7 +107,7 @@ var HelpText = {
 		"Weave is mouse and keyboard driven.",
 		"On the left is the Sidebar, which can be shown/hidden using: CMD B (Mac) or CTRL B (Windows/Linux)",
 		"On the right is the Notebar, which can be shown/hidden using: CMD K (Mac) or CTRL K (Windows/Linux)",
-		"In the Plot Sidebar is the Search bar, which can be access from keyboard using: CMD F (Mac) or CTRL F (Windows/Linux)",
+		"In the Plot Sidebar is the Search bar, which can be accessed from keyboard using: CMD F (Mac) or CTRL F (Windows/Linux)",
 		"The main view shows Place columns with any visible scenes layed in time order.",
 		"You can increase/decrease the font size using: CMD +/- (Mac) or CTRL +/- (Windows/Linux)",
 		"Delete buttons require you to hold down the mouse button to really confirm your intention."
