@@ -11,10 +11,6 @@ const
 		return id;
 	};
 
-// function adjustIndex(to, from) { // LEGACY? OR DEAD CODE?
-// 	return (to > from) ? to - 1 : to
-// }
-
 /*
 	deep copy values of all properties of pattern from src to pattern--given a JS Object as a pattern, and a JS Object as a src
 */

@@ -1,5 +1,4 @@
 require('./polyfills.js');
-//require('../assert.js').pollute(); // inject Assert and Test into window global object
 const CURRENT_VERSION = 'v0.9.0';
 const
 	React = require('preact'),
